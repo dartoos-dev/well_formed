@@ -46,6 +46,8 @@ Most of the form fields in this package are built on top of a Flutter
 `TextFormField` widget so that they remain fully compatible with Flutter's
 `Form` widget container.
 
+<!-- @todo #2 add a form field example as soon as possible -->
+
 ## Demo application
 
 The demo application provides a fully working example, focused on demonstrating
