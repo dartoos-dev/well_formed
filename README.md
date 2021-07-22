@@ -1,8 +1,8 @@
 # well_formed
 
 <img
-src="https://user-images.githubusercontent.com/24878574/119202536-61caa380-ba67-11eb-8f29-1bfa92f28143.png"
-alt="EO-Color logo" width="176" height="82"/>
+src="https://user-images.githubusercontent.com/24878574/126539340-83d14f37-93e0-4fae-8029-f7ec9de71d88.png"
+alt="EO-Color logo" width="153" height="153"/>
 
 [![EO principles respected
 here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
@@ -14,8 +14,8 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 [![PDD status](https://www.0pdd.com/svg?name=dartoos-dev/well_formed)](https://www.0pdd.com/p?name=dartoos-dev/well_formed)
 
 [![build](https://github.com/dartoos-dev/well_formed/actions/workflows/build.yml/badge.svg)](https://github.com/dartoos-dev/well_formed/actions/)
-[![codecov](https://codecov.io/gh/dartoos-dev/well_formed/branch/master/graph/badge.svg?token=Hvpu48mfx1)](https://codecov.io/gh/dartoos-dev/well_formed)
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/rafamizes/well_formed)
+[![codecov](https://codecov.io/gh/dartoos-dev/well_formed/branch/master/graph/badge.svg?token=W6spF0S796)](https://codecov.io/gh/dartoos-dev/well_formed)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/rafamizes/well_formed)](https://www.codefactor.io/repository/github/rafamizes/well_formed)
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 [![Hits-of-Code](https://hitsofcode.com/github/dartoos-dev/well_formed?branch=master)](https://hitsofcode.com/github/dartoos-dev/well_formed/view?branch=master)
 
@@ -28,12 +28,17 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 
 ## Overview
 
-Well-**Form**ed Widget Fields — Well-Formed — is a collection of Flutter form
-fields designed to keep your users' data well-formed, as well as to remove much
-of the validation and form-related (boilerplate) code from your project.
+Well-**Form**ed Widget Fields - Well-Formed - is a collection of Flutter form
+fields widgets. This package aims to help developers to:
 
-In addition, this package improves the readability and maintainability of your
-source code by providing a declarative, object-oriented interface.
+- keep user data (always) well-formed.
+- reduce most of the (boilerplate) code related to form fields and their
+  validations.
+- improve readability and maintainability of source code by providing a
+  declarative, object-oriented interface.
+
+In order to be a reliable package, each class is well-documented and fully unit
+tested by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
@@ -53,7 +58,6 @@ To run the demo application:
 git clone https://github.com/dartoos-dev/well_formed.git
 cd well_formed/example/
 flutter run -d chrome
-
 ```
 
 This should launch the demo application on Chrome in debug mode.
