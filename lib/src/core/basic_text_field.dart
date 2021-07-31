@@ -46,6 +46,9 @@ class BasicTextField extends StatelessWidget {
           ValStr val = validator ?? _ok;
           if (blank != null) {
             val = Pair.str2(Req(blank: blank), val);
+            if (trim) {
+              val = Trim(val);
+            }
           }
           final ValueChanged<String>? maybeTrimOnChanged = onChanged == null
               ? null
