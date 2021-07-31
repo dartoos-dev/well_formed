@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.1.0] - 2021-07-31
+
 ### Added
 
 - BasicTextField, a text form field that can be made required and/or have its
