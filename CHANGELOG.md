@@ -8,3 +8,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 ## [Unreleased]
 
 ## [0.0.1] - 2021-07-21
+
+### Added
+
+- BasicTextField, a text form field that can be made required and/or have its
+  input data trimmed — [8](https://github.com/dartoos-deve/well_formed/issues)
