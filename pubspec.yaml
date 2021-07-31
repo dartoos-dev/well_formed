@@ -1,5 +1,5 @@
 name: well_formed
-description: A collection of declarative Flutter form field widgets designed to keep your users' data well-formed! It also significantly removes a lot of validation code from your projects.
+description: Form field widgets designed to take much of the burden of form-related coding off the developer's back — masks, validations, keyboard type, etc.
 version: 0.0.1
 homepage: https://dartoos.dev
 repository: https://github.com/dartoos-dev/well_formed
@@ -11,7 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  formdator: ^0.7.1
+  formdator: ^0.8.2
+  mask_text_input_formatter: ^2.0.0
 
 dev_dependencies:
   flutter_test:
