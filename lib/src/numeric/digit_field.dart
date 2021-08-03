@@ -3,17 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:formdator/formdator.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// Digit-only Form Field
+/// Digit-only Form Field.
+///
+/// It sets both a validator for blocking non-digit characters and the
+/// keyboardType to [TextInputType.number].
 class DigitField extends StatelessWidget {
-  /// Digit-only Form Field
+  /// Digit-only Form Field.
   ///
+  /// [malformed] the error message in case of non-digit characters.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be required.
-  /// [malformed] the error message in case of non-digit characters.
   /// [validator] an optional extra validation step.
   DigitField({
-    String? blank,
     String? malformed,
+    String? blank,
+    bool trim = false,
+    TextInputType? keyboardType = TextInputType.number,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -38,19 +43,14 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   })  : _toDigitField = ((context) {
-          final vals = Rules<String>([
-            if (blank == null)
-              Digit(non: malformed)
-            else
-              ReqDigit(blank: blank, non: malformed),
-            validator ?? const Ok().call,
-          ]);
-          return TextFormField(
-            validator: vals,
+          return BasicTextField(
+            validator: Pair.str(Digit(non: malformed), validator ?? _dummy),
+            blank: blank,
+            trim: trim,
+            keyboardType: keyboardType,
             controller: controller,
             initialValue: initialValue,
             decoration: decoration,
-            keyboardType: TextInputType.number,
             textInputAction: textInputAction,
             style: style,
             textDirection: textDirection,
@@ -69,22 +69,26 @@ class DigitField extends StatelessWidget {
             scrollPadding: scrollPadding,
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
+            key: key,
           );
         }),
         super(key: key);
 
-  /// Digit-only form field in which the number of digits must equal to [len].
+  /// Digit-only form field with length constraint.
   ///
   /// [len] the exact number of digits; it must be > 0.
-  /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be required.
   /// [malformed] the error message in case of non-digit characters.
   /// [diff] the error message if the number of digits is different from [len].
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be required.
   /// [validator] an optional extra validation step.
   DigitField.len(
     int len, {
-    String? blank,
+    String? malformed,
     String? diff,
+    String? blank,
+    bool trim = false,
+    TextInputType? keyboardType = TextInputType.number,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration = const InputDecoration(),
@@ -109,12 +113,11 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(
-            Len(len, diff: diff),
-            validator ?? const Ok().call,
-          ),
+          validator: Pair.str(Len(len, diff: diff), validator ?? _dummy),
+          malformed: malformed,
           blank: blank,
-          key: key,
+          trim: trim,
+          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -136,21 +139,24 @@ class DigitField extends StatelessWidget {
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
           autovalidateMode: autovalidateMode,
+          key: key,
         );
 
-  /// Digit-only Form Field in which the number of input digits must be greater
-  /// than or equal to [min].
+  /// Digit-only form field with minimum length constraint.
   ///
   /// [min] the minimum number of digits; it must be > 0.
-  /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be required.
   /// [malformed] the error message in case of non-digit characters.
   /// [less] the error message if the number of digits is less than [min].
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be required.
   /// [validator] an optional extra validation step.
   DigitField.min(
     int min, {
-    String? blank,
+    String? malformed,
     String? less,
+    String? blank,
+    bool trim = false,
+    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -175,12 +181,11 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(
-            Len.min(min, less: less),
-            validator ?? const Ok().call,
-          ),
+          validator: Pair.str(Len.min(min, less: less), validator ?? _dummy),
+          malformed: malformed,
           blank: blank,
-          key: key,
+          trim: trim,
+          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -202,20 +207,24 @@ class DigitField extends StatelessWidget {
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
           autovalidateMode: autovalidateMode,
+          key: key,
         );
 
-  /// Digit-only form field in which the number of input digits must be less
-  /// than or equal to [max].
+  /// Digit-only form field with maximum length constraint.
   ///
   /// [max] the maximum number of digits; it must be > 0.
-  /// [blank] the error message in case of blank field; if omitted, the field
   /// [malformed] the error message in case of non-digit characters.
   /// [great] the error message if the number of digits is greater than [max].
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be required.
   /// [validator] an optional extra validation step.
   DigitField.max(
     int max, {
-    String? blank,
+    String? malformed,
     String? great,
+    String? blank,
+    bool trim = false,
+    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -240,12 +249,11 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(
-            Len.max(max, great: great),
-            validator ?? const Ok().call,
-          ),
+          validator: Pair.str(Len.max(max, great: great), validator ?? _dummy),
+          malformed: malformed,
           blank: blank,
-          key: key,
+          trim: trim,
+          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -267,24 +275,28 @@ class DigitField extends StatelessWidget {
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
           autovalidateMode: autovalidateMode,
+          key: key,
         );
 
-  /// Digit-only form field in which the number of input digits must be within
-  /// the range [min–max].
+  /// Digit-only form field with length range constraint.
   ///
   /// [min] the minimum number of digits; it must be > 0 and < [max].
   /// [max] the maximum number of digits; it must be > 0 and > [min].
-  /// [blank] the error message in case of blank field; if omitted, the field
   /// [malformed] the error message in case of non-digit characters.
   /// [less] the error message if the number of digits is less than [min].
   /// [great] the error message if the number of digits is greater than [max].
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be required.
   /// [validator] an optional extra validation step.
   DigitField.range(
     int min,
     int max, {
-    String? blank,
+    String? malformed,
     String? less,
     String? great,
+    String? blank,
+    bool trim = false,
+    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -311,10 +323,12 @@ class DigitField extends StatelessWidget {
   }) : this(
           validator: Pair.str(
             Len.range(min, max, less: less, great: great),
-            validator ?? const Ok().call,
+            validator ?? _dummy,
           ),
+          malformed: malformed,
           blank: blank,
-          key: key,
+          trim: trim,
+          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -336,40 +350,14 @@ class DigitField extends StatelessWidget {
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
           autovalidateMode: autovalidateMode,
+          key: key,
         );
 
-  final ToTextField _toDigitField;
+  final ToBasicTextField _toDigitField;
 
-  /// Builds a [TextFormField] suitable for digit-only values.
+  static String? _dummy(String? input) => null;
+
+  /// Builds a [BasicTextField] suitable for digit-only values.
   @override
-  Widget build(BuildContext context) => _toDigitField(context);
+  BasicTextField build(BuildContext context) => _toDigitField(context);
 }
-/*
-   @todo #8 document the reasons for leaving out several constructor parameters.
-   FocusNode? focusNode,
-   TextInputType? keyboardType,
-   TextCapitalization textCapitalization = TextCapitalization.none,
-   StrutStyle? strutStyle,
-   TextAlignVertical? textAlignVertical,
-   bool autofocus = false,
-   ToolbarOptions? toolbarOptions,
-   bool? showCursor,
-   SmartDashesType? smartDashesType,
-   SmartQuotesType? smartQuotesType,
-   bool enableSuggestions = true,
-   MaxLengthEnforcement? maxLengthEnforcement,
-   int? maxLines = 1,
-   int? minLines,
-   bool expands = false,
-   GestureTapCallback? onTap,
-   double cursorWidth = 2.0,
-   double? cursorHeight,
-   Radius? cursorRadius,
-   Color? cursorColor,
-   Brightness? keyboardAppearance,
-   TextSelectionControls? selectionControls,
-   InputCounterWidgetBuilder? buildCounter,
-   ScrollPhysics? scrollPhysics,
-   Iterable<String>? autofillHints,
-   ScrollController? scrollController,
-   */
