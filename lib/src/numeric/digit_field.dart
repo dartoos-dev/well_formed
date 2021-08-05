@@ -69,7 +69,6 @@ class DigitField extends StatelessWidget {
             scrollPadding: scrollPadding,
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
-            key: key,
           );
         }),
         super(key: key);
