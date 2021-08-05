@@ -7,6 +7,21 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Added
+
+- WellFormed, a convenient well-formed form widget!
+- Several unit tests in addition to improvements to the existing ones —
+  [15](https://github.com/dartoos-dev/well_formed/issues/15).
+
+### Changed
+
+- The description of this package.
+
+### Removed
+
+- The FormFieldTester class has been removed and the WellFormed class is its
+  replacement. **BREAKING CHANGE**
+
 ## [0.1.0] - 2021-07-31
 
 ### Added

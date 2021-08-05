@@ -67,7 +67,7 @@ class WellFormed extends StatelessWidget {
   /// [fields] the [Form]'s fields.
   /// [submit] factory function for the submission widget.
   /// [reset] optional factory function for the reset widget.
-  /// [leading] optional extra widget that will be placed on the leftmost
+  /// [leading] optional extra widget that will be placed in the leftmost
   /// position alongside [submit] and [reset] widgets.
   /// [scrollDirection] the axis along which the scroll view scrolls.
   /// [formKey] the form state key; if omitted, one will be generated.
@@ -94,8 +94,8 @@ class WellFormed extends StatelessWidget {
         super(key: key);
 
   /// Convenient Scrollable Form Widget that contains a [ElevatedButton] for
-  /// submission along with an optional reset [TextButton] for resetting all
-  /// form fields back to their [FormField.initialValue].
+  /// submission along with an optional reset [TextButton]for resetting all form
+  /// fields back to their [FormField.initialValue].
   ///
   /// [fields] the [Form]'s fields.
   /// [enabled] enable/disable flag.
@@ -174,7 +174,7 @@ class WellFormed extends StatelessWidget {
   /// [leading] if set, an extra widget will be placed on the leftmost position
   /// alongside the submission and reset buttons.
   /// [scrollDirection] the axis along which the scroll view scrolls.
-  /// [formKey] the form state key; if omitted, one will be generated.
+  /// [formKey] the form state key; if omitted, a new key will be generated.
   /// [submitKey] the submit button key — it might be useful for unit testing.
   /// [resetKey] the reset button key — it might be useful for unit testing.
   WellFormed.app(

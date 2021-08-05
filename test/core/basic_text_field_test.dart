@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formdator/logic.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:well_formed/well_formed.dart';
+import 'package:well_formed/src/core/basic_text_field.dart';
+import 'package:well_formed/src/core/well_formed.dart';
 
 Future<void> main() async {
-  // await PropsTester.basic().run();
   group('BasicTextField', () {
     const empty = ''; // zero-length text.
-    const blank = 'this field is required';
     const short = 'few';
-    const long = 'There are certainly more than ten chars in this sentence.';
-    const less = 'the text is too short';
-    const great = 'the text is too long';
     const tenCharText = 'ten chars.';
+    const long = 'There are certainly more than ten chars in this sentence.';
+    const blank = 'Error: this field is required';
+    const less = 'Error: the text is too short';
+    const great = 'Error: the text is too long';
     const kDef = Key('()');
     const kLen = Key('len');
     const kMin = Key('min');
@@ -376,57 +376,107 @@ Future<void> main() async {
     testWidgets('obscuringCharacter', (WidgetTester tester) async {
       const obscuringCharacter = '*';
       await tester.pumpWidget(
-        WellFormed.app(
-            [BasicTextField(obscuringCharacter: obscuringCharacter)]),
+        WellFormed.app([
+          BasicTextField(obscuringCharacter: obscuringCharacter),
+          BasicTextField.len(23, obscuringCharacter: obscuringCharacter),
+          BasicTextField.min(23, obscuringCharacter: obscuringCharacter),
+          BasicTextField.max(23, obscuringCharacter: obscuringCharacter),
+          BasicTextField.range(15, 25, obscuringCharacter: obscuringCharacter),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).obscuringCharacter, obscuringCharacter);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).obscuringCharacter, obscuringCharacter);
+      }
     });
     testWidgets('maxLength', (WidgetTester tester) async {
       const maxLength = 10;
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(maxLength: maxLength)]),
+        WellFormed.app([
+          BasicTextField(maxLength: maxLength),
+          BasicTextField.len(23, maxLength: maxLength),
+          BasicTextField.min(23, maxLength: maxLength),
+          BasicTextField.max(23, maxLength: maxLength),
+          BasicTextField.range(15, 25, maxLength: maxLength),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).maxLength, maxLength);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).maxLength, maxLength);
+      }
     });
     testWidgets('keyboardType', (WidgetTester tester) async {
       const keyboardType = TextInputType.phone;
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(keyboardType: keyboardType)]),
+        WellFormed.app([
+          BasicTextField(keyboardType: keyboardType),
+          BasicTextField.len(23, keyboardType: keyboardType),
+          BasicTextField.min(23, keyboardType: keyboardType),
+          BasicTextField.max(23, keyboardType: keyboardType),
+          BasicTextField.range(15, 25, keyboardType: keyboardType),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).keyboardType, keyboardType);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).keyboardType, keyboardType);
+      }
     });
     testWidgets('onEditingComplete', (WidgetTester tester) async {
       void onEdit() {}
 
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(onEditingComplete: onEdit)]),
+        WellFormed.app([
+          BasicTextField(onEditingComplete: onEdit),
+          BasicTextField.len(23, onEditingComplete: onEdit),
+          BasicTextField.min(23, onEditingComplete: onEdit),
+          BasicTextField.max(23, onEditingComplete: onEdit),
+          BasicTextField.range(15, 25, onEditingComplete: onEdit),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).onEditingComplete, onEdit);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).onEditingComplete, onEdit);
+      }
     });
     testWidgets('onFieldSubmitted', (WidgetTester tester) async {
-      final key = UniqueKey();
       void onSubmit(String s) {}
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(key: key, onFieldSubmitted: onSubmit)]),
+        WellFormed.app([
+          BasicTextField(onFieldSubmitted: onSubmit),
+          BasicTextField.len(23, onFieldSubmitted: onSubmit),
+          BasicTextField.min(23, onFieldSubmitted: onSubmit),
+          BasicTextField.max(23, onFieldSubmitted: onSubmit),
+          BasicTextField.range(15, 25, onFieldSubmitted: onSubmit),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).onSubmitted, onSubmit);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).onSubmitted, onSubmit);
+      }
     });
     testWidgets('onSaved', (WidgetTester tester) async {
-      final key = UniqueKey();
       void onSaved(String? s) {}
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(key: key, onSaved: onSaved)]),
+        WellFormed.app([
+          BasicTextField(onSaved: onSaved),
+          BasicTextField.len(23, onSaved: onSaved),
+          BasicTextField.min(23, onSaved: onSaved),
+          BasicTextField.max(23, onSaved: onSaved),
+          BasicTextField.range(15, 25, onSaved: onSaved),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextFormField));
-      expect((elem as TextFormField).onSaved, onSaved);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextFormField));
+      for (final elem in elems) {
+        expect((elem as TextFormField).onSaved, onSaved);
+      }
     });
     testWidgets('inputFormatters', (WidgetTester tester) async {
-      final key = UniqueKey();
       final formatters = [
         MaskTextInputFormatter(
           mask: '###.###.###-##',
@@ -434,51 +484,99 @@ Future<void> main() async {
         ),
       ];
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(key: key, inputFormatters: formatters)]),
+        WellFormed.app([
+          BasicTextField(key: kDef, inputFormatters: formatters),
+          BasicTextField.len(23, key: kLen, inputFormatters: formatters),
+          BasicTextField.min(23, key: kMin, inputFormatters: formatters),
+          BasicTextField.max(23, key: kMax, inputFormatters: formatters),
+          BasicTextField.range(15, 25,
+              key: kRange, inputFormatters: formatters),
+        ]),
       );
-      await tester.enterText(find.byKey(key), '99999999999');
       await tester.pumpAndSettle();
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).inputFormatters, formatters);
-      expect(find.text('999.999.999-99'), findsOneWidget);
+      for (var i = 0; i < keys.length; ++i) {
+        final unmasked = '$i$i$i$i$i$i$i$i$i$i$i'; // E.g. 11111111111
+        final masked = '$i$i$i.$i$i$i.$i$i$i-$i$i'; // E.g. 111.111.111-11
+        await tester.enterText(find.byKey(keys[i]), unmasked);
+        await tester.pumpAndSettle();
+        final elem = tester.widget(find.widgetWithText(TextField, masked));
+        expect((elem as TextField).inputFormatters, formatters);
+        expect(find.text(masked), findsOneWidget);
+      }
     });
     testWidgets('enabled', (WidgetTester tester) async {
       const enabled = false;
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(enabled: enabled)]),
+        WellFormed.app([
+          BasicTextField(enabled: enabled),
+          BasicTextField.len(23, enabled: enabled),
+          BasicTextField.min(23, enabled: enabled),
+          BasicTextField.max(23, enabled: enabled),
+          BasicTextField.range(15, 25, enabled: enabled),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).enabled, enabled);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).enabled, enabled);
+      }
     });
     testWidgets('scrollPadding', (WidgetTester tester) async {
       const scrollPadding = EdgeInsets.all(40.0);
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(scrollPadding: scrollPadding)]),
+        WellFormed.app([
+          BasicTextField(scrollPadding: scrollPadding),
+          BasicTextField.len(23, scrollPadding: scrollPadding),
+          BasicTextField.min(23, scrollPadding: scrollPadding),
+          BasicTextField.max(23, scrollPadding: scrollPadding),
+          BasicTextField.range(15, 25, scrollPadding: scrollPadding),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect((elem as TextField).scrollPadding, scrollPadding);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).scrollPadding, scrollPadding);
+      }
     });
-    testWidgets('enableInteractiveSelection', (WidgetTester tester) async {
+    testWidgets('enableInteraciveSelection', (WidgetTester tester) async {
       const enableInteractiveSelection = false;
       await tester.pumpWidget(
         WellFormed.app([
           BasicTextField(
               enableInteractiveSelection: enableInteractiveSelection),
+          BasicTextField.len(23,
+              enableInteractiveSelection: enableInteractiveSelection),
+          BasicTextField.min(23,
+              enableInteractiveSelection: enableInteractiveSelection),
+          BasicTextField.max(23,
+              enableInteractiveSelection: enableInteractiveSelection),
+          BasicTextField.range(15, 25,
+              enableInteractiveSelection: enableInteractiveSelection),
         ]),
       );
-      final elem = tester.widget(find.byType(TextField));
-      expect(
-        (elem as TextField).enableInteractiveSelection,
-        enableInteractiveSelection,
-      );
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).enableInteractiveSelection,
+            enableInteractiveSelection);
+      }
     });
     testWidgets('autoValidateMode', (WidgetTester tester) async {
-      const autoValidateMode = AutovalidateMode.onUserInteraction;
+      const autovalidateMode = AutovalidateMode.onUserInteraction;
       await tester.pumpWidget(
-        WellFormed.app([BasicTextField(autovalidateMode: autoValidateMode)]),
+        WellFormed.app([
+          BasicTextField(autovalidateMode: autovalidateMode),
+          BasicTextField.len(23, autovalidateMode: autovalidateMode),
+          BasicTextField.min(23, autovalidateMode: autovalidateMode),
+          BasicTextField.max(23, autovalidateMode: autovalidateMode),
+          BasicTextField.range(15, 25, autovalidateMode: autovalidateMode),
+        ]),
       );
-      final elem = tester.widget(find.byType(TextFormField));
-      expect((elem as TextFormField).autovalidateMode, autoValidateMode);
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextFormField));
+      for (final elem in elems) {
+        expect((elem as TextFormField).autovalidateMode, autovalidateMode);
+      }
     });
   });
 }

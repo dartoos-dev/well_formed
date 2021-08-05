@@ -28,13 +28,16 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 
 ## Overview
 
-Well-**Form**ed Widget Fields — Well-Formed is a collection of Flutter form
-field widgets. This package aims to:
+Well-**Form**ed Widget Fields — Well-Formed is a form field package designed to
+relieve the developer of much of the form-related coding by providing
+out-of-the-box field masking, validation, smart trimming, and more.
 
-- helper developers to keep user data well-formed.
-- take most of the form-related coding off the developer's back.
-- improve readability and maintainability of source code by providing a
-  declarative, object-oriented interface.
+In addition, this package aims to:
+
+- improve the readability of the source code by providing form fields that have
+  "semantic" names — names that convey their purpose at first glance — such as
+  "EmailField", "DigitFields", "Ipv4Field", and so on.
+- select the keyboard type according to the field's purpose.
 - **not to end up being yet another buggy Flutter form package!**.
 
 In order to be a reliable package, every class is well-documented and fully unit
@@ -43,17 +46,17 @@ tested by a CI/CD pipeline with rigorous quality gates.
 ## Getting Started
 
 Most of the form fields in this package are built on top of a `TextFormField`
-widget so that they remain **fully compatible** with Flutter's `Form` widget
-container. This is quite important to avoid buggy behavior, such as when a field
-is not cleared when its parent Form is cleared — via the reset method.
+widget so they remain **fully compatible** with the `Form` widget. This is quite
+important to avoid buggy behavior such as when a field does not get reset when
+its parent form gets reset.
 
 <!-- @todo #2 add a form field example as soon as possible -->
 
 ## Demo application
 
 The demo application provides a fully working example, focused on demonstrating
-exactly one field in action — BasicTextField. You can take the code in this demo
-and experiment with it.
+exactly three widgets in action — _WellFormed_, _BasicTextField_ and
+_DigitField_. You can take the code in this demo and experiment with it.
 
 To run the demo application:
 
