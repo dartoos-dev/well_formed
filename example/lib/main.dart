@@ -25,56 +25,20 @@ class _DemoApp extends StatelessWidget {
         body: Center(
           child: SizedBox(
             width: 350,
-            child: WellFormed.scroll(
-              [
-                BasicTextField(
-                  trim: true,
-                  blank: 'Please fill in this field',
-                ),
-                DigitField(blank: 'Please enter the digits'),
-              ],
-              submit: (onSubmit) {
-                return ElevatedButton(
-                  // tooltip: 'Send',
-                  onPressed: onSubmit,
-                  child: const Icon(Icons.send),
-                );
-              },
-              reset: (onReset) {
-                return IconButton(
-                  onPressed: onReset,
-                  icon: const Icon(Icons.clear_all),
-                );
-              },
-            ),
-            // child: SingleChildScrollView(
-            //     child: Column(children: [
-            //   WellFormed.btn(
-            //     [
-            //       BasicTextField(
-            //         trim: true,
-            //         blank: 'Please fill in this field',
-            //       ),
-            //       DigitField(blank: 'Please enter the digits'),
-            //     ],
-            //   ),
-            //   WellFormed(
-            //     [
-            //       BasicTextField(
-            //         trim: true,
-            //         blank: 'Please fill in this field',
-            //       ),
-            //       DigitField(blank: 'Please enter the digits'),
-            //     ],
-            //     submit: (onSubmit) {
-            //       return IconButton(
-            //         tooltip: 'Send',
-            //         onPressed: onSubmit,
-            //         icon: const Icon(Icons.send),
-            //       );
-            //     },
-            //   )
-            // ])),
+            child: WellFormed.btn([
+              BasicTextField(
+                trim: true,
+                blank: 'Please fill in this field',
+                decoration: const InputDecoration(labelText: 'Enter some text'),
+              ),
+              DigitField.len(
+                5,
+                diff: 'Please enter exactly 5 digits; for example, 22335.',
+                blank: 'Please enter the 5 digits',
+                decoration:
+                    const InputDecoration(labelText: 'Enter the 5 digits'),
+              ),
+            ]),
           ),
         ),
       ),
