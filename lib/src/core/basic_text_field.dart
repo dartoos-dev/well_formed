@@ -18,7 +18,6 @@ class BasicTextField extends StatelessWidget {
   BasicTextField({
     bool trim = false,
     String? blank,
-    Key? key,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -42,6 +41,7 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
+    Key? key,
   })  : _toBasicField = ((context) {
           // coverage:ignore-start
           ValStr val = validator ?? _ok;
@@ -112,7 +112,6 @@ class BasicTextField extends StatelessWidget {
     String? diff,
     bool trim = false,
     String? blank,
-    Key? key,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -136,6 +135,7 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
+    Key? key,
   }) : this(
           validator: Pair.str2(Len(len, diff: diff), validator ?? _ok),
           trim: trim,
@@ -180,7 +180,6 @@ class BasicTextField extends StatelessWidget {
     String? less,
     bool trim = false,
     String? blank,
-    Key? key,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -204,6 +203,7 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
+    Key? key,
   }) : this(
           validator: Pair.str2(Len.min(min, less: less), validator ?? _ok),
           trim: trim,
@@ -248,7 +248,6 @@ class BasicTextField extends StatelessWidget {
     String? great,
     bool trim = false,
     String? blank,
-    Key? key,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -272,6 +271,7 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
+    Key? key,
   }) : this(
           validator: Pair.str2(Len.max(max, great: great), validator ?? _ok),
           trim: trim,
@@ -321,7 +321,6 @@ class BasicTextField extends StatelessWidget {
     String? great,
     bool trim = false,
     String? blank,
-    Key? key,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -345,6 +344,7 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
+    Key? key,
   }) : this(
           validator: Pair.str2(
               Len.range(min, max, less: less, great: great), validator ?? _ok),

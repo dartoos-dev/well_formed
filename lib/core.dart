@@ -5,4 +5,4 @@
 library core;
 
 export 'src/core/basic_text_field.dart';
-export 'src/core/form_field_tester.dart';
+export 'src/core/well_formed.dart';
