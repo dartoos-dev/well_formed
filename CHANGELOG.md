@@ -9,6 +9,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ### Added
 
+- CepField widget for CEP (Código de Endereçamento Postal) input values —
+  [7](https://github.com/dartoos-dev/well_formed/issues/7).
 - WellFormed, a convenient well-formed form widget!
 - Several unit tests in addition to improvements to the existing ones —
   [15](https://github.com/dartoos-dev/well_formed/issues/15).
