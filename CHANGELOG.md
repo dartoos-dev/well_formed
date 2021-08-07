@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-08-07
+
 ### Added
 
 - CepField widget for CEP (Código de Endereçamento Postal) input values —
