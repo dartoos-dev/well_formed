@@ -34,10 +34,10 @@ class _DemoApp extends StatelessWidget {
               DigitField.len(
                 5,
                 diff: 'Please enter exactly 5 digits; for example, 22335.',
-                blank: 'Please enter the 5 digits',
-                decoration:
-                    const InputDecoration(labelText: 'Enter the 5 digits'),
+                blank: 'Please enter 5 digits',
+                decoration: const InputDecoration(labelText: 'Enter 5 digits'),
               ),
+              CepField(blank: 'Please enter the CEP value'),
             ]),
           ),
         ),
