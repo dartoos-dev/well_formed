@@ -7,6 +7,7 @@
 ///   declarative, object-oriented interface.
 library well_formed;
 
+export 'brazil.dart';
 export 'core.dart';
 export 'numeric.dart';
 export 'type.dart';

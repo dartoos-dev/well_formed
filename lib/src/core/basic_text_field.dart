@@ -11,7 +11,7 @@ import 'package:well_formed/well_formed.dart';
 class BasicTextField extends StatelessWidget {
   /// Text form field that can be made required (mandatory).
   ///
-  /// [trim] whether to trim or not the input data.
+  /// [trim] whether or not to trim the input data.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [validator] an optional extra validation step.
