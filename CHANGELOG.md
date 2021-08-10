@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.3.0] - 2021-08-10
+
 ### Changed
 
 - update the version of the "Formdator" dependency to 0.10.0 —
