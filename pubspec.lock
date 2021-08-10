@@ -66,7 +66,7 @@ packages:
       name: formdator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.2"
+    version: "0.10.0"
   lint:
     dependency: "direct dev"
     description:

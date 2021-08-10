@@ -44,7 +44,7 @@ class DigitField extends StatelessWidget {
     Key? key,
   })  : _toDigitField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Digit(non: malformed), validator ?? _dummy),
+            validator: Pair.str(Digit(mal: malformed), validator ?? _dummy),
             blank: blank,
             trim: trim,
             keyboardType: keyboardType,
