@@ -5,20 +5,25 @@ import 'package:well_formed/well_formed.dart';
 
 /// Digit-only Form Field.
 ///
-/// It sets both a validator for blocking non-digit characters and the
-/// keyboardType to [TextInputType.number].
+/// Non-digit characters must somehow be filtered out so that they do not appear
+/// in the form field. To achieve this, this widget:
+///
+/// - sets up a validator to block non-digit characters;
+/// - sets the [inputFormatters] attribute to [FilteringTextInputFormatter.digitsOnly];
+/// - sets the [keyboardType] to [TextInputType.number].
 class DigitField extends StatelessWidget {
   /// Digit-only Form Field.
   ///
   /// [malformed] the error message in case of non-digit characters.
   /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be required.
+  /// will not be made required.
+  /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   DigitField({
     String? malformed,
     String? blank,
     bool trim = false,
-    TextInputType? keyboardType = TextInputType.number,
+    FormFieldValidator<String>? validator,
     TextEditingController? controller,
     String? initialValue,
     InputDecoration? decoration = const InputDecoration(),
@@ -35,8 +40,6 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    FormFieldValidator<String>? validator,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -45,9 +48,10 @@ class DigitField extends StatelessWidget {
   })  : _toDigitField = ((context) {
           return BasicTextField(
             validator: Pair.str(Digit(mal: malformed), validator ?? _dummy),
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             blank: blank,
             trim: trim,
-            keyboardType: keyboardType,
             controller: controller,
             initialValue: initialValue,
             decoration: decoration,
@@ -64,7 +68,6 @@ class DigitField extends StatelessWidget {
             onEditingComplete: onEditingComplete,
             onFieldSubmitted: onFieldSubmitted,
             onSaved: onSaved,
-            inputFormatters: inputFormatters,
             enabled: enabled,
             scrollPadding: scrollPadding,
             enableInteractiveSelection: enableInteractiveSelection,
@@ -77,17 +80,19 @@ class DigitField extends StatelessWidget {
   ///
   /// [len] the exact number of digits; it must be > 0.
   /// [malformed] the error message in case of non-digit characters.
-  /// [diff] the error message if the number of digits is different from [len].
   /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be made required.
+  /// [diff] the error message if the number of digits is different from [len].
   /// will not be required.
+  /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   DigitField.len(
     int len, {
     String? malformed,
-    String? diff,
     String? blank,
+    String? diff,
     bool trim = false,
-    TextInputType? keyboardType = TextInputType.number,
+    FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration = const InputDecoration(),
@@ -104,8 +109,6 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    FormFieldValidator<String>? validator,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -116,7 +119,6 @@ class DigitField extends StatelessWidget {
           malformed: malformed,
           blank: blank,
           trim: trim,
-          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -133,7 +135,6 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -145,9 +146,11 @@ class DigitField extends StatelessWidget {
   ///
   /// [min] the minimum number of digits; it must be > 0.
   /// [malformed] the error message in case of non-digit characters.
-  /// [less] the error message if the number of digits is less than [min].
   /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be made required.
+  /// [less] the error message if the number of digits is less than [min].
   /// will not be required.
+  /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   DigitField.min(
     int min, {
@@ -155,7 +158,6 @@ class DigitField extends StatelessWidget {
     String? less,
     String? blank,
     bool trim = false,
-    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -173,7 +175,6 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -184,7 +185,6 @@ class DigitField extends StatelessWidget {
           malformed: malformed,
           blank: blank,
           trim: trim,
-          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -201,7 +201,6 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -213,9 +212,10 @@ class DigitField extends StatelessWidget {
   ///
   /// [max] the maximum number of digits; it must be > 0.
   /// [malformed] the error message in case of non-digit characters.
-  /// [great] the error message if the number of digits is greater than [max].
   /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be required.
+  /// will not be made required.
+  /// [great] the error message if the number of digits is greater than [max].
+  /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   DigitField.max(
     int max, {
@@ -223,7 +223,6 @@ class DigitField extends StatelessWidget {
     String? great,
     String? blank,
     bool trim = false,
-    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -241,7 +240,6 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -252,7 +250,6 @@ class DigitField extends StatelessWidget {
           malformed: malformed,
           blank: blank,
           trim: trim,
-          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -269,7 +266,6 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -282,10 +278,10 @@ class DigitField extends StatelessWidget {
   /// [min] the minimum number of digits; it must be > 0 and < [max].
   /// [max] the maximum number of digits; it must be > 0 and > [min].
   /// [malformed] the error message in case of non-digit characters.
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be made required.
   /// [less] the error message if the number of digits is less than [min].
   /// [great] the error message if the number of digits is greater than [max].
-  /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be required.
   /// [validator] an optional extra validation step.
   DigitField.range(
     int min,
@@ -295,7 +291,6 @@ class DigitField extends StatelessWidget {
     String? great,
     String? blank,
     bool trim = false,
-    TextInputType? keyboardType = TextInputType.number,
     FormFieldValidator<String>? validator,
     String? initialValue,
     TextEditingController? controller,
@@ -313,7 +308,6 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -327,7 +321,6 @@ class DigitField extends StatelessWidget {
           malformed: malformed,
           blank: blank,
           trim: trim,
-          keyboardType: keyboardType,
           controller: controller,
           initialValue: initialValue,
           decoration: decoration,
@@ -344,7 +337,6 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,

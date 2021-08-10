@@ -7,6 +7,18 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Changed
+
+- update the version of the "Formdator" dependency to 0.10.0 —
+  [19](https://github.com/dartoos-dev/well_formed/issues/19).
+- DigitField: [21](https://github.com/dartoos-dev/well_formed/issues/21)
+  **BREAKING CHANGES**.
+  - set the [inputFormatters] attribute to
+    [FilteringTextInputFormatter.digitsOnly] and remove it from the constructors
+    parameter list
+  - set the [keyboardType] to [TextInputType.number] and remove it from the
+    constructors parameter list.
+
 ## [0.2.0] - 2021-08-07
 
 ### Added

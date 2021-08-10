@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formdator/formdator.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/src/core/well_formed.dart';
 import 'package:well_formed/src/numeric/digit_field.dart';
 
@@ -453,21 +453,20 @@ Future<void> main() async {
         expect((elem as TextField).maxLength, maxLength);
       }
     });
-    testWidgets('keyboardType', (WidgetTester tester) async {
-      const keyboardType = TextInputType.phone;
+    testWidgets('default keyboardType', (WidgetTester tester) async {
       await tester.pumpWidget(
         WellFormed.app([
-          DigitField(keyboardType: keyboardType),
-          DigitField.len(23, keyboardType: keyboardType),
-          DigitField.min(23, keyboardType: keyboardType),
-          DigitField.max(23, keyboardType: keyboardType),
-          DigitField.range(15, 25, keyboardType: keyboardType),
+          DigitField(),
+          DigitField.len(23),
+          DigitField.min(23),
+          DigitField.max(23),
+          DigitField.range(15, 25),
         ]),
       );
       await tester.pumpAndSettle();
       final elems = tester.widgetList(find.byType(TextField));
       for (final elem in elems) {
-        expect((elem as TextField).keyboardType, keyboardType);
+        expect((elem as TextField).keyboardType, TextInputType.number);
       }
     });
     testWidgets('onEditingComplete', (WidgetTester tester) async {
@@ -522,31 +521,31 @@ Future<void> main() async {
         expect((elem as TextFormField).onSaved, onSaved);
       }
     });
-    testWidgets('inputFormatters', (WidgetTester tester) async {
-      final formatters = [
-        MaskTextInputFormatter(
-          mask: '###.###.###-##',
-          filter: {"#": RegExp(r'\d')},
-        ),
-      ];
+
+    /// non-digit characters must be filtered out by the input formatter so that
+    /// they do not appear in the form field.
+    testWidgets('default inputFormatters', (WidgetTester tester) async {
       await tester.pumpWidget(
         WellFormed.app([
-          DigitField(key: kDef, inputFormatters: formatters),
-          DigitField.len(23, key: kLen, inputFormatters: formatters),
-          DigitField.min(23, key: kMin, inputFormatters: formatters),
-          DigitField.max(23, key: kMax, inputFormatters: formatters),
-          DigitField.range(15, 25, key: kRange, inputFormatters: formatters),
+          DigitField(key: kDef),
+          DigitField.len(23, key: kLen),
+          DigitField.min(23, key: kMin),
+          DigitField.max(23, key: kMax),
+          DigitField.range(15, 25, key: kRange),
         ]),
       );
       await tester.pumpAndSettle();
       for (var i = 0; i < keys.length; ++i) {
         final unmasked = '$i$i$i$i$i$i$i$i$i$i$i'; // E.g. 11111111111
         final masked = '$i$i$i.$i$i$i.$i$i$i-$i$i'; // E.g. 111.111.111-11
-        await tester.enterText(find.byKey(keys[i]), unmasked);
+        await tester.enterText(find.byKey(keys[i]), masked);
         await tester.pumpAndSettle();
-        final elem = tester.widget(find.widgetWithText(TextField, masked));
-        expect((elem as TextField).inputFormatters, formatters);
-        expect(find.text(masked), findsOneWidget);
+        final elem = tester.widget(find.widgetWithText(TextField, unmasked));
+        expect(
+          (elem as TextField).inputFormatters,
+          [FilteringTextInputFormatter.digitsOnly],
+        );
+        expect(find.text(unmasked), findsOneWidget);
       }
     });
     testWidgets('enabled', (WidgetTester tester) async {
