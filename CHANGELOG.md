@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.3.1] - 2021-08-12
+
 ### Added
 
 - IntField widget, a form field for entering integer numbers —
