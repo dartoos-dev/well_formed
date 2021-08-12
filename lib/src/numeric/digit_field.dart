@@ -54,7 +54,7 @@ class DigitField extends StatelessWidget {
             trim: trim,
             controller: controller,
             initialValue: initialValue,
-            decoration: decoration?? const InputDecoration(),
+            decoration: decoration ?? const InputDecoration(),
             textInputAction: textInputAction,
             style: style,
             textDirection: textDirection,
