@@ -7,6 +7,13 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Added
+
+- IntField widget for integer input values —
+  [24](https://github.com/dartoos-dev/well_formed/issues/24).
+- NumField widget for floating-point input values —
+  [10](https://github.com/dartoos-dev/well_formed/issues/10).
+
 ## [0.3.0] - 2021-08-10
 
 ### Changed

@@ -29,15 +29,15 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 ## Overview
 
 Well-**Form**ed Widget Fields — Well-Formed is a form field package designed to
-relieve the developer of much of the form-related coding by providing
-out-of-the-box field masking, validation, smart trimming, and more.
+relieve developers of much of the form-related coding. This is achieved by
+providing out-of-the-box field masking, validation, smart trimming, and more.
 
 In addition, this package aims to:
 
-- improve the readability of the source code by providing form fields that have
-  "semantic" names — names that convey their purpose at first glance — such as
-  "EmailField", "DigitFields", "Ipv4Field", and so on.
-- select the keyboard type according to the field's purpose.
+- improve source code readability by providing form fields with "semantic" names
+  — names that convey their purpose at first glance — such as "EmailField",
+  "DigitField", "IntField", "Ipv4Field", and so on.
+- automate the selection of the keyboard type according to the field's purpose.
 - **not to end up being yet another buggy Flutter form package!**.
 
 In order to be a reliable package, every class is well-documented and fully unit
