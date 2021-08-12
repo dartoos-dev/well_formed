@@ -9,9 +9,9 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ### Added
 
-- IntField widget for integer input values —
+- IntField widget, a form field for entering integer numbers —
   [24](https://github.com/dartoos-dev/well_formed/issues/24).
-- NumField widget for floating-point input values —
+- NumField widget, a form field for entering floating point numbers —
   [10](https://github.com/dartoos-dev/well_formed/issues/10).
 
 ## [0.3.0] - 2021-08-10
