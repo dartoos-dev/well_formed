@@ -29,15 +29,15 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 ## Overview
 
 Well-**Form**ed Widget Fields — Well-Formed is a form field package designed to
-relieve the developer of much of the form-related coding by providing
-out-of-the-box field masking, validation, smart trimming, and more.
+relieve developers of much of the form-related coding. This is achieved by
+providing out-of-the-box field masking, validation, smart trimming, and more.
 
 In addition, this package aims to:
 
-- improve the readability of the source code by providing form fields that have
-  "semantic" names — names that convey their purpose at first glance — such as
-  "EmailField", "DigitFields", "Ipv4Field", and so on.
-- select the keyboard type according to the field's purpose.
+- improve source code readability by providing form fields with "semantic" names
+  — names that convey their purpose at first glance — such as "EmailField",
+  "DigitField", "IntField", "Ipv4Field", and so on.
+- automate the selection of the keyboard type according to the field's purpose.
 - **not to end up being yet another buggy Flutter form package!**.
 
 In order to be a reliable package, every class is well-documented and fully unit
@@ -45,10 +45,10 @@ tested by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
-Most of the form fields in this package are built on top of a `TextFormField`
-widget so they remain **fully compatible** with the `Form` widget. This is quite
-important to avoid buggy behavior such as when a field does not get reset when
-its parent form gets reset.
+Most of the form fields in this package are built on top of the `TextFormField`
+widget so that they remain **fully compatible** with Flutter's `Form` widget.
+This is important to avoid erroneous (buggy) behavior, such as when a field does
+not reset when its parent widget is reset.
 
 <!-- @todo #2 add a form field example as soon as possible -->
 

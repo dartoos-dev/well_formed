@@ -3,23 +3,26 @@ import 'package:flutter/services.dart';
 import 'package:formdator/formdator.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// Digit-only Form Field.
+/// Integer Form Field.
 ///
-/// Non-digit characters must somehow be filtered out so that they do not appear
-/// in the form field. To achieve this, this widget:
+/// The Integer field only accepts integer values. Letters and most symbols
+/// cannot be entered into this type of field. However, the negative sign ('-')
+/// and the positive sign ('+') are allowed.
 ///
-/// - sets up a validator to block non-digit characters;
-/// - sets the [inputFormatters] attribute to [FilteringTextInputFormatter.digitsOnly];
-/// - sets the [keyboardType] to [TextInputType.number].
-class DigitField extends StatelessWidget {
-  /// Digit-only Form Field.
+/// Non-numeric characters must somehow be filtered out so that they do not
+/// appear in the form field. This is accomplished by setting the following:
+///
+/// - [Int] as the validator to limit input data to integer values
+/// - [TextInputType.numberWithOptions] as the keyboardType.
+class IntField extends StatelessWidget {
+  /// Integer Numbers Form Field.
   ///
-  /// [trim] whether or not to trim the input value.
-  /// [validator] an optional extra validation step.
+  /// [malformed] the error message in case of non-numeric characters.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
-  /// [malformed] the error message in case of non-digit characters.
-  DigitField({
+  /// [trim] whether or not to trim the input value.
+  /// [validator] an optional extra validation step.
+  IntField({
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
@@ -40,21 +43,22 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
     Key? key,
-  })  : _toDigitField = ((context) {
+  })  : _toIntField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Digit(mal: malformed), validator ?? _dummy),
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            validator: Pair.str(Int(mal: malformed), validator ?? _dummy),
+            keyboardType: const TextInputType.numberWithOptions(signed: true),
+            inputFormatters: inputFormatters,
             blank: blank,
             trim: trim,
+            decoration: decoration ?? const InputDecoration(),
             controller: controller,
             initialValue: initialValue,
-            decoration: decoration ?? const InputDecoration(),
             textInputAction: textInputAction,
             style: style,
             textDirection: textDirection,
@@ -76,88 +80,22 @@ class DigitField extends StatelessWidget {
         }),
         super(key: key);
 
-  /// Digit-only form field with length constraint.
+  /// Constrains data to integer numbers greater than or equal to [min].
   ///
-  /// [len] the exact number of digits; it must be > 0.
+  /// [min] the smallest valid integer number.
   /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
-  /// [malformed] the error message in case of non-digit characters.
-  /// [diff] the error message if the number of digits is different from [len].
-  DigitField.len(
-    int len, {
-    bool trim = false,
-    FormFieldValidator<String>? validator,
-    String? malformed,
-    String? blank,
-    String? diff,
-    String? initialValue,
-    TextEditingController? controller,
-    InputDecoration? decoration,
-    TextInputAction? textInputAction,
-    TextStyle? style,
-    TextDirection? textDirection,
-    TextAlign textAlign = TextAlign.start,
-    bool readOnly = false,
-    String obscuringCharacter = '•',
-    bool obscureText = false,
-    bool autocorrect = true,
-    int? maxLength,
-    ValueChanged<String>? onChanged,
-    VoidCallback? onEditingComplete,
-    ValueChanged<String>? onFieldSubmitted,
-    FormFieldSetter<String>? onSaved,
-    bool? enabled,
-    EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
-    bool enableInteractiveSelection = true,
-    AutovalidateMode? autovalidateMode,
-    Key? key,
-  }) : this(
-          validator: Pair.str(Len(len, diff: diff), validator ?? _dummy),
-          malformed: malformed,
-          blank: blank,
-          trim: trim,
-          controller: controller,
-          initialValue: initialValue,
-          decoration: decoration,
-          textInputAction: textInputAction,
-          style: style,
-          textDirection: textDirection,
-          textAlign: textAlign,
-          readOnly: readOnly,
-          obscuringCharacter: obscuringCharacter,
-          obscureText: obscureText,
-          autocorrect: autocorrect,
-          maxLength: maxLength,
-          onChanged: onChanged,
-          onEditingComplete: onEditingComplete,
-          onFieldSubmitted: onFieldSubmitted,
-          onSaved: onSaved,
-          enabled: enabled,
-          scrollPadding: scrollPadding,
-          enableInteractiveSelection: enableInteractiveSelection,
-          autovalidateMode: autovalidateMode,
-          key: key,
-        );
-
-  /// Digit-only form field with minimum length constraint.
-  ///
-  /// [min] the minimum number of digits; it must be > 0.
-  /// [trim] whether or not to trim the input value.
-  /// [validator] an optional extra validation step.
-  /// [blank] the error message in case of blank field; if omitted, the field
-  /// will not be made required.
-  /// [malformed] the error message in case of non-digit characters.
-  /// [less] the error message if the number of digits is less than [min].
-  /// will not be required.
-  DigitField.min(
+  /// [malformed] the error message for non-integer input values.
+  /// [small] the error message if an input integer number is too small.
+  IntField.min(
     int min, {
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? less,
+    String? small,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration,
@@ -174,13 +112,14 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.min(min, less: less), validator ?? _dummy),
+          validator: Pair.str(Int.min(min, small: small), validator ?? _dummy),
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -200,6 +139,7 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
+          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -207,25 +147,90 @@ class DigitField extends StatelessWidget {
           key: key,
         );
 
-  /// Digit-only form field with maximum length constraint.
+  /// Constrains entered data to positive integers.
   ///
-  /// [max] the maximum number of digits; it must be > 0.
   /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
-  /// [malformed] the error message in case of non-digit characters.
-  /// [great] the error message if the number of digits is greater than [max].
-  DigitField.max(
+  /// [malformed] the error message for non-integer input values.
+  /// [neg] the error message in case a negative integer is entered.
+  IntField.pos({
+    bool trim = false,
+    FormFieldValidator<String>? validator,
+    String? blank,
+    String? malformed,
+    String? neg,
+    String? initialValue,
+    TextEditingController? controller,
+    InputDecoration? decoration,
+    TextInputAction? textInputAction,
+    TextStyle? style,
+    TextDirection? textDirection,
+    TextAlign textAlign = TextAlign.start,
+    bool readOnly = false,
+    String obscuringCharacter = '•',
+    bool obscureText = false,
+    bool autocorrect = true,
+    int? maxLength,
+    ValueChanged<String>? onChanged,
+    VoidCallback? onEditingComplete,
+    ValueChanged<String>? onFieldSubmitted,
+    FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
+    bool? enabled,
+    EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
+    bool enableInteractiveSelection = true,
+    AutovalidateMode? autovalidateMode,
+    Key? key,
+  }) : this(
+          validator: Pair.str(Int.pos(neg: neg), validator ?? _dummy),
+          malformed: malformed,
+          blank: blank,
+          trim: trim,
+          controller: controller,
+          initialValue: initialValue,
+          decoration: decoration,
+          textInputAction: textInputAction,
+          style: style,
+          textDirection: textDirection,
+          textAlign: textAlign,
+          readOnly: readOnly,
+          obscuringCharacter: obscuringCharacter,
+          obscureText: obscureText,
+          autocorrect: autocorrect,
+          maxLength: maxLength,
+          onChanged: onChanged,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
+          onSaved: onSaved,
+          inputFormatters: inputFormatters,
+          enabled: enabled,
+          scrollPadding: scrollPadding,
+          enableInteractiveSelection: enableInteractiveSelection,
+          autovalidateMode: autovalidateMode,
+          key: key,
+        );
+
+  /// Constrains data to integer values that are less than or equal to [max].
+  ///
+  /// [max] the largest valid integer number.
+  /// [trim] whether or not to trim the input value.
+  /// [validator] an optional extra validation step.
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// will not be made required.
+  /// [malformed] the error message for non-integer input values.
+  /// [large] the error message if an input interger number is too large.
+  IntField.max(
     int max, {
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? great,
+    String? large,
     String? initialValue,
     TextEditingController? controller,
-    InputDecoration? decoration,
+    InputDecoration? decoration = const InputDecoration(),
     TextInputAction? textInputAction,
     TextStyle? style,
     TextDirection? textDirection,
@@ -239,13 +244,14 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.max(max, great: great), validator ?? _dummy),
+          validator: Pair.str(Int.max(max, large: large), validator ?? _dummy),
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -265,6 +271,7 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
+          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -272,26 +279,90 @@ class DigitField extends StatelessWidget {
           key: key,
         );
 
-  /// Digit-only form field with length range constraint.
+  /// Constrains entered data to negative integers.
   ///
-  /// [min] the minimum number of digits; it must be > 0 and < [max].
-  /// [max] the maximum number of digits; it must be > 0 and > [min].
   /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
-  /// [malformed] the error message in case of non-digit characters.
-  /// [less] the error message if the number of digits is less than [min].
-  /// [great] the error message if the number of digits is greater than [max].
-  DigitField.range(
+  /// [malformed] the error message for non-integer input values.
+  /// [pos] the error message in case a positive integer is entered.
+  IntField.neg({
+    bool trim = false,
+    FormFieldValidator<String>? validator,
+    String? blank,
+    String? malformed,
+    String? pos,
+    String? initialValue,
+    TextEditingController? controller,
+    InputDecoration? decoration,
+    TextInputAction? textInputAction,
+    TextStyle? style,
+    TextDirection? textDirection,
+    TextAlign textAlign = TextAlign.start,
+    bool readOnly = false,
+    String obscuringCharacter = '•',
+    bool obscureText = false,
+    bool autocorrect = true,
+    int? maxLength,
+    ValueChanged<String>? onChanged,
+    VoidCallback? onEditingComplete,
+    ValueChanged<String>? onFieldSubmitted,
+    FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
+    bool? enabled,
+    EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
+    bool enableInteractiveSelection = true,
+    AutovalidateMode? autovalidateMode,
+    Key? key,
+  }) : this(
+          validator: Pair.str(Int.neg(pos: pos), validator ?? _dummy),
+          malformed: malformed,
+          blank: blank,
+          trim: trim,
+          controller: controller,
+          initialValue: initialValue,
+          decoration: decoration,
+          textInputAction: textInputAction,
+          style: style,
+          textDirection: textDirection,
+          textAlign: textAlign,
+          readOnly: readOnly,
+          obscuringCharacter: obscuringCharacter,
+          obscureText: obscureText,
+          autocorrect: autocorrect,
+          maxLength: maxLength,
+          onChanged: onChanged,
+          onEditingComplete: onEditingComplete,
+          onFieldSubmitted: onFieldSubmitted,
+          onSaved: onSaved,
+          inputFormatters: inputFormatters,
+          enabled: enabled,
+          scrollPadding: scrollPadding,
+          enableInteractiveSelection: enableInteractiveSelection,
+          autovalidateMode: autovalidateMode,
+          key: key,
+        );
+
+  /// Constrains data to integer numbers within the range [min–max].
+  ///
+  /// [min] the smallest valid integer number; it must be < [max].
+  /// [max] the largest valid integer number; it must be > [min].
+  /// [trim] whether or not to trim the input value.
+  /// [validator] an optional extra validation step.
+  /// [blank] the error message in case of blank field; if omitted, the field
+  /// [malformed] the error message for non-integer input values.
+  /// [small] the error message if an input integer number is too small.
+  /// [large] the error message if an input interger number is too large.
+  IntField.range(
     int min,
     int max, {
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? less,
-    String? great,
+    String? small,
+    String? large,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration,
@@ -308,6 +379,7 @@ class DigitField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
+    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -315,7 +387,7 @@ class DigitField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Len.range(min, max, less: less, great: great),
+            Int.range(min, max, small: small, large: large),
             validator ?? _dummy,
           ),
           malformed: malformed,
@@ -337,6 +409,7 @@ class DigitField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
+          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -344,11 +417,11 @@ class DigitField extends StatelessWidget {
           key: key,
         );
 
-  final ToBasicTextField _toDigitField;
+  final ToBasicTextField _toIntField;
 
   static String? _dummy(String? input) => null;
 
-  /// Builds a [BasicTextField] suitable for digit-only values.
+  /// Builds a [BasicTextField] suitable for integer values.
   @override
-  BasicTextField build(BuildContext context) => _toDigitField(context);
+  BasicTextField build(BuildContext context) => _toIntField(context);
 }

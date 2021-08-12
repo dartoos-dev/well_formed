@@ -37,7 +37,22 @@ class _DemoApp extends StatelessWidget {
                 blank: 'Please enter 5 digits',
                 decoration: const InputDecoration(labelText: 'Enter 5 digits'),
               ),
-              CepField(blank: 'Please enter the CEP value'),
+              CepField(
+                blank: 'Please enter the CEP value',
+                decoration: const InputDecoration(
+                  labelText: 'Insert a CEP',
+                ),
+              ),
+              IntField.pos(
+                decoration: const InputDecoration(
+                  labelText: 'Insert a positive interger',
+                ),
+              ),
+              NumField.neg(
+                decoration: const InputDecoration(
+                  labelText: 'Insert a negative (floating-point) number',
+                ),
+              )
             ]),
           ),
         ),
