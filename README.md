@@ -45,10 +45,10 @@ tested by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
-Most of the form fields in this package are built on top of a `TextFormField`
-widget so they remain **fully compatible** with the `Form` widget. This is quite
-important to avoid buggy behavior such as when a field does not get reset when
-its parent form gets reset.
+Most of the form fields in this package are built on top of the `TextFormField`
+widget so that they remain **fully compatible** with Flutter's `Form` widget.
+This is important to avoid erroneous (buggy) behavior, such as when a field does
+not reset when its parent widget is reset.
 
 <!-- @todo #2 add a form field example as soon as possible -->
 
