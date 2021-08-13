@@ -9,5 +9,6 @@ library well_formed;
 
 export 'brazil.dart';
 export 'core.dart';
+export 'net.dart';
 export 'numeric.dart';
 export 'type.dart';

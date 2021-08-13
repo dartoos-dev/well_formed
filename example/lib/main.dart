@@ -33,8 +33,8 @@ class _DemoApp extends StatelessWidget {
               ),
               DigitField.len(
                 5,
-                diff: 'Please enter exactly 5 digits; for example, 22335.',
-                blank: 'Please enter 5 digits',
+                diff: 'Please enter exactly 5 digits; for example, "22335".',
+                blank: 'Please enter the 5 digits',
                 decoration: const InputDecoration(labelText: 'Enter 5 digits'),
               ),
               CepField(
@@ -44,13 +44,17 @@ class _DemoApp extends StatelessWidget {
                 ),
               ),
               IntField.pos(
+                blank: 'Please informe the positive integer',
                 decoration: const InputDecoration(
                   labelText: 'Insert a positive interger',
                 ),
               ),
-              NumField.neg(
+              EmailField.len(
+                50,
+                blank: 'Please inform the email address',
+                long: 'The email is too long.',
                 decoration: const InputDecoration(
-                  labelText: 'Insert a negative (floating-point) number',
+                  labelText: 'Enter an email with up to 50 characters',
                 ),
               )
             ]),
