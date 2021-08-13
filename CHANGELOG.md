@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.3.2] - 2021-08-13
+
 ### Added
 
 - EmailFiel, a text form field for entering email addresses —
