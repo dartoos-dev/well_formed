@@ -26,11 +26,6 @@ class _DemoApp extends StatelessWidget {
           child: SizedBox(
             width: 350,
             child: WellFormed.btn([
-              BasicTextField(
-                trim: true,
-                blank: 'Please fill in this field',
-                decoration: const InputDecoration(labelText: 'Enter some text'),
-              ),
               DigitField.len(
                 5,
                 diff: 'Please enter exactly 5 digits; for example, "22335".',
@@ -56,7 +51,15 @@ class _DemoApp extends StatelessWidget {
                 decoration: const InputDecoration(
                   labelText: 'Enter an email with up to 50 characters',
                 ),
-              )
+              ),
+              CpfField(
+                blank: 'A CPF value is required',
+                malformed: 'Invalid CPF',
+                decoration: const InputDecoration(
+                  labelText: 'Enter a CPF',
+                  hintText: '999.999.999-99',
+                ),
+              ),
             ]),
           ),
         ),
