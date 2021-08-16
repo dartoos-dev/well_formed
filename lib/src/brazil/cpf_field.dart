@@ -65,7 +65,8 @@ class CpfField extends StatelessWidget {
               ? null
               : !strip
                   ? onChanged
-                  : (String mask) => onChanged(mask.replaceAll('-', ''));
+                  : (String mask) =>
+                      onChanged(mask.replaceAll(RegExp('[-.]'), ''));
 
           final ValueChanged<String>? onFieldSubmittedStrip =
               onFieldSubmitted == null
@@ -73,7 +74,7 @@ class CpfField extends StatelessWidget {
                   : !strip
                       ? onFieldSubmitted
                       : (String mask) =>
-                          onFieldSubmitted(mask.replaceAll('-', ''));
+                          onFieldSubmitted(mask.replaceAll(RegExp('[-.]'), ''));
           return BasicTextField(
             validator: Pair.str(Cpf(mal: malformed), validator ?? _dummy),
             blank: blank,
@@ -97,7 +98,7 @@ class CpfField extends StatelessWidget {
             onSaved: onSavedStrip,
             inputFormatters: [
               MaskTextInputFormatter(
-                mask: '#####-###',
+                mask: '###.###.###-##',
                 filter: {"#": RegExp(r'\d')},
               )
             ],
