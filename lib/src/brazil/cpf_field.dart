@@ -4,26 +4,25 @@ import 'package:formdator/formdator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// CEP — Código de Endereçamento Postal.
+/// CPF - Cadastro da Pessoa Física.
 ///
-/// It is the Brazilian equivalent of zip/postal code.
+/// Kind of Brazilian SSN - Social Security Number.
 ///
-/// Valid inputs must match the pattern '#####-###', where each '#' is a digit
-/// [0-9].
-class CepField extends StatelessWidget {
-  /// Cep Form Field.
-  ///
+/// Valid inputs must match the pattern '###.###.###-##', where each '#' is a
+/// digit [0-9].
+class CpfField extends StatelessWidget {
+  /// Cpf Form Field.
   ///
   /// [trim] whether or not to trim the input data.
-  /// [strip] sets whether or not the hyphen '-' of the input value will be
-  /// removed from it. If set to true, which is the default value, the input
-  /// value of the [onSaved], [onChanged] and [onFieldSubmitted] callbacks will
-  /// always be an unmasked (simple) value.
-  /// [malformed] the error message in case of a malformed CEP.
+  /// [strip] sets whether or not the dots '.' and the hyphen '-' of the cpf
+  /// value will be removed from it. If set to true, which is the default value,
+  /// the input value of the [onSaved], [onChanged] and [onFieldSubmitted]
+  /// callbacks will always be an unmasked (simple) value.
+  /// [malformed] the error message in case of a malformed CPF.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be required.
   /// [validator] an optional extra validation step.
-  CepField({
+  CpfField({
     bool trim = false,
     bool strip = true,
     String? malformed,
@@ -50,7 +49,7 @@ class CepField extends StatelessWidget {
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
     Key? key,
-  })  : _toCepField = ((context) {
+  })  : _toCpfField = ((context) {
           final FormFieldSetter<String>? onSavedStrip = onSaved == null
               ? null
               : !strip
@@ -59,7 +58,7 @@ class CepField extends StatelessWidget {
                       if (mask == null) {
                         onSaved(mask);
                       } else {
-                        onSaved(CepStrip(mask).value);
+                        onSaved(CpfStrip(mask).value);
                       }
                     };
           final ValueChanged<String>? onChangedStrip = onChanged == null
@@ -76,7 +75,7 @@ class CepField extends StatelessWidget {
                       : (String mask) =>
                           onFieldSubmitted(mask.replaceAll('-', ''));
           return BasicTextField(
-            validator: Pair.str(Cep(mal: malformed), validator ?? _dummy),
+            validator: Pair.str(Cpf(mal: malformed), validator ?? _dummy),
             blank: blank,
             trim: trim,
             keyboardType: TextInputType.number,
@@ -110,11 +109,11 @@ class CepField extends StatelessWidget {
         }),
         super(key: key);
 
-  final ToBasicTextField _toCepField;
+  final ToBasicTextField _toCpfField;
 
   static String? _dummy(String? input) => null;
 
-  /// Builds a [BasicTextField] suitable for CEP values.
+  /// Builds a [BasicTextField] suitable for CPF values.
   @override
-  BasicTextField build(BuildContext context) => _toCepField(context);
+  BasicTextField build(BuildContext context) => _toCpfField(context);
 }
