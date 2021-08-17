@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.3.3] - 2021-08-17
+
 ### Added
 
 - CpfField, a text form field for entering CPF values —
