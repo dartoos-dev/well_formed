@@ -243,7 +243,7 @@ class, some properties were left out for one of two reasons:
 - the property has been deprecated by the Flutter sdk. This is the case of the
   `autovalidate` and `maxLengthEnforced` properties.
 - the property has been considered too superfluous — they have little use in the
-  context of form fields. This is the case of the following properties (A–Z):
+  context of form fields. This is the case of the following properties:
 
 ```Dart
 Brightness? keyboardAppearance,
@@ -260,7 +260,7 @@ SmartDashesType? smartDashesType,
 SmartQuotesType? smartQuotesType,
 StrutStyle? strutStyle,
 TextAlignVertical? textAlignVertical,
-TextCapitalization textCapitalization = TextCapitalization.none,
+TextCapitalization textCapitalization,
 TextSelectionControls? selectionControls,
 ToolbarOptions? toolbarOptions,
 bool autofocus,
