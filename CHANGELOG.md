@@ -7,6 +7,11 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Fixed
+
+- some sections of the README file.
+- a few unit tests.
+
 ## [0.3.3] - 2021-08-17
 
 ### Added

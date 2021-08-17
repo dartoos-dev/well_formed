@@ -36,122 +36,151 @@ Future<void> main() async {
     const initNeg = '-1';
     const initRange = '10';
     const inits = [init, initMin, initPos, initMax, initNeg, initRange];
-    testWidgets('min value constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([IntField.min(10, malformed: nonDigit, small: small)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(minusOneBillion), small);
-      expect(val(minusTen), small);
-      expect(val(minusOne), small);
-      expect(val(zero), small);
-      expect(val(one), small);
-      expect(val(ten), null);
-      expect(val(oneBillion), null);
+    group('value constraints', () {
+      testWidgets('minimum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          IntField.min(10, malformed: nonDigit, small: small),
+        );
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(minusOneBillion), small);
+        expect(val(minusTen), small);
+        expect(val(minusOne), small);
+        expect(val(zero), small);
+        expect(val(one), small);
+        expect(val(ten), null);
+        expect(val(oneBillion), null);
+      });
+      testWidgets('positive', (WidgetTester tester) async {
+        const neg = 'positive numbers only';
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          IntField.pos(malformed: nonDigit, neg: neg),
+        );
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(minusOneBillion), neg);
+        expect(val(minusTen), neg);
+        expect(val(minusOne), neg);
+        expect(val(zero), null);
+        expect(val(one), null);
+        expect(val(ten), null);
+        expect(val(oneBillion), null);
+      });
+      testWidgets('maximum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          IntField.max(10, malformed: nonDigit, large: large),
+        );
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(minusOneBillion), null);
+        expect(val(minusTen), null);
+        expect(val(minusOne), null);
+        expect(val(zero), null);
+        expect(val(one), null);
+        expect(val(ten), null);
+        expect(val(oneBillion), large);
+      });
+      testWidgets('negative', (WidgetTester tester) async {
+        const pos = 'negative numbers only';
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          IntField.neg(malformed: nonDigit, pos: pos),
+        );
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(minusOneBillion), null);
+        expect(val(minusTen), null);
+        expect(val(minusOne), null);
+        expect(val(zero), pos);
+        expect(val(one), pos);
+        expect(val(ten), pos);
+        expect(val(oneBillion), pos);
+      });
+      testWidgets('range', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          IntField.range(-5, 5,
+              malformed: nonDigit, small: small, large: large),
+        );
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(minusOneBillion), small);
+        expect(val(minusTen), small);
+        expect(val(minusOne), null);
+        expect(val(zero), null);
+        expect(val(one), null);
+        expect(val(ten), large);
+        expect(val(oneBillion), large);
+      });
     });
-    testWidgets('positive integers', (WidgetTester tester) async {
-      const neg = 'positive numbers only';
-      await tester.pumpWidget(
-        WellFormed.app([IntField.pos(malformed: nonDigit, neg: neg)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(minusOneBillion), neg);
-      expect(val(minusTen), neg);
-      expect(val(minusOne), neg);
-      expect(val(zero), null);
-      expect(val(one), null);
-      expect(val(ten), null);
-      expect(val(oneBillion), null);
+    group('key', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([IntField(key: kDef)]));
+        expect(find.byKey(kDef), findsOneWidget);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([IntField.min(1, key: kMin)]));
+        expect(find.byKey(kMin), findsOneWidget);
+      });
+      testWidgets('pos ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([IntField.pos(key: kPos)]));
+        expect(find.byKey(kPos), findsOneWidget);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([IntField.max(1, key: kMax)]));
+        expect(find.byKey(kMax), findsOneWidget);
+      });
+      testWidgets('neg ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([IntField.neg(key: kNeg)]));
+        expect(find.byKey(kNeg), findsOneWidget);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([IntField.range(1, 2, key: kRange)]),
+        );
+        expect(find.byKey(kRange), findsOneWidget);
+      });
     });
-    testWidgets('max value constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([IntField.max(10, malformed: nonDigit, large: large)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(minusOneBillion), null);
-      expect(val(minusTen), null);
-      expect(val(minusOne), null);
-      expect(val(zero), null);
-      expect(val(one), null);
-      expect(val(ten), null);
-      expect(val(oneBillion), large);
-    });
-    testWidgets('negative integers', (WidgetTester tester) async {
-      const pos = 'negative numbers only';
-      await tester.pumpWidget(
-        WellFormed.app([IntField.neg(malformed: nonDigit, pos: pos)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(minusOneBillion), null);
-      expect(val(minusTen), null);
-      expect(val(minusOne), null);
-      expect(val(zero), pos);
-      expect(val(one), pos);
-      expect(val(ten), pos);
-      expect(val(oneBillion), pos);
-    });
-    testWidgets('range value constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
-          IntField.range(-5, 5, malformed: nonDigit, small: small, large: large)
-        ]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(minusOneBillion), small);
-      expect(val(minusTen), small);
-      expect(val(minusOne), null);
-      expect(val(zero), null);
-      expect(val(one), null);
-      expect(val(ten), large);
-      expect(val(oneBillion), large);
-    });
-    testWidgets('key', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
-          IntField(key: kDef),
-          IntField.min(1, key: kMin),
-          IntField.pos(key: kPos),
-          IntField.max(1, key: kMax),
-          IntField.neg(key: kNeg),
-          IntField.range(1, 2, key: kRange),
-        ]),
-      );
-      for (final key in keys) {
-        expect(find.byKey(key), findsOneWidget);
-      }
-    });
-    testWidgets('blank', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
-          IntField(blank: blank, initialValue: init),
-          IntField.min(1, blank: blank, initialValue: initMin),
-          IntField.pos(blank: blank, initialValue: initPos),
-          IntField.max(15, blank: blank, initialValue: initMax),
-          IntField.neg(blank: blank, initialValue: initNeg),
-          IntField.range(1, 15, blank: blank, initialValue: initRange),
-        ]),
-      );
-      for (final init in inits) {
-        final elem = tester.widget(find.widgetWithText(TextFormField, init));
-        final val = (elem as TextFormField).validator!;
+    group('blank', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField(blank: blank));
         expect(val(null), blank);
         expect(val(init), null);
-      }
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField.min(0, blank: blank));
+        expect(val(null), blank);
+        expect(val('0'), null);
+      });
+      testWidgets('pos ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField.pos(blank: blank));
+        expect(val(null), blank);
+        expect(val('0'), null);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField.max(15, blank: blank));
+        expect(val(null), blank);
+        expect(val('10'), null);
+      });
+      testWidgets('neg ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField.neg(blank: blank));
+        expect(val(null), blank);
+        expect(val('-1'), null);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(IntField.range(1, 15, blank: blank));
+        expect(val(null), blank);
+        expect(val('10'), null);
+      });
     });
     group('validator', () {
       const error = 'cannot have odd digits';

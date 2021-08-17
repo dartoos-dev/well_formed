@@ -54,13 +54,7 @@ class CpfField extends StatelessWidget {
               ? null
               : !strip
                   ? onSaved
-                  : (String? mask) {
-                      if (mask == null) {
-                        onSaved(mask);
-                      } else {
-                        onSaved(CpfStrip(mask).value);
-                      }
-                    };
+                  : (String? mask) => onSaved(CpfStrip(mask ?? '').value);
           final ValueChanged<String>? onChangedStrip = onChanged == null
               ? null
               : !strip

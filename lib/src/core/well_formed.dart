@@ -223,6 +223,7 @@ class WellFormed extends StatelessWidget {
   /// Form builder.
   final ToForm _toForm;
 
+  /// Builds a well-formed [Form] widget!
   @override
   Widget build(BuildContext context) => _toForm(context);
 }

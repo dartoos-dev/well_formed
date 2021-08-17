@@ -5,6 +5,8 @@ import 'package:formdator/formdator.dart';
 import 'package:well_formed/src/core/well_formed.dart';
 import 'package:well_formed/src/numeric/digit_field.dart';
 
+import '../get_val.dart';
+
 Future<void> main() async {
   group('DigitField', () {
     const empty = ''; // zero-length text.
@@ -29,178 +31,323 @@ Future<void> main() async {
     const initMax = '3333333333';
     const initRange = '4444444444';
     const inits = [init, initLen, initMin, initMax, initRange];
-    testWidgets('length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([DigitField.len(10, malformed: nonDigit, diff: diff)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(tenDigits), null);
-      expect(val(empty), nonDigit);
-      expect(val(tenDigitsX), nonDigit);
-      expect(val(short), diff);
-      expect(val(long), diff);
+    group('length constraints', () {
+      testWidgets('fixed', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(DigitField.len(10, malformed: nonDigit, diff: diff));
+        expect(val(null), null);
+        expect(val(tenDigits), null);
+        expect(val(empty), nonDigit);
+        expect(val(tenDigitsX), nonDigit);
+        expect(val(short), diff);
+        expect(val(long), diff);
+      });
+      testWidgets('mininum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(DigitField.min(10, malformed: nonDigit, less: less));
+        expect(val(null), null);
+        expect(val(tenDigits), null);
+        expect(val(empty), nonDigit);
+        expect(val(short), less);
+        expect(val(long), null);
+      });
+      testWidgets('maximum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(DigitField.max(10, malformed: nonDigit, great: great));
+        expect(val(null), null);
+        expect(val(empty), nonDigit);
+        expect(val(tenDigits), null);
+        expect(val(short), null);
+        expect(val(long), great);
+      });
+      testWidgets('range', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.range(
+          10,
+          20,
+          malformed: nonDigit,
+          less: less,
+          great: great,
+        ));
+        expect(val(null), null);
+        expect(val(tenDigitsX), nonDigit);
+        expect(val(tenDigits), null);
+        expect(val(short), less);
+        expect(val(long), great);
+      });
     });
-    testWidgets('min length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([DigitField.min(10, malformed: nonDigit, less: less)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(tenDigits), null);
-      expect(val(empty), nonDigit);
-      expect(val(short), less);
-      expect(val(long), null);
+    group('key', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField(key: kDef)]),
+        );
+        expect(find.byKey(kDef), findsOneWidget);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.len(1, key: kDef)]),
+        );
+        expect(find.byKey(kDef), findsOneWidget);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.min(1, key: kMin)]),
+        );
+        expect(find.byKey(kMin), findsOneWidget);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.max(1, key: kMax)]),
+        );
+        expect(find.byKey(kMax), findsOneWidget);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.range(1, 5, key: kRange)]),
+        );
+        expect(find.byKey(kRange), findsOneWidget);
+      });
     });
-    testWidgets('max length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([DigitField.max(10, malformed: nonDigit, great: great)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), nonDigit);
-      expect(val(tenDigits), null);
-      expect(val(short), null);
-      expect(val(long), great);
-    });
-    testWidgets('range length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
-          DigitField.range(10, 20,
-              malformed: nonDigit, less: less, great: great)
-        ]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(tenDigitsX), nonDigit);
-      expect(val(tenDigits), null);
-      expect(val(short), less);
-      expect(val(long), great);
-    });
-    testWidgets('key', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
-          DigitField(key: kDef),
-          DigitField.len(1, key: kLen),
-          DigitField.min(1, key: kMin),
-          DigitField.max(1, key: kMax),
-          DigitField.range(1, 2, key: kRange),
-        ]),
-      );
-      for (final key in keys) {
-        expect(find.byKey(key), findsOneWidget);
-      }
-    });
-    testWidgets('blank', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([
+    group('blank', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
           DigitField(key: kDef, blank: blank, initialValue: '$kDef'),
-          DigitField.len(5, key: kLen, blank: blank, initialValue: '$kLen'),
-          DigitField.min(5, key: kMin, blank: blank, initialValue: '$kMin'),
-          DigitField.max(5, key: kMax, blank: blank, initialValue: '$kMax'),
-          DigitField.range(1, 5,
-              key: kRange, blank: blank, initialValue: '$kRange'),
-        ]),
-      );
-      for (final key in keys) {
-        final elem = tester.widget(find.widgetWithText(TextFormField, '$key'));
-        final val = (elem as TextFormField).validator!;
+        );
         expect(val(null), blank);
         expect(val('12345'), null);
-      }
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          DigitField.len(5, key: kDef, blank: blank, initialValue: '$kDef'),
+        );
+        expect(val(null), blank);
+        expect(val('12345'), null);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          DigitField.len(5, key: kDef, blank: blank, initialValue: '$kLen'),
+        );
+        expect(val(null), blank);
+        expect(val('12345'), null);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          DigitField.min(5, key: kMin, blank: blank, initialValue: '$kMin'),
+        );
+        expect(val(null), blank);
+        expect(val('12345'), null);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+          DigitField.range(1, 5,
+              key: kRange, blank: blank, initialValue: '$kRange'),
+        );
+        expect(val(null), blank);
+        expect(val('12345'), null);
+      });
     });
-    testWidgets('validator', (WidgetTester tester) async {
+    group('validator', () {
       const error = 'cannot have odd digits';
 
       /// Input values cannot have uppercase letters.
       String? noOddDigits(String? v) =>
           (v != null && v.contains(RegExp('[13579]+'))) ? error : null;
-
-      final def = DigitField(validator: noOddDigits);
-      final len = DigitField.len(3, validator: noOddDigits);
-      final min = DigitField.min(3, validator: noOddDigits);
-      final max = DigitField.max(3, validator: noOddDigits);
-      final range = DigitField.range(3, 10, validator: noOddDigits);
-      await tester.pumpWidget(WellFormed.app([def, len, min, max, range]));
-      await tester.pump();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        final val = (elem as TextFormField).validator!;
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField(validator: noOddDigits));
         expect(val(null), null);
+        expect(val('0'), null);
         expect(val('246'), null);
+        expect(val('1'), error);
         expect(val('247'), error);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.len(3, validator: noOddDigits));
+        expect(val(null), null);
+        expect(val('000'), null);
+        expect(val('246'), null);
         expect(val('111'), error);
-        expect(val('138'), error);
-      }
+        expect(val('247'), error);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.min(1, validator: noOddDigits));
+        expect(val(null), null);
+        expect(val('0'), null);
+        expect(val('246'), null);
+        expect(val('1'), error);
+        expect(val('247'), error);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.max(5, validator: noOddDigits));
+        expect(val(null), null);
+        expect(val('0'), null);
+        expect(val('246'), null);
+        expect(val('1'), error);
+        expect(val('247'), error);
+        expect(val('24689'), error);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(DigitField.range(1, 5, validator: noOddDigits));
+        expect(val(null), null);
+        expect(val('0'), null);
+        expect(val('246'), null);
+        expect(val('1'), error);
+        expect(val('247'), error);
+      });
     });
-    testWidgets('blank and validator', (WidgetTester tester) async {
+    group('blank and validator', () {
       const error = 'it must always be invalid';
       const nok = Nok(error: error);
-      await tester.pumpWidget(WellFormed.app([
-        DigitField(blank: blank, validator: nok),
-        DigitField.len(3, malformed: nonDigit, blank: blank, validator: nok),
-        DigitField.min(3, malformed: nonDigit, blank: blank, validator: nok),
-        DigitField.max(3, malformed: nonDigit, blank: blank, validator: nok),
-        DigitField.range(3, 6,
-            malformed: nonDigit, blank: blank, validator: nok),
-      ]));
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        final val = (elem as TextFormField).validator!;
+
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField(
+          blank: blank,
+          malformed: nonDigit,
+          validator: nok,
+        ));
         expect(val(null), blank);
         expect(val(empty), blank);
+        expect(val('1X'), nonDigit);
+        expect(val('9'), error);
         expect(val('111'), error);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.len(
+          2,
+          blank: blank,
+          malformed: nonDigit,
+          validator: nok,
+        ));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('A1'), nonDigit);
+        expect(val('11'), error);
+        expect(val('99'), error);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.min(
+          3,
+          blank: blank,
+          malformed: nonDigit,
+          less: less,
+          validator: nok,
+        ));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('1.1'), nonDigit);
+        expect(val('55'), less);
+        expect(val('123'), error);
         expect(val('222'), error);
-      }
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.max(
+          3,
+          blank: blank,
+          malformed: nonDigit,
+          great: great,
+          validator: nok,
+        ));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('+55'), nonDigit);
+        expect(val('5555'), great);
+        expect(val('9'), error);
+        expect(val('11'), error);
+        expect(val('246'), error);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(DigitField.range(
+          2,
+          4,
+          blank: blank,
+          malformed: nonDigit,
+          less: less,
+          great: great,
+          validator: nok,
+        ));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('-55'), nonDigit);
+        expect(val('9'), less);
+        expect(val('99999'), great);
+        expect(val('111'), error);
+      });
     });
-    testWidgets('malformed', (WidgetTester tester) async {
-      Future<void> testDig(
-          DigitField dig, List<String> good, List<String> bad) async {
-        await tester.pumpWidget(WellFormed.app([dig]));
-        final elem = tester.widget(find.byType(TextFormField));
-        final validator = (elem as TextFormField).validator!;
+    group('malformed', () {
+      Future<void> testDig(WidgetTester tester, DigitField dig,
+          List<String> good, List<String> bad) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(dig);
         for (final ok in good) {
-          expect(validator(ok), null);
+          expect(val(ok), null);
         }
         for (final nok in bad) {
-          expect(validator(nok), nonDigit);
+          expect(val(nok), nonDigit);
         }
       }
 
-      await testDig(
-        DigitField(malformed: nonDigit),
-        ['0', '12345', '00000000'],
-        [empty, 'a', '0.0', '12345X', '?', '9!'],
-      );
-      await testDig(
-        DigitField.len(3, malformed: nonDigit),
-        ['999', '123', '000'],
-        [empty, 'aaa', '0.0', '12X', '???', '9!9'],
-      );
-      await testDig(
-        DigitField.min(1, malformed: nonDigit),
-        ['0', '12345', '00000000'],
-        [empty, 'a', '0.0', 'X2345', '&', '9A'],
-      );
-      await testDig(
-        DigitField.max(10, malformed: nonDigit),
-        ['0', '12345', '00000000'],
-        [empty, 'a', '1.0', '12X456', '1,2', '9!'],
-      );
-      await testDig(
-        DigitField.range(1, 10, malformed: nonDigit),
-        ['0', '12345', '00000000'],
-        [empty, 'a', '+1', '-1', '?', '9!'],
-      );
+      testWidgets('default ctor', (WidgetTester tester) async {
+        await testDig(
+          tester,
+          DigitField(malformed: nonDigit),
+          ['0', '12345', '00000000'],
+          [empty, 'a', '0.0', '12345X', '?', '9!'],
+        );
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        await testDig(
+          tester,
+          DigitField.len(3, malformed: nonDigit),
+          ['999', '123', '000'],
+          [empty, 'aaa', '0.0', '12X', '???', '9!9'],
+        );
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await testDig(
+          tester,
+          DigitField.min(1, malformed: nonDigit),
+          ['0', '12345', '00000000'],
+          [empty, 'a', '0.0', 'X2345', '&', '9A'],
+        );
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await testDig(
+          tester,
+          DigitField.max(10, malformed: nonDigit),
+          ['0', '12345', '00000000'],
+          [empty, 'a', '1.0', '12X456', '1,2', '9!'],
+        );
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await testDig(
+          tester,
+          DigitField.range(1, 10, malformed: nonDigit),
+          ['0', '12345', '00000000'],
+          [empty, 'a', '+1', '-1', '?', '9!'],
+        );
+      });
     });
-    testWidgets('trim and onChanged', (WidgetTester tester) async {
+    group('trim and onChanged', () {
       const trimmed = '1234567890';
-      const nonTrimmed = '\n $trimmed \t';
+      const untrimmed = '\n $trimmed \t';
       var count = 0;
       void onChanged(String s) {
         if (s.contains(RegExp('^$trimmed\$'))) {
@@ -208,19 +355,130 @@ Future<void> main() async {
         }
       }
 
-      await tester.pumpWidget(WellFormed.app([
-        DigitField(key: kDef, trim: true, onChanged: onChanged),
-        DigitField.len(10, key: kLen, trim: true, onChanged: onChanged),
-        DigitField.min(10, key: kMin, trim: true, onChanged: onChanged),
-        DigitField.max(10, key: kMax, trim: true, onChanged: onChanged),
-        DigitField.range(10, 20, key: kRange, trim: true, onChanged: onChanged)
-      ]));
-      await tester.pumpAndSettle();
-      for (final key in keys) {
+      testWidgets('main ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          DigitField(key: kDef, trim: true, onChanged: onChanged),
+        ]));
+        await tester.pumpAndSettle();
         final before = count;
-        await tester.enterText(find.byKey(key), nonTrimmed);
+        await tester.enterText(find.byKey(kDef), untrimmed);
         await tester.pumpAndSettle();
         expect(count, before + 1);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          DigitField.len(10, key: kLen, trim: true, onChanged: onChanged),
+        ]));
+        await tester.pumpAndSettle();
+        final before = count;
+        await tester.enterText(find.byKey(kLen), untrimmed);
+        await tester.pumpAndSettle();
+        expect(count, before + 1);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          DigitField.min(10, key: kMin, trim: true, onChanged: onChanged),
+        ]));
+        await tester.pumpAndSettle();
+        final before = count;
+        await tester.enterText(find.byKey(kMin), untrimmed);
+        await tester.pumpAndSettle();
+        expect(count, before + 1);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          DigitField.max(10, key: kMax, trim: true, onChanged: onChanged),
+        ]));
+        await tester.pumpAndSettle();
+        final before = count;
+        await tester.enterText(find.byKey(kMax), untrimmed);
+        await tester.pumpAndSettle();
+        expect(count, before + 1);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          DigitField.range(8, 12,
+              key: kRange, trim: true, onChanged: onChanged),
+        ]));
+        await tester.pumpAndSettle();
+        final before = count;
+        await tester.enterText(find.byKey(kRange), untrimmed);
+        await tester.pumpAndSettle();
+        expect(count, before + 1);
+      });
+    });
+    group('onSaved', () {
+      void onSaved(String? s) {}
+
+      testWidgets('default ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField(onSaved: onSaved)]),
+        );
+        final elem = tester.widget(find.byType(TextFormField));
+        expect((elem as TextFormField).onSaved, onSaved);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.len(5, onSaved: onSaved)]),
+        );
+        final elem = tester.widget(find.byType(TextFormField));
+        expect((elem as TextFormField).onSaved, onSaved);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.min(5, onSaved: onSaved)]),
+        );
+        final elem = tester.widget(find.byType(TextFormField));
+        expect((elem as TextFormField).onSaved, onSaved);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.max(5, onSaved: onSaved)]),
+        );
+        final elem = tester.widget(find.byType(TextFormField));
+        expect((elem as TextFormField).onSaved, onSaved);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          WellFormed.app([DigitField.range(5, 10, onSaved: onSaved)]),
+        );
+        final elem = tester.widget(find.byType(TextFormField));
+        expect((elem as TextFormField).onSaved, onSaved);
+      });
+    });
+    testWidgets('onEditingComplete', (WidgetTester tester) async {
+      void onEdit() {}
+
+      await tester.pumpWidget(
+        WellFormed.app([
+          DigitField(onEditingComplete: onEdit),
+          DigitField.len(23, onEditingComplete: onEdit),
+          DigitField.min(23, onEditingComplete: onEdit),
+          DigitField.max(23, onEditingComplete: onEdit),
+          DigitField.range(15, 25, onEditingComplete: onEdit),
+        ]),
+      );
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).onEditingComplete, onEdit);
+      }
+    });
+    testWidgets('onFieldSubmitted', (WidgetTester tester) async {
+      void onSubmit(String s) {}
+      await tester.pumpWidget(
+        WellFormed.app([
+          DigitField(onFieldSubmitted: onSubmit),
+          DigitField.len(23, onFieldSubmitted: onSubmit),
+          DigitField.min(23, onFieldSubmitted: onSubmit),
+          DigitField.max(23, onFieldSubmitted: onSubmit),
+          DigitField.range(15, 25, onFieldSubmitted: onSubmit),
+        ]),
+      );
+      await tester.pumpAndSettle();
+      final elems = tester.widgetList(find.byType(TextField));
+      for (final elem in elems) {
+        expect((elem as TextField).onSubmitted, onSubmit);
       }
     });
     testWidgets('controller', (WidgetTester tester) async {
@@ -469,61 +727,6 @@ Future<void> main() async {
         expect((elem as TextField).keyboardType, TextInputType.number);
       }
     });
-    testWidgets('onEditingComplete', (WidgetTester tester) async {
-      void onEdit() {}
-
-      await tester.pumpWidget(
-        WellFormed.app([
-          DigitField(onEditingComplete: onEdit),
-          DigitField.len(23, onEditingComplete: onEdit),
-          DigitField.min(23, onEditingComplete: onEdit),
-          DigitField.max(23, onEditingComplete: onEdit),
-          DigitField.range(15, 25, onEditingComplete: onEdit),
-        ]),
-      );
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextField));
-      for (final elem in elems) {
-        expect((elem as TextField).onEditingComplete, onEdit);
-      }
-    });
-    testWidgets('onFieldSubmitted', (WidgetTester tester) async {
-      void onSubmit(String s) {}
-      await tester.pumpWidget(
-        WellFormed.app([
-          DigitField(onFieldSubmitted: onSubmit),
-          DigitField.len(23, onFieldSubmitted: onSubmit),
-          DigitField.min(23, onFieldSubmitted: onSubmit),
-          DigitField.max(23, onFieldSubmitted: onSubmit),
-          DigitField.range(15, 25, onFieldSubmitted: onSubmit),
-        ]),
-      );
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextField));
-      for (final elem in elems) {
-        expect((elem as TextField).onSubmitted, onSubmit);
-      }
-    });
-    testWidgets('onSaved', (WidgetTester tester) async {
-      void onSaved(String? s) {}
-      await tester.pumpWidget(
-        WellFormed.app([
-          DigitField(onSaved: onSaved),
-          DigitField.len(23, onSaved: onSaved),
-          DigitField.min(23, onSaved: onSaved),
-          DigitField.max(23, onSaved: onSaved),
-          DigitField.range(15, 25, onSaved: onSaved),
-        ]),
-      );
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        expect((elem as TextFormField).onSaved, onSaved);
-      }
-    });
-
-    /// non-digit characters must be filtered out by the input formatter so that
-    /// they do not appear in the form field.
     testWidgets('default inputFormatters', (WidgetTester tester) async {
       await tester.pumpWidget(
         WellFormed.app([
