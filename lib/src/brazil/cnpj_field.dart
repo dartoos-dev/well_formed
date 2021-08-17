@@ -4,25 +4,26 @@ import 'package:formdator/formdator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// CPF — Cadastro da Pessoa Física.
+/// CNPJ — Cadastro Nacional de Pessoa Jurídica.
 ///
-/// Kind of Brazilian SSN — Social Security Number.
+/// Kind of Brazilian Company's Registered Number or National Registry of Legal
+/// Entities.
 ///
-/// Valid inputs must match the pattern '###.###.###-##', where each '#' is a
-/// digit [0-9].
-class CpfField extends StatelessWidget {
-  /// Cpf Form Field.
+/// Valid inputs must match the pattern '##.###.###/####-##', where each '#' is
+/// a digit [0-9].
+class CnpjField extends StatelessWidget {
+  /// Cnpj Form Field.
   ///
   /// [trim] whether or not to trim the input data.
-  /// [strip] sets whether or not the CPF value will be stripped of its dot '.'
-  /// and hyphen '-' characters. If set to true, which is the default value, the
-  /// input parameter of the [onSaved], [onChanged], and [onFieldSubmitted]
-  /// functions will contain only digits.
-  /// [malformed] the error message in case of a malformed CPF.
+  /// [strip] sets whether or not the CNPJ value will be stripped of its dot
+  /// '.', slash '/', and hyphen '-' characters. If set to true, which is the
+  /// default value, the input parameter of the [onSaved], [onChanged], and
+  /// [onFieldSubmitted] functions will contain only digits.
+  /// [malformed] the error message in case of a malformed CNPJ.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be required.
   /// [validator] an optional extra validation step.
-  CpfField({
+  CnpjField({
     bool trim = false,
     bool strip = true,
     String? malformed,
@@ -49,7 +50,7 @@ class CpfField extends StatelessWidget {
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
     Key? key,
-  })  : _toCpfField = ((context) {
+  })  : _toCnpjField = ((context) {
           final FormFieldSetter<String>? onSavedStrip = onSaved == null
               ? null
               : !strip
@@ -58,7 +59,7 @@ class CpfField extends StatelessWidget {
                       if (mask == null) {
                         onSaved(mask);
                       } else {
-                        onSaved(CpfStrip(mask).value);
+                        onSaved(CnpjStrip(mask).value);
                       }
                     };
           final ValueChanged<String>? onChangedStrip = onChanged == null
@@ -66,17 +67,17 @@ class CpfField extends StatelessWidget {
               : !strip
                   ? onChanged
                   : (String mask) =>
-                      onChanged(mask.replaceAll(RegExp('[-.]'), ''));
+                      onChanged(mask.replaceAll(RegExp('[-/.]'), ''));
 
           final ValueChanged<String>? onFieldSubmittedStrip =
               onFieldSubmitted == null
                   ? null
                   : !strip
                       ? onFieldSubmitted
-                      : (String mask) =>
-                          onFieldSubmitted(mask.replaceAll(RegExp('[-.]'), ''));
+                      : (String mask) => onFieldSubmitted(
+                          mask.replaceAll(RegExp('[-/.]'), ''));
           return BasicTextField(
-            validator: Pair.str(Cpf(mal: malformed), validator ?? _dummy),
+            validator: Pair.str(Cnpj(mal: malformed), validator ?? _dummy),
             blank: blank,
             trim: trim,
             keyboardType: TextInputType.number,
@@ -98,7 +99,7 @@ class CpfField extends StatelessWidget {
             onSaved: onSavedStrip,
             inputFormatters: [
               MaskTextInputFormatter(
-                mask: '###.###.###-##',
+                mask: '##.###.###/####-##',
                 filter: {"#": RegExp(r'\d')},
               )
             ],
@@ -110,11 +111,11 @@ class CpfField extends StatelessWidget {
         }),
         super(key: key);
 
-  final ToBasicTextField _toCpfField;
+  final ToBasicTextField _toCnpjField;
 
   static String? _dummy(String? input) => null;
 
-  /// Builds a [BasicTextField] suitable for CPF values.
+  /// Builds a [BasicTextField] suitable for CNPJ values.
   @override
-  BasicTextField build(BuildContext context) => _toCpfField(context);
+  BasicTextField build(BuildContext context) => _toCnpjField(context);
 }

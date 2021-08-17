@@ -11,6 +11,9 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 - CpfField, a text form field for entering CPF values —
   [31](https://github.com/dartoos-dev/well_formed/issues/31)
+- CpfField, a text form field for entering CNPJ values —
+  [32](https://github.com/dartoos-dev/well_formed/issues/32)
+- Several improvements to the README file.
 
 ## [0.3.2] - 2021-08-13
 

@@ -11,6 +11,8 @@ class _DemoApp extends StatelessWidget {
   /// Ctor.
   const _DemoApp({Key? key}) : super(key: key);
 
+  static final _labelStyle = TextStyle(color: const Grey.veryDark().color);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +22,7 @@ class _DemoApp extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Cyan().color,
           elevation: 0.0,
-          title: const Text('A Form and its fields'),
+          title: const Text('Well_formed demo app'),
         ),
         body: Center(
           child: SizedBox(
@@ -29,35 +31,35 @@ class _DemoApp extends StatelessWidget {
               DigitField.len(
                 5,
                 diff: 'Please enter exactly 5 digits; for example, "22335".',
-                blank: 'Please enter the 5 digits',
-                decoration: const InputDecoration(labelText: 'Enter 5 digits'),
-              ),
-              CepField(
-                blank: 'Please enter the CEP value',
-                decoration: const InputDecoration(
-                  labelText: 'Insert a CEP',
+                blank: 'Please enter the 5 digits.',
+                decoration: InputDecoration(
+                  labelText: 'Enter 5 digits',
+                  labelStyle: _labelStyle,
                 ),
               ),
               IntField.pos(
-                blank: 'Please informe the positive integer',
-                decoration: const InputDecoration(
-                  labelText: 'Insert a positive interger',
+                blank: 'Please enter a positive integer',
+                decoration: InputDecoration(
+                  labelText: 'Enter a positive interger',
+                  labelStyle: _labelStyle,
                 ),
               ),
               EmailField.len(
                 50,
-                blank: 'Please inform the email address',
-                long: 'The email is too long.',
-                decoration: const InputDecoration(
+                blank: 'Please inform the email address.',
+                long: 'The email is too long',
+                decoration: InputDecoration(
                   labelText: 'Enter an email with up to 50 characters',
+                  labelStyle: _labelStyle,
                 ),
               ),
               CpfField(
-                blank: 'A CPF value is required',
+                blank: 'A CPF value is required.',
                 malformed: 'Invalid CPF',
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Enter a CPF',
                   hintText: '999.999.999-99',
+                  labelStyle: _labelStyle,
                 ),
               ),
             ]),
