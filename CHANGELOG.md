@@ -7,6 +7,11 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Added
+
+- HexField, a text form field for entering hexadecimal digits —
+  [41](https://github.com/dartoos-dev/well_formed/issues/41).
+
 ### Fixed
 
 - some sections of the README file.

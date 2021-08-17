@@ -9,5 +9,6 @@
 library numeric;
 
 export 'src/numeric/digit_field.dart';
+export 'src/numeric/hex_field.dart';
 export 'src/numeric/int_field.dart';
 export 'src/numeric/num_field.dart';

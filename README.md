@@ -179,6 +179,16 @@ Quantity of a product; and so on.
 - to a maximum number of digits through the `DigitField.max` constructor
 - within a range through the `DigitField.range` constructor
 
+[HexField](https://pub.dev/documentation/well_formed/latest/numeric/HexField-class.html)
+— hexadecimal form field. It accepts the digits 0–9 and the letters
+  'AaBbCcDdEeFf'.  For example: _123_, _45fe_, _CafeBabe_. You can constrain the
+  number of hex digits in several ways:
+
+- to a fixed number of hex digits through the `HexField.len` constructor
+- to a minimum number of hex digits through the `HexField.min` constructor
+- to a maximum number of hex digits through the `HexField.max` constructor
+- within a range through the `HexField.range` constructor
+
 [IntField](https://pub.dev/documentation/well_formed/latest/numeric/IntField-class.html)
 — integer values form field. You can constrain the allowed values in several
 ways:
