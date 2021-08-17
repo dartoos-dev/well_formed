@@ -55,13 +55,7 @@ class CnpjField extends StatelessWidget {
               ? null
               : !strip
                   ? onSaved
-                  : (String? mask) {
-                      if (mask == null) {
-                        onSaved(mask);
-                      } else {
-                        onSaved(CnpjStrip(mask).value);
-                      }
-                    };
+                  : (String? mask) => onSaved(CnpjStrip(mask ?? '').value);
           final ValueChanged<String>? onChangedStrip = onChanged == null
               ? null
               : !strip
@@ -69,13 +63,12 @@ class CnpjField extends StatelessWidget {
                   : (String mask) =>
                       onChanged(mask.replaceAll(RegExp('[-/.]'), ''));
 
-          final ValueChanged<String>? onFieldSubmittedStrip =
-              onFieldSubmitted == null
-                  ? null
-                  : !strip
-                      ? onFieldSubmitted
-                      : (String mask) => onFieldSubmitted(
-                          mask.replaceAll(RegExp('[-/.]'), ''));
+          final ValueChanged<String>? onFieldSubStrip = onFieldSubmitted == null
+              ? null
+              : !strip
+                  ? onFieldSubmitted
+                  : (String mask) =>
+                      onFieldSubmitted(mask.replaceAll(RegExp('[-/.]'), ''));
           return BasicTextField(
             validator: Pair.str(Cnpj(mal: malformed), validator ?? _dummy),
             blank: blank,
@@ -95,7 +88,7 @@ class CnpjField extends StatelessWidget {
             maxLength: maxLength,
             onChanged: onChangedStrip,
             onEditingComplete: onEditingComplete,
-            onFieldSubmitted: onFieldSubmittedStrip,
+            onFieldSubmitted: onFieldSubStrip,
             onSaved: onSavedStrip,
             inputFormatters: [
               MaskTextInputFormatter(

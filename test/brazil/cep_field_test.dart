@@ -4,6 +4,8 @@ import 'package:formdator/formdator.dart';
 import 'package:well_formed/src/brazil/cep_field.dart';
 import 'package:well_formed/src/core/well_formed.dart';
 
+import '../get_val.dart';
+
 Future<void> main() async {
   group('CepField', () {
     const empty = ''; // zero-length text.
@@ -20,12 +22,9 @@ Future<void> main() async {
       expect(find.byKey(kDef), findsOneWidget);
     });
     testWidgets('blank', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app(
-            [CepField(key: kDef, blank: blank, initialValue: validCep)]),
-      );
-      final elem = tester.widget(find.widgetWithText(TextFormField, validCep));
-      final val = (elem as TextFormField).validator!;
+      final getVal = GetVal(tester);
+      final val = await getVal(
+          CepField(key: kDef, blank: blank, initialValue: validCep));
       expect(val(null), blank);
       expect(val(empty), blank);
       expect(val(validCep), null);
@@ -37,12 +36,9 @@ Future<void> main() async {
       String? noOddDigits(String? v) =>
           (v != null && v.contains(RegExp('[13579]+'))) ? error : null;
 
-      await tester.pumpWidget(WellFormed.app(
-        [CepField(validator: noOddDigits, malformed: malformed)],
-      ));
-      await tester.pump();
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
+      final getVal = GetVal(tester);
+      final val =
+          await getVal(CepField(validator: noOddDigits, malformed: malformed));
       expect(val(null), null);
       expect(val(empty), malformed);
       expect(val('22222-468'), null);
@@ -52,12 +48,10 @@ Future<void> main() async {
     testWidgets('blank and validator', (WidgetTester tester) async {
       const error = 'it must always be invalid';
       const nok = Nok(error: error);
-      await tester.pumpWidget(WellFormed.app([
+      final getVal = GetVal(tester);
+      final val = await getVal(
         CepField(blank: blank, malformed: malformed, validator: nok),
-      ]));
-      await tester.pumpAndSettle();
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
+      );
       expect(val(null), blank);
       expect(val(empty), blank);
       expect(val(validCep), error);

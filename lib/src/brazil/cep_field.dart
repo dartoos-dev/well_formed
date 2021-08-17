@@ -55,13 +55,7 @@ class CepField extends StatelessWidget {
               ? null
               : !strip
                   ? onSaved
-                  : (String? mask) {
-                      if (mask == null) {
-                        onSaved(mask);
-                      } else {
-                        onSaved(CepStrip(mask).value);
-                      }
-                    };
+                  : (String? mask) => onSaved(CepStrip(mask ?? '').value);
           final ValueChanged<String>? onChangedStrip = onChanged == null
               ? null
               : !strip

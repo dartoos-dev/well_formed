@@ -5,6 +5,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/src/core/basic_text_field.dart';
 import 'package:well_formed/src/core/well_formed.dart';
 
+import '../get_val.dart';
+
 Future<void> main() async {
   group('BasicTextField', () {
     const empty = ''; // zero-length text.
@@ -26,127 +28,210 @@ Future<void> main() async {
     const initMax = 'The initial text of max';
     const initRange = 'The initial text of range';
     const inits = [init, initLen, initMin, initMax, initRange];
-    testWidgets('length constraint', (WidgetTester tester) async {
-      const diff = 'length error';
-      await tester.pumpWidget(
-        WellFormed.app([BasicTextField.len(10, diff: diff)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), diff);
-      expect(val(tenCharText), null);
-      expect(val(short), diff);
-      expect(val(long), diff);
+    group('length constrints', () {
+      testWidgets('fixed', (WidgetTester tester) async {
+        const diff = 'length error';
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.len(10, diff: diff));
+        expect(val(null), null);
+        expect(val(empty), diff);
+        expect(val(tenCharText), null);
+        expect(val(short), diff);
+        expect(val(long), diff);
+      });
+      testWidgets('mininum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.min(10, less: less));
+        expect(val(null), null);
+        expect(val(empty), less);
+        expect(val(tenCharText), null);
+        expect(val(short), less);
+        expect(val(long), null);
+      });
+      testWidgets('maximum', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.max(10, great: great));
+        expect(val(null), null);
+        expect(val(empty), null);
+        expect(val(tenCharText), null);
+        expect(val(short), null);
+        expect(val(long), great);
+      });
+      testWidgets('range', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+            BasicTextField.range(10, 20, less: less, great: great));
+        expect(val(null), null);
+        expect(val(empty), less);
+        expect(val(tenCharText), null);
+        expect(val(short), less);
+        expect(val(long), great);
+      });
     });
-    testWidgets('min length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([BasicTextField.min(10, less: less)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), less);
-      expect(val(tenCharText), null);
-      expect(val(short), less);
-      expect(val(long), null);
+    group('key', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          BasicTextField(key: kDef),
+        ]));
+        expect(find.byKey(kDef), findsOneWidget);
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          BasicTextField.len(10, key: kLen),
+        ]));
+        expect(find.byKey(kLen), findsOneWidget);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          BasicTextField.min(10, key: kMin),
+        ]));
+        expect(find.byKey(kMin), findsOneWidget);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          BasicTextField.max(10, key: kMax),
+        ]));
+        expect(find.byKey(kMax), findsOneWidget);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        await tester.pumpWidget(WellFormed.app([
+          BasicTextField.range(10, 20, key: kRange),
+        ]));
+        expect(find.byKey(kRange), findsOneWidget);
+      });
     });
-    testWidgets('max length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app([BasicTextField.max(10, great: great)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), null);
-      expect(val(tenCharText), null);
-      expect(val(short), null);
-      expect(val(long), great);
-    });
-    testWidgets('range length constraint', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        WellFormed.app(
-            [BasicTextField.range(10, 20, less: less, great: great)]),
-      );
-      final elem = tester.widget(find.byType(TextFormField));
-      final val = (elem as TextFormField).validator!;
-      expect(val(null), null);
-      expect(val(empty), less);
-      expect(val(tenCharText), null);
-      expect(val(short), less);
-      expect(val(long), great);
-    });
-    testWidgets('key', (WidgetTester tester) async {
-      await tester.pumpWidget(WellFormed.app([
-        BasicTextField(key: kDef),
-        BasicTextField.len(10, key: kLen),
-        BasicTextField.min(10, key: kMin),
-        BasicTextField.max(10, key: kMax),
-        BasicTextField.range(10, 20, key: kRange)
-      ]));
-      await tester.pumpAndSettle();
-      for (final key in keys) {
-        expect(find.byKey(key), findsOneWidget);
-      }
-    });
-    testWidgets('blank', (WidgetTester tester) async {
-      await tester.pumpWidget(WellFormed.app([
-        BasicTextField(blank: blank),
-        BasicTextField.len(10, blank: blank),
-        BasicTextField.min(10, blank: blank),
-        BasicTextField.max(10, blank: blank),
-        BasicTextField.range(10, 20, blank: blank)
-      ]));
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        final val = (elem as TextFormField).validator!;
+    group('blank', () {
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField(blank: blank));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(tenCharText), null);
-      }
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.len(10, blank: blank));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val(tenCharText), null);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.min(10, blank: blank));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val(tenCharText), null);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.max(10, blank: blank));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val(tenCharText), null);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField.range(10, 20, blank: blank));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val(tenCharText), null);
+      });
     });
-    testWidgets('validator', (WidgetTester tester) async {
+    group('validator', () {
       const error = 'cannot have uppercase letters [A-Z]';
 
       /// Input values cannot have uppercase letters.
       String? noUppercase(String? v) =>
           (v != null && v.contains(RegExp('[A-Z]+'))) ? error : null;
-      await tester.pumpWidget(WellFormed.app([
-        BasicTextField(validator: noUppercase),
-        BasicTextField.len(13, validator: noUppercase),
-        BasicTextField.min(13, validator: noUppercase),
-        BasicTextField.max(13, validator: noUppercase),
-        BasicTextField.range(13, 26, validator: noUppercase),
-      ]));
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        final val = (elem as TextFormField).validator!;
+
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField(validator: noUppercase));
         expect(val(null), null);
         expect(val('13 characters'), null);
         expect(val('13 Characters'), error);
-      }
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.len(13, validator: noUppercase));
+        expect(val(null), null);
+        expect(val('13 characters'), null);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.min(13, validator: noUppercase));
+        expect(val(null), null);
+        expect(val('13 characters'), null);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.max(13, validator: noUppercase));
+        expect(val(null), null);
+        expect(val('13 characters'), null);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.range(13, 26, validator: noUppercase));
+        expect(val(null), null);
+        expect(val('13 characters'), null);
+        expect(val('13 Characters'), error);
+      });
     });
-    testWidgets('blank and validator', (WidgetTester tester) async {
+    group('blank and validator', () {
       const error = 'it must always be invalid';
       const nok = Nok(error: error);
-      await tester.pumpWidget(WellFormed.app([
-        BasicTextField(blank: blank, validator: nok),
-        BasicTextField.len(13, blank: blank, validator: nok),
-        BasicTextField.min(13, blank: blank, validator: nok),
-        BasicTextField.max(13, blank: blank, validator: nok),
-        BasicTextField.range(13, 26, blank: blank, validator: nok),
-      ]));
-      await tester.pumpAndSettle();
-      final elems = tester.widgetList(find.byType(TextFormField));
-      for (final elem in elems) {
-        final val = (elem as TextFormField).validator!;
+
+      testWidgets('default ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(BasicTextField(blank: blank, validator: nok));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);
         expect(val('13 Characters'), error);
-      }
+      });
+      testWidgets('len ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.len(13, blank: blank, validator: nok));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('13 characters'), error);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('min ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.min(13, blank: blank, validator: nok));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('13 characters'), error);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('max ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val =
+            await getVal(BasicTextField.max(13, blank: blank, validator: nok));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('13 characters'), error);
+        expect(val('13 Characters'), error);
+      });
+      testWidgets('range ctor', (WidgetTester tester) async {
+        final getVal = GetVal(tester);
+        final val = await getVal(
+            BasicTextField.range(13, 26, blank: blank, validator: nok));
+        expect(val(null), blank);
+        expect(val(empty), blank);
+        expect(val('13 characters'), error);
+        expect(val('13 Characters'), error);
+      });
     });
     testWidgets('trim and onChanged', (WidgetTester tester) async {
       const trimmed = 'abcdefghijklm';

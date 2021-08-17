@@ -43,7 +43,6 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   })  : _toBasicField = ((context) {
-          // coverage:ignore-start
           ValStr val = validator ?? _ok;
           if (blank != null) {
             val = Pair.str2(Req(blank: blank), val);
@@ -67,7 +66,6 @@ class BasicTextField extends StatelessWidget {
               : trim
                   ? (String? v) => onSaved(v?.trim())
                   : onSaved;
-          // coverage:ignore-end
           return TextFormField(
             validator: val,
             keyboardType: keyboardType,
