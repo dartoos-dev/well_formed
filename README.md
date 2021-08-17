@@ -242,7 +242,7 @@ class, some properties were left out for one of two reasons:
 
 - the property has been deprecated by the Flutter sdk. This is the case of the
   `autovalidate` and `maxLengthEnforced` properties.
-- the property has been considered too superfluous — the property has little use in
+- the property has been considered too superfluous — it has little use in
   the context of form fields. This is the case of the following properties:
 
 ```Dart
