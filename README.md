@@ -55,26 +55,24 @@ tested by a CI/CD pipeline with rigorous quality gates.
 ## Getting Started
 
 Most of the form fields in this package are built on top of the `TextFormField`
-widget so that they remain **fully compatible** with Flutter's `Form` widget.
+widget so that they remain **fully compatible** with the `Form` widget.
 This is important to avoid erroneous (buggy) behavior, such as when a field does
-not reset when its parent widget is reset.
+not reset when its parent `Form` widget is reset.
 
-Besides most of the `TextFormField` properties, additional properties have been
-introduced to facilitate the creation of "Smarter" form fields with stunning
+In addition to supporting most of the `TextFormField` properties, additional properties
+have been introduced to facilitate the creation of "Smarter" form fields with stunning
 capabilities such as:
 
-- **Fields can easily be made mandatory (required)** by just filling in the
+- **Fields that can easily be made mandatory (required)** by just filling in the
   `blank` property with text.
-- **Automatic field masking**. For example (where each '#' is a digit [0–9]):
-- `CepField` — '#####-##'; `CpfField` — '###.###.###-##'; `CnpjField` —
-  '##.###.###/####-##'; `BrMobileField` — '(##) #####-####'; and so on.
+- **Automatic field masking**. For example ('#' is a digit [0–9]):
+  `CpfField` — '###.###.###-##'; `CnpjField` — '##.###.###/####-##';
+  `BrMobileField` — '(##) #####-####'; and so on.
 - **Stripping**: this is the optional removal of non-digit characters. It is
-  enabled by default. To disable it, simply set the `strip` property to `false`
-  while instantiating a form field object.
+  enabled by default. To disable it, simply set the `strip` property to `false`.
 - **Smart trimming**: this is when trimming is also applied to form field
-  callback functions. The affected callback functions are `onSaved`,
-  `onChanged`, and `onFieldSubmitted`. To enable it, simply set the `trim`
-  property to `true` while instantiating a form field object.
+  callback functions. The affected callback functions are `onSaved`,`onChanged`
+  and `onFieldSubmitted`. To enable it, simply set the `trim` property to `true`.
 - **Validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
 - **Automatic keyboard type selection**: the most suitable keyboard type is selected
   according to the field type. For example, the `EmailFiel` class sets the
@@ -176,34 +174,34 @@ Quantity of a product; and so on.
 [DigitField](https://pub.dev/documentation/well_formed/latest/numeric/DigitField-class.html)
 — digit-only form field. You can constrain the number of digits in several ways:
 
-- to a fixed number of digits through the `DigitField.len` constructor;
-- to a minimum number of digits through the `DigitField.min` constructor;
-- to a maximum number of digits through the `DigitField.max` constructor;
-- within a range through the `DigitField.range` constructor.
+- to a fixed number of digits through the `DigitField.len` constructor
+- to a minimum number of digits through the `DigitField.min` constructor
+- to a maximum number of digits through the `DigitField.max` constructor
+- within a range through the `DigitField.range` constructor
 
 [IntField](https://pub.dev/documentation/well_formed/latest/numeric/IntField-class.html)
 — integer values form field. You can constrain the allowed values in several
 ways:
 
-- to positive values through the `IntField.pos` constructor;
-- to negative values through the `IntField.neg` constructor;
+- to positive values through the `IntField.pos` constructor
+- to negative values through the `IntField.neg` constructor
 - to values greater than or equal to a minimum value through the `IntField.min`
-  constructor;
+  constructor
 - to values less than or equal to a maximum value through the `IntField.max`
-  constructor;
-- within a range through the `IntField.range` constructor.
+  constructor
+- within a range through the `IntField.range` constructor
 
 [NumField](https://pub.dev/documentation/well_formed/latest/numeric/NumField-class.html)
 — floating-point values form field. You can constrain the allowed values in
 several ways:
 
-- to positive values through the `NumField.pos` constructor;
-- to negative values through the `NumField.neg` constructor;
+- to positive values through the `NumField.pos` constructor
+- to negative values through the `NumField.neg` constructor
 - to values greater than or equal to a minimum value through the `NumField.min`
-  constructor;
+  constructor
 - to values less than or equal to a maximum value through the `NumField.max`
-  constructor;
-- within a range through the `NumField.range` constructor.
+  constructor
+- within a range through the `NumField.range` constructor
 
 ## Demo application
 
@@ -263,12 +261,11 @@ SmartQuotesType? smartQuotesType,
 StrutStyle? strutStyle,
 TextAlignVertical? textAlignVertical,
 TextCapitalization textCapitalization = TextCapitalization.none,
-TextInputType? keyboardType,
 TextSelectionControls? selectionControls,
 ToolbarOptions? toolbarOptions,
-bool autofocus = false,
-bool enableSuggestions = true,
-bool expands = false,
+bool autofocus,
+bool enableSuggestions,
+bool expands,
 bool? showCursor,
 double cursorWidth,
 double? cursorHeight,
@@ -279,5 +276,5 @@ int? minLines,
 ## References
 
 - [TextFormField](https://api.flutter.dev/flutter/material/TextFormField-class.html)
-- [build a Flutter form](https://flutter.dev/docs/cookbook/forms/validation)
+- [Build a Flutter form](https://flutter.dev/docs/cookbook/forms/validation)
 - [Mozilla input types](https://developer.mozilla.org/en-US/docs/Learn/Forms/HTML5_input_types)
