@@ -11,7 +11,7 @@ Future<void> main() async {
     const empty = ''; // zero-length text.
     const mal = 'Error: malformed cnpj';
     const blank = 'Error: a cnpj is required';
-    const validCnpj =  '34.600.728/0001-76';
+    const validCnpj = '34.600.728/0001-76';
     const invalidCnpj = '40.76.91/0001-02';
     const init = '00.000.000/0000-00';
     const kDef = Key('()');
