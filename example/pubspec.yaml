@@ -1,7 +1,7 @@
 name: well_formed_demo_app
 description: How to use the Well-Formed package effectively.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0
 homepage: https://dartoos.dev
