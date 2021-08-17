@@ -63,18 +63,20 @@ Besides most of the `TextFormField` properties, additional properties have been
 introduced to facilitate the creation of "Smarter" form fields with stunning
 capabilities such as:
 
-- **the field can easily be made mandatory (required)** by just filling in the
-  `blank` property.
-- **automatic field masking**. For example (where each '#' is a digit [0–9]):
+- **Fields can easily be made mandatory (required)** by just filling in the
+  `blank` property with text.
+- **Automatic field masking**. For example (where each '#' is a digit [0–9]):
 - `CepField` — '#####-##'; `CpfField` — '###.###.###-##'; `CnpjField` —
   '##.###.###/####-##'; `BrMobileField` — '(##) #####-####'; and so on.
-- **stripping**: the optional removal of non-digit characters. It is enabled by
-    default. To disable it, simply set the `strip` property to `false` while
-    instantiating a form field object.
-- **smart trimming**: when trimming is also applied to the form field's callback
-  functions `onSaved`, `onChanged`, and `onFieldSubmitted`.
-- **validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
-- **automatic keyboard type selection**: the most suitable keyboard type is selected
+- **Stripping**: this is the optional removal of non-digit characters. It is
+  enabled by default. To disable it, simply set the `strip` property to `false`
+  while instantiating a form field object.
+- **Smart trimming**: this is when trimming is also applied to form field
+  callback functions. The affected callback functions are `onSaved`,
+  `onChanged`, and `onFieldSubmitted`. To enable it, simply set the `trim`
+  property to `true` while instantiating a form field object.
+- **Validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
+- **Automatic keyboard type selection**: the most suitable keyboard type is selected
   according to the field type. For example, the `EmailFiel` class sets the
   keyboardType to `TextInputType.emailAddress`, which in turn is optimized for
   email addresses.
