@@ -81,6 +81,8 @@ capabilities such as:
   keyboardType to `TextInputType.emailAddress`, which in turn is optimized for
   email addresses.
 
+### Form Field in Action
+
 The code below demonstrates how to use the `EmailField` widget with the `trim`
 property set to `true` so that the entered email value is trimmed before being
 validated. Furthermore, the example also illustrates some important features:
@@ -89,11 +91,9 @@ validated. Furthermore, the example also illustrates some important features:
 - error messages
 - length constraint
 
-### Form Field in Action
-
 ```dart
   …
-  // the form's mandatory state key.
+  // the form's mandatory state key
   final formKey = GlobalKey<FormState>();
   …
   @override
