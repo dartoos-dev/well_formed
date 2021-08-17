@@ -199,8 +199,7 @@ Future<void> main() async {
       });
       testWidgets('range ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val =
-            await getVal(HexField.range(1, 5, validator: noOddHexs));
+        final val = await getVal(HexField.range(1, 5, validator: noOddHexs));
         expect(val(null), null);
         expect(val('0'), null);
         expect(val('246'), null);
@@ -292,8 +291,8 @@ Future<void> main() async {
       });
     });
     group('malformed', () {
-      Future<void> testDig(WidgetTester tester, HexField dig,
-          List<String> good, List<String> bad) async {
+      Future<void> testDig(WidgetTester tester, HexField dig, List<String> good,
+          List<String> bad) async {
         final getVal = GetVal(tester);
         final val = await getVal(dig);
         for (final ok in good) {
@@ -397,8 +396,7 @@ Future<void> main() async {
       });
       testWidgets('range ctor', (WidgetTester tester) async {
         await tester.pumpWidget(WellFormed.app([
-          HexField.range(8, 12,
-              key: kRange, trim: true, onChanged: onChanged),
+          HexField.range(8, 12, key: kRange, trim: true, onChanged: onChanged),
         ]));
         await tester.pumpAndSettle();
         final before = count;
