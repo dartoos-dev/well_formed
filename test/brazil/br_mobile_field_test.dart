@@ -93,7 +93,8 @@ Future<void> main() async {
         }
 
         await tester.pumpWidget(WellFormed.app([
-          BrMobileField(key: kDef, strip: false, trim: true, onChanged: onChanged),
+          BrMobileField(
+              key: kDef, strip: false, trim: true, onChanged: onChanged),
         ]));
         await tester.enterText(find.byKey(kDef), untrimmed);
         await tester.pumpAndSettle();
@@ -106,7 +107,7 @@ Future<void> main() async {
         const stripped = '12345678900';
         var count = 0;
         void shouldStrip(String s) {
-          if (s == stripped){
+          if (s == stripped) {
             ++count;
           }
         }
@@ -235,7 +236,8 @@ Future<void> main() async {
       testWidgets('default ctor', (WidgetTester tester) async {
         const obscuringCharacter = '*';
         await tester.pumpWidget(
-          WellFormed.app([BrMobileField(obscuringCharacter: obscuringCharacter)]),
+          WellFormed.app(
+              [BrMobileField(obscuringCharacter: obscuringCharacter)]),
         );
         await tester.pumpAndSettle();
         final elem = tester.widget(find.byType(TextField));

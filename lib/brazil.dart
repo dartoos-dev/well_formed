@@ -5,7 +5,7 @@
 /// - [CepField] for CEP (Código de Endereçamento Postal) — Brazilian Postal
 ///   Code.
 /// - [CnpjField] for CNPJ (Cadastro Nacional de Pessoa Jurídica) — Brazilian
-///   Company's Registered Number. 
+///   Company's Registered Number.
 /// - [CpfField] for CPF (Cadastro da Pessoa Física) — Brazilian Social Security
 ///   Number.
 library brazil;
