@@ -13,6 +13,7 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
   [46](https://github.com/dartoos-dev/well_formed/issues/46).
 - BrPhoneField, a text form field for entering Brazilian telephone numbers —
   [46](https://github.com/dartoos-dev/well_formed/issues/46).
+- several improvements to the README file.
 
 ## [0.3.4] - 2021-08-18
 

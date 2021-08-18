@@ -26,9 +26,21 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
   - [Form Field in Action](#form-field-in-action)
 - [List of Form Fields by Category](#list-of-form-fields)
   - [Brazil](#brazil)
+    - [BrMobileField](#brmobilefield)
+    - [BrPhoneField](#brphonefield)
+    - [CepField](#cepfield)
+    - [CnpjField](#cnpjfield)
+    - [CpfField](#cpffield)
   - [Core](#core)
+    - [BasicTextField](#basictextfield)
+    - [WellFormed](#wellformed)
   - [Net](#net)
+    - [EmailField](#emailfield)
   - [Numeric](#numeric)
+    - [DigitField](#digitfield)
+    - [HexField](#digitfield)
+    - [IntField](#digitfield)
+    - [NumField](#digitfield)
 - [Demo application](#demo-application)
   - [Blank Field Error Messages](#blank-field-error-messages)
   - [Invalid Inputs](#invalid-inputs)
@@ -38,46 +50,52 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 
 ## Overview
 
-Well-**Form**ed Widget Fields — Well-Formed is a form field package designed to
-relieve developers of much of the form-related coding. This is achieved by
-providing out-of-the-box field masking, validation, smart trimming, and more. In
-addition, this package aims to:
+Well-**Form**ed is a form field package designed to relieve developers of much
+of the form-related coding. This is achieved by providing out-of-the-box field
+masking, validation, smart trimming, and more. In addition, this package aims
+to:
 
-- improve source code readability by providing form fields with "semantic" names
-  — names that convey their purpose at first glance — such as "EmailField",
-  "CpfField", "DigitField", "IntField", and so on.
+- help developers to always keep the users' data well-formed.
+- reduce most of the code related to form fields and their validations.
+- improve source code readability by providing form fields with **semantic
+  names**; that is, names that convey their purpose at first glance like
+  _EmailField_, _Ipv4Field_, _UrlField_, and so on.
 - automate the selection of the keyboard type according to the field's purpose.
-- **not to end up being yet another buggy Flutter form package!**
 
 In order to be a reliable package, every class is well-documented and fully unit
 tested by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
-Most of the form fields in this package are built on top of the `TextFormField`
-widget so that they remain **fully compatible** with the `Form` widget.
-This is important to avoid erroneous (buggy) behavior, such as when a field does
-not reset when its parent `Form` widget is reset.
+Most of the form fields in this package are built on top of the
+[TextFormField](https://api.flutter.dev/flutter/material/TextFormField-class.html)
+widget so that they remain **fully compatible** with the
+[Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget. This is
+important to avoid erroneous (buggy) behavior, such as when a field does not
+reset when its parent `Form` widget is reset.
 
-In addition to supporting most of the `TextFormField` properties, additional properties
-have been introduced to facilitate the creation of "Smarter" form fields with stunning
-capabilities such as:
+In addition to supporting most of the `TextFormField` properties, additional
+properties have been introduced to facilitate the creation of "Smarter" form
+fields with stunning capabilities such as:
 
-- **Fields that can easily be made mandatory (required)** by just filling in the
-  `blank` property with text.
-- **Automatic field masking**. For example ('#' is a digit [0–9]):
-  `CpfField` — '###.###.###-##'; `CnpjField` — '##.###.###/####-##';
-  `BrMobileField` — '(##) #####-####'; and so on.
+- Fields that can easily be made **required (mandatory)**: you have just to set
+  the `blank` property with some text. This property is the error message that
+  will be displayed if the user leaves the field blank.
+- **Automatic field masking**. For example, the
+- [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.htmlform)
+  form field displays the mask '###.###.###-##' (where each '#' is a single
+  digit [0–9]) while the user is entering the digits. Therefore, if the user
+  enters '999999999', the displayed text will be '999.999.999-99'.
 - **Stripping**: this is the optional removal of non-digit characters. It is
   enabled by default. To disable it, simply set the `strip` property to `false`.
 - **Smart trimming**: this is when trimming is also applied to form field
   callback functions. The affected callback functions are `onSaved`,`onChanged`
   and `onFieldSubmitted`. To enable it, simply set the `trim` property to `true`.
 - **Validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
-- **Automatic keyboard type selection**: the most suitable keyboard type is selected
-  according to the field type. For example, the `EmailFiel` class sets the
-  keyboardType to `TextInputType.emailAddress`, which in turn is optimized for
-  email addresses.
+- **Automatic keyboard type selection**: the most suitable keyboard type is
+  selected according to the field type. For example, the `EmailFiel` class sets
+  the keyboardType to `TextInputType.emailAddress`, which is optimized for email
+  addresses.
 
 ### Form Field in Action
 
@@ -125,93 +143,247 @@ parameters, etc.):
 
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
-Each '#' represents a digit [0–9].
+Most of the fields in the Brazil library are masked fields, where each '#'
+represents a digit [0–9].
 
-- [BrMobileField](https://pub.dev/documentation/well_formed/latest/brazil/BrMobileField-class.html)
-  — a masked _(##) #####-####_ form field for Brazilian mobile numbers.
-- [BrPhoneField](https://pub.dev/documentation/well_formed/latest/brazil/BrPhone-class.html)
-  — a masked _(##) ####-####_ form field for Brazilian landline telephone
-  numbers.
-- [CepField](https://pub.dev/documentation/well_formed/latest/brazil/CepField-class.html)
-  — a masked _#####-###_ form field for CEP (Código de Endereçamento Postal).
-- [CnpjField](https://pub.dev/documentation/well_formed/latest/brazil/CnpjField-class.html)
-  — masked _##.###.###/####-##_ form field for CNPJ (Cadastro Nacional da Pessoa
-  Jurídica).
-- [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CnpjField-class.html)
-  — a masked _###.###.###-##_ form field for CPF (Cadastro da Pessoa Física).
+#### BrMobileField
+
+[BrMobileField](https://pub.dev/documentation/well_formed/latest/brazil/BrMobileField-class.html)
+is a masked _(##) #####-####_ form field for Brazilian mobile numbers.
+
+```dart
+BrMobileField(
+  strip: true, // remove non-digit characters when submitted/saved/changed.
+  blank: 'Please enter the mobile number', // the error message if the field is left blank
+  malformed: 'Invalid mobile number', // the error message if the number is invalid
+  decoration: InputDecoration(labelText: 'Enter a mobile number'),
+);
+```
+
+#### BrPhoneField
+
+[BrPhoneField](https://pub.dev/documentation/well_formed/latest/brazil/BrPhone-class.html)
+is a masked _(##) ####-####_ form field for Brazilian landline telephone
+numbers.
+
+```dart
+BrPhoneField(
+  strip: true, // remove non-digit characters when submitted/saved/changed.
+  blank: 'Please enter the phone number', // the error message if the field is left blank
+  malformed: 'Invalid phone number', // the error message if the number is invalid
+  decoration: InputDecoration(labelText: 'Enter a phone number'),
+);
+```
+
+#### CepField
+
+[CepField](https://pub.dev/documentation/well_formed/latest/brazil/CepField-class.html)
+is a masked _#####-###_ form field for CEP (Código de Endereçamento Postal —
+Brazilian Postal Code).
+
+```dart
+CepField(
+  strip: true, // remove non-digit characters when submitted/saved/changed.
+  blank: 'Please enter the CEP', // the error message if the field is left blank
+  malformed: 'Invalid CEP', // the error message if the CEP is invalid
+  decoration: InputDecoration(labelText: 'Enter a CEP'),
+);
+```
+
+#### CnpjField
+
+[CnpjField](https://pub.dev/documentation/well_formed/latest/brazil/CnpjField-class.html)
+is a masked _##.###.###/####-##_ form field for CNPJ (Cadastro Nacional da
+Pessoa Jurídica — Brazilian Company's Registered Number).
+
+```dart
+CnpjField(
+  strip: true, // remove non-digit characters when submitted/saved/changed.
+  blank: 'Please enter the CNPJ', // the error message if the field is left blank
+  malformed: 'Invalid CNPJ', // the error message if the CNPJ is invalid
+  decoration: InputDecoration(labelText: 'Enter a CNPJ'),
+);
+```
+
+#### CpfField
+
+[CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CnpjField-class.html)
+is a masked _###.###.###-##_ form field for CPF (Cadastro da Pessoa Física; it
+is a kind of social security number).
+
+```dart
+CnpjField(
+  strip: true, // remove non-digit characters when submitted/saved/changed.
+  blank: 'Please enter the CPF', // the error message if the field is left blank
+  malformed: 'Invalid CPF', // the error message if the CPF is invalid
+  decoration: InputDecoration(labelText: 'Enter a CPF'),
+);
+```
 
 ### Core
 
 [Core](https://pub.dev/documentation/formdator/latest/core/core-library.html)
 components.
 
-- [BasicTextField](https://pub.dev/documentation/well_formed/latest/core/BasicTextField-class.html)
-  — a text form field that can be made required and/or have its input data
-  trimmed.
-- [WellFormed](https://pub.dev/documentation/well_formed/latest/core/WellFormed-class.html)
-  — a convenient and well-formed form widget! It builds a
-  [Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget within
-  a structure consisting of
-  [SafeArea](https://api.flutter.dev/flutter/widgets/SafeArea-class.html) and
-  [Column](https://api.flutter.dev/flutter/widgets/Column-class.html) widgets.
+#### BasicTextField
+
+[BasicTextField](https://pub.dev/documentation/well_formed/latest/core/BasicTextField-class.html)
+is a text form field that can be made required and/or have its input data
+trimmed.
+
+```dart
+BasicTextField.max(
+  50, // limits the length to 50 charactes
+  trim: true, // trims the entered data when submitted/saved/changed.
+  blank: 'Please enter your full name', // the error message if the field is left blank
+  great: 'The name is too long', // the error message if the number of chars is greater than 50
+  decoration: InputDecoration(labelText: 'Enter your full name (up to 50 chars)'),
+);
+```
+
+#### WellFormed
+
+[WellFormed](https://pub.dev/documentation/well_formed/latest/core/WellFormed-class.html)
+is a convenient and well-formed form widget! It builds a
+[Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget within a
+structure consisting of
+[SafeArea](https://api.flutter.dev/flutter/widgets/SafeArea-class.html) and
+[Column](https://api.flutter.dev/flutter/widgets/Column-class.html) widgets.
 
 ### Net
 
 Inter[net](https://pub.dev/documentation/well_formed/latest/net/net-library.html)
 related form fields.
 
+#### EmailField
+
 [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-— form field optimized for emails. You can limit the length of an email by using
-the `EmailField.len` constructor.
+is a form field optimized for emails. You can limit the length of an email by
+using the `EmailField.len` constructor.
+
+```dart
+EmailField.len(
+  50, // limits the length to up to 50 characters
+  trim: true, // trims the entered email
+  blank: 'Inform the email', // error message if the field is left blank
+  malformed: 'Invalid email', // error message if the email is invalid
+  long: 'The email is too long', // error message for long emails
+  decoration: InputDecoration(
+    labelText: 'Enter an email with up to 50 characters',
+  ),
+),
+```
 
 ### Numeric
 
 [Numeric](https://pub.dev/documentation/formdator/latest/numeric/numeric-library.html)
-— form fields related to numbers or digits. Example of numeric inputs: a
+form fields related to numbers or digits. Example of numeric inputs: a
 three-digit code; a six-digit password; a hexadecimal value; the Minimum Order
 Quantity of a product; and so on.
 
-[DigitField](https://pub.dev/documentation/well_formed/latest/numeric/DigitField-class.html)
-— digit-only form field. You can constrain the number of digits in several ways:
+#### DigitField
 
-- to a fixed number of digits through the `DigitField.len` constructor
-- to a minimum number of digits through the `DigitField.min` constructor
-- to a maximum number of digits through the `DigitField.max` constructor
-- within a range through the `DigitField.range` constructor
+[DigitField](https://pub.dev/documentation/well_formed/latest/numeric/DigitField-class.html)
+is a digit-only form field. It is ideal for verification code, PIN numbers, etc.
+Example of valid entries: _0123_, _1111_, _090909_.
+
+```dart
+DigitField(
+  blank: 'Please enter the verification code', // the error message if the field is left blank
+  malformed:'non-digit character(s)' // the error message for malformed data.
+  decoration: InputDecoration(labelText: 'Verification code'),
+);
+```
+
+You can constrain the number of digits in several ways through constructors:
+
+- [DigitField.len](https://pub.dev/documentation/well_formed/latest/numeric/DigitField/DigitField.len.html)
+  for a fixed number of digits.
+- [DigitField.min](https://pub.dev/documentation/well_formed/latest/numeric/DigitField/DigitField.max.html)
+  for a minimum number of digits.
+- [DigitField.max](https://pub.dev/documentation/well_formed/latest/numeric/DigitField/DigitField.max.html)
+  for a maximum number of digits.
+- [DigitField.range](https://pub.dev/documentation/well_formed/latest/numeric/DigitField/DigitField.range.html)
+  for a range.
+
+#### HexField
 
 [HexField](https://pub.dev/documentation/well_formed/latest/numeric/HexField-class.html)
-— hexadecimal form field. It accepts the digits 0–9 and the letters
-  'AaBbCcDdEeFf'.  For example: _123_, _45fe_, _CafeBabe_. You can constrain the
-  number of hex digits in several ways:
+is a hexadecimal form field. It accepts the digits 0–9 and the letters
+'AaBbCcDdEeFf'. Example of valid entries: _123_, _45fe_, _CafeBabe_.
 
-- to a fixed number of hex digits through the `HexField.len` constructor
-- to a minimum number of hex digits through the `HexField.min` constructor
-- to a maximum number of hex digits through the `HexField.max` constructor
-- within a range through the `HexField.range` constructor
+```dart
+HexField(
+  blank: 'Please enter the device number', // the error message if the field is left blank
+  malformed:'non-hex character(s)' // the error message for malformed data.
+  decoration: InputDecoration(labelText: 'Enter a device hex number'),
+);
+```
+
+You can constrain the number of hex digits in several ways through constructors:
+
+- [HexField.len](https://pub.dev/documentation/well_formed/latest/numeric/HexField/HexField.len.html)
+  for a fixed number of hex digits.
+- [HexField.min](https://pub.dev/documentation/well_formed/latest/numeric/HexField/HexField.min.html)
+  for a minimum number of hex digits.
+- [HexField.max](https://pub.dev/documentation/well_formed/latest/numeric/HexField/HexField.max.html)
+  for a maximum number of hex digits.
+- [HexField.range](https://pub.dev/documentation/well_formed/latest/numeric/HexField/HexField.max.html)
+  for a range.
+
+#### IntField
 
 [IntField](https://pub.dev/documentation/well_formed/latest/numeric/IntField-class.html)
-— integer values form field. You can constrain the allowed values in several
-ways:
+is the form field for integers. It is ideal for entering the quantity of an
+item, number of children, age, etc.
 
-- to positive values through the `IntField.pos` constructor
-- to negative values through the `IntField.neg` constructor
-- to values greater than or equal to a minimum value through the `IntField.min`
-  constructor
-- to values less than or equal to a maximum value through the `IntField.max`
-  constructor
-- within a range through the `IntField.range` constructor
+```dart
+IntField(
+  blank: 'Please enter the number of items to purchase', // the error message if the field is left blank
+  malformed:'non-digit character(s)' // the error message for malformed data.
+  decoration: InputDecoration(labelText: 'Number of items'),
+);
+```
+
+You can constrain the allowed values in several ways through constructors:
+
+- [IntField.pos](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.pos.html)
+  for positive integers.
+- [IntField.neg](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.neg.html)
+  for negative integers.
+- [IntField.min](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.min.html)
+  for values greater than or equal to a minimum integer value
+- [IntField.max](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.max.html)
+  for values less than or equal to a maximum integer value.
+- [IntField.range](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.range.html)
+  for a range of integer values.
+
+#### NumField
 
 [NumField](https://pub.dev/documentation/well_formed/latest/numeric/NumField-class.html)
-— floating-point values form field. You can constrain the allowed values in
-several ways:
+is the floating-point form field. It is ideal for displaying the total price of
+a shopping cart, getting an auction bid, etc.
 
-- to positive values through the `NumField.pos` constructor
-- to negative values through the `NumField.neg` constructor
-- to values greater than or equal to a minimum value through the `NumField.min`
-  constructor
-- to values less than or equal to a maximum value through the `NumField.max`
-  constructor
-- within a range through the `NumField.range` constructor
+```dart
+NumField(
+  blank: 'Please enter your bid amount', // the error message if the field is left blank
+  malformed:'non-numeric character(s)' // the error message for malformed data.
+  decoration: InputDecoration(labelText: 'Your bid amount'),
+);
+```
+
+You can constrain the allowed values in several ways:
+
+- [NumField.pos](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.pos.html)
+  for positive numbers.
+- [NumField.neg](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.neg.html)
+  for negative numbers.
+- [NumField.min](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.min.html)
+  for values greater than or equal to a minimum numbers
+- [NumField.max](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.max.html)
+  for values less than or equal to a maximum numbers.
+- [NumField.range](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.range.html)
+  for a range.
 
 ## Demo application
 
