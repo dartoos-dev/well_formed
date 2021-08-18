@@ -143,8 +143,8 @@ parameters, etc.):
 
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
-Most of the fields in the Brazil library are masked fields. Every time you see a '#'
-in the documentation, think of it as a placeholder for a single digit [0–9].
+Most of the fields in the Brazil library are masked fields. So whenever you see a '#'
+character in the documentation, think of it as a placeholder for a single digit [0–9].
 
 #### BrMobileField
 
