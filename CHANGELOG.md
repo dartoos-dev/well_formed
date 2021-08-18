@@ -7,6 +7,10 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Fixed
+
+- line break error in README.
+
 ## [0.3.6] - 2021-08-18
 
 ### Fixed
