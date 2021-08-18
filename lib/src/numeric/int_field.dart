@@ -13,6 +13,8 @@ import 'package:well_formed/well_formed.dart';
 /// appear in the form field. This is accomplished by setting the following:
 ///
 /// - [Int] as the validator to limit input data to integer values
+/// - the [inputFormatters] to deny non-digt characters except the minus
+///   '-' and plus '+' signs.
 /// - [TextInputType.numberWithOptions] as the keyboardType.
 class IntField extends StatelessWidget {
   /// Integer Numbers Form Field.
@@ -43,8 +45,8 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
+    List<TextInputFormatter>? inputFormatters,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
@@ -53,7 +55,8 @@ class IntField extends StatelessWidget {
           return BasicTextField(
             validator: Pair.str(Int(mal: malformed), validator ?? _dummy),
             keyboardType: const TextInputType.numberWithOptions(signed: true),
-            inputFormatters: inputFormatters,
+            inputFormatters: inputFormatters ??
+                [FilteringTextInputFormatter.allow(RegExp('[0-9+-]'))],
             blank: blank,
             trim: trim,
             decoration: decoration ?? const InputDecoration(),
@@ -112,7 +115,6 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -139,7 +141,6 @@ class IntField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -147,7 +148,10 @@ class IntField extends StatelessWidget {
           key: key,
         );
 
-  /// Constrains entered data to positive integers.
+  /// Constrains data to positive integers.
+  ///
+  /// It sets the [inputFormatters] to deny non-digt characters except the plus
+  /// '+' sign.
   ///
   /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
@@ -177,7 +181,6 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -185,6 +188,9 @@ class IntField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(Int.pos(neg: neg), validator ?? _dummy),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
+          ],
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -204,7 +210,6 @@ class IntField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -244,7 +249,6 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -271,7 +275,6 @@ class IntField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -280,6 +283,9 @@ class IntField extends StatelessWidget {
         );
 
   /// Constrains entered data to negative integers.
+  ///
+  /// It sets the [inputFormatters] to deny non-digt characters except the minus
+  /// '-' sign.
   ///
   /// [trim] whether or not to trim the input value.
   /// [validator] an optional extra validation step.
@@ -309,7 +315,6 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -317,6 +322,9 @@ class IntField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(Int.neg(pos: pos), validator ?? _dummy),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9-]')),
+          ],
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -336,7 +344,6 @@ class IntField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,
@@ -379,7 +386,6 @@ class IntField extends StatelessWidget {
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
-    List<TextInputFormatter>? inputFormatters,
     bool? enabled,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
@@ -409,7 +415,6 @@ class IntField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onFieldSubmitted: onFieldSubmitted,
           onSaved: onSaved,
-          inputFormatters: inputFormatters,
           enabled: enabled,
           scrollPadding: scrollPadding,
           enableInteractiveSelection: enableInteractiveSelection,

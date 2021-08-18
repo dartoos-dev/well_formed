@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formdator/formdator.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/src/core/well_formed.dart';
 import 'package:well_formed/src/numeric/int_field.dart';
 
@@ -728,35 +727,139 @@ Future<void> main() async {
       }
     });
 
-    /// non-digit characters must be filtered out by the input formatter so that
-    /// they do not appear in the form field.
-    testWidgets('inputFormatters', (WidgetTester tester) async {
-      final formatters = [
-        MaskTextInputFormatter(
-          mask: '###.###.###-##',
-          filter: {"#": RegExp(r'\d')},
-        ),
-      ];
-      await tester.pumpWidget(
-        WellFormed.app([
-          IntField(key: kDef, inputFormatters: formatters),
-          IntField.min(1, key: kMin, inputFormatters: formatters),
-          IntField.pos(key: kPos, inputFormatters: formatters),
-          IntField.max(10, key: kMax, inputFormatters: formatters),
-          IntField.neg(key: kNeg, inputFormatters: formatters),
-          IntField.range(15, 25, key: kRange, inputFormatters: formatters),
-        ]),
-      );
-      await tester.pumpAndSettle();
-      for (var i = 0; i < keys.length; ++i) {
-        final unmasked = '$i$i$i$i$i$i$i$i$i$i$i'; // E.g. 11111111111
-        final masked = '$i$i$i.$i$i$i.$i$i$i-$i$i'; // E.g. 111.111.111-11
-        await tester.enterText(find.byKey(keys[i]), unmasked);
-        await tester.pumpAndSettle();
-        final elem = tester.widget(find.widgetWithText(TextField, masked));
-        expect((elem as TextField).inputFormatters, formatters);
-        expect(find.text(masked), findsOneWidget);
-      }
+    /// The minus '-' and plus '+' signs must be accepted along with the digits
+    /// 0–9.
+    group('inputFormatters', () {
+      group('no prefix', () {
+        const masked = '12.34/5';
+        const unmasked = '12345';
+        testWidgets('default ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField(key: kDef)]));
+          await tester.enterText(find.byKey(kDef), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('min ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.min(1, key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('pos ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.pos(key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('max ctor', (WidgetTester tester) async {
+          await tester
+              .pumpWidget(WellFormed.app([IntField.max(99999, key: kMax)]));
+          await tester.enterText(find.byKey(kMax), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('neg ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.neg(key: kMax)]));
+          await tester.enterText(find.byKey(kMax), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('range ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(
+            WellFormed.app([IntField.range(1, 99999, key: kRange)]),
+          );
+          await tester.enterText(find.byKey(kRange), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+      });
+      group('plus sign prefix', () {
+        const masked = '+12.34/5';
+        const unmasked = '+12345';
+        const mod = '12345'; // modulus: no sign.
+
+        testWidgets('default ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField(key: kDef)]));
+          await tester.enterText(find.byKey(kDef), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('min ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.min(1, key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('pos ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.pos(key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('max ctor', (WidgetTester tester) async {
+          await tester
+              .pumpWidget(WellFormed.app([IntField.max(99999, key: kMax)]));
+          await tester.enterText(find.byKey(kMax), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('neg ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.neg(key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, mod), findsOneWidget);
+        });
+        testWidgets('range ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(
+            WellFormed.app([IntField.range(1, 99999, key: kRange)]),
+          );
+          await tester.enterText(find.byKey(kRange), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+      });
+      group('minus sign prefix', () {
+        const masked = '-12.34/5';
+        const unmasked = '-12345';
+        const mod = '12345';
+
+        testWidgets('default ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField(key: kDef)]));
+          await tester.enterText(find.byKey(kDef), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('min ctor', (WidgetTester tester) async {
+          await tester
+              .pumpWidget(WellFormed.app([IntField.min(-99999, key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+
+        /// Must get rid of the minus '-' sign.
+        testWidgets('pos ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(WellFormed.app([IntField.pos(key: kMin)]));
+          await tester.enterText(find.byKey(kMin), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, mod), findsOneWidget);
+        });
+        testWidgets('max ctor', (WidgetTester tester) async {
+          await tester
+              .pumpWidget(WellFormed.app([IntField.max(99999, key: kMax)]));
+          await tester.enterText(find.byKey(kMax), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+        testWidgets('range ctor', (WidgetTester tester) async {
+          await tester.pumpWidget(
+            WellFormed.app([IntField.range(1, 99999, key: kRange)]),
+          );
+          await tester.enterText(find.byKey(kRange), masked);
+          await tester.pumpAndSettle();
+          expect(find.widgetWithText(TextFormField, unmasked), findsOneWidget);
+        });
+      });
     });
     testWidgets('enabled', (WidgetTester tester) async {
       const enabled = false;

@@ -12,6 +12,15 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 - HexField, a text form field for entering hexadecimal digits —
   [41](https://github.com/dartoos-dev/well_formed/issues/41).
 
+### Changed
+
+- The IntField constructor sets the inputFormatters to allow only digits and
+  the plus '+' or minus '-' signs.
+- IntField.pos constructor sets the inputFormatters to only allow digits and
+  the plus '+' sign.
+- IntField.neg constructor sets the inputFormatters to only allow digits and
+  the minus '-' sign.
+
 ### Fixed
 
 - some sections of the README file.
