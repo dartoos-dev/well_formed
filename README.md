@@ -82,7 +82,7 @@ fields with stunning capabilities such as:
   the `blank` property with some text. This property is the error message that
   will be displayed if the user leaves the field blank.
 - **Automatic field masking**. For example, the
-- [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.htmlform)
+  [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.htmlform)
   form field displays the mask '###.###.###-##' (where each '#' is a single
   digit [0–9]) while the user is entering the digits. Therefore, if the user
   enters '999999999', the displayed text will be '999.999.999-99'.
