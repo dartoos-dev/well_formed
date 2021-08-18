@@ -43,11 +43,12 @@ relieve developers of much of the form-related coding. This is achieved by
 providing out-of-the-box field masking, validation, smart trimming, and more. In
 addition, this package aims to:
 
+- help developers to always keep the users' data well-formed.
+- reduce most of the code related to form fields and their validations.
 - improve source code readability by providing form fields with "semantic" names
   — names that convey their purpose at first glance — such as "EmailField",
-  "CpfField", "DigitField", "IntField", and so on.
+  "DigitField", "Ipv4Field", and so on.
 - automate the selection of the keyboard type according to the field's purpose.
-- **not to end up being yet another buggy Flutter form package!**
 
 In order to be a reliable package, every class is well-documented and fully unit
 tested by a CI/CD pipeline with rigorous quality gates.
@@ -181,8 +182,8 @@ Quantity of a product; and so on.
 
 [HexField](https://pub.dev/documentation/well_formed/latest/numeric/HexField-class.html)
 — hexadecimal form field. It accepts the digits 0–9 and the letters
-  'AaBbCcDdEeFf'.  For example: _123_, _45fe_, _CafeBabe_. You can constrain the
-  number of hex digits in several ways:
+'AaBbCcDdEeFf'. For example: _123_, _45fe_, _CafeBabe_. You can constrain the
+number of hex digits in several ways:
 
 - to a fixed number of hex digits through the `HexField.len` constructor
 - to a minimum number of hex digits through the `HexField.min` constructor
