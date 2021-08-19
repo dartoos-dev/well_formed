@@ -62,8 +62,8 @@ to:
   _EmailField_, _Ipv4Field_, _UrlField_, and so on.
 - automate the selection of the keyboard type according to the field's purpose.
 
-In order to be a reliable package, every class is well-documented and fully unit
-tested by a CI/CD pipeline with rigorous quality gates.
+In order to be a reliable package, every class is well-documented and fully unit-tested
+by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
