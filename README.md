@@ -80,10 +80,10 @@ fields with stunning capabilities such as:
 
 - **Required fields**: any field can be made required. To do this, simply assign an
   error message to the field's "blank" property.
-- **Validation**: this is done automatically according to the field type, and you can
+- **Validation**: this is done automatically according to the field type. You can
   customize the error messages by assigning them to properties like `blank`,
-  `malformed`, etc. In addition, you can pass an extra validation step to the `validator`
-  property.
+  `malformed`, `long`, etc. In addition, you can pass an extra validation step to
+  the `validator` property.
 - **Field masking**: this is also performed automatically. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   widget displays the mask _###.###.###-##_ as the user enters digits; therefore,
