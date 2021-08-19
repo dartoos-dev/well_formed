@@ -80,17 +80,19 @@ fields with stunning capabilities such as:
 
 - **Required fields**: any field can be made required. To do this, simply assign an
   error message to the field's "blank" property.
-- **Automatic field masking**. For example, the
+- **Validation**: this is done automatically according to the field type, and you can
+  customize the error messages by assigning them to properties like `blank`,
+  `malformed`, etc. In addition, you can pass an extra validation step to the `validator`
+  property.
+- **Field masking**: this is also performed automatically. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   widget displays the mask _###.###.###-##_ as the user enters digits; therefore,
   if the user enters _12345678900_, the displayed text will be _123.456.789-00_.
-- **Stripping**: this is the optional removal of non-digit characters. It is
-  enabled by default. To disable it, simply set the `strip` property to `false`.
-- **Smart trimming**: this is when trimming is also applied to the callback functions.
+- **Stripping**: is the removal of non-digit characters from masked fields. It is
+  enabled by default. To disable it, simply set the `strip` property to ` false`.
+- **Smart trimming**: this is when trimming is also applied to callback functions.
   The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To enable it,
   simply set the `trim` property to `true`.
-- **Validation**: you can customize the error messages by assigning them to properties like
-  `blank`,`malformed`, `long`, etc.
 - **Automatic keyboard type selection**: the most suitable keyboard type is
   selected according to the field type. For example, the
   [EmailFiel](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
