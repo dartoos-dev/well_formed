@@ -78,36 +78,38 @@ Besides supporting most of the `TextFormField` properties, additional
 properties have been introduced to facilitate the creation of "Smarter" form
 fields with stunning capabilities such as:
 
-- **Required fields**: any field can be made required. To do this, simply assign an
-  error message to the field's "blank" property.
-- **Validation**: this is done automatically according to the field type. You can
-  customize the error messages by assigning them to properties like `blank`,
+- **Required fields**: any field can be made required. To do this, simply assign
+  an error message to the field's "blank" property.
+- **Validation**: this is done automatically according to the field type. You
+  can use your own error messages by assigning them to properties like `blank`,
   `malformed`, `long`, etc. In addition, you can pass an extra validation step to
   the `validator` property.
 - **Field masking**: this is also performed automatically. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
-  widget displays the mask _###.###.###-##_ as the user enters digits; therefore,
-  if the user enters _12345678900_, the displayed text will be _123.456.789-00_.
-- **Stripping**: is the removal of non-digit characters from masked fields. It is
-  enabled by default. To disable it, simply set the `strip` property to ` false`.
+  widget displays the mask _###.###.###-##_ (each '#' is a digit [0–9]) as the
+  user enters digits; therefore, if the user enters _12345678900_, the text that
+  will be displayed is _123.456.789-00_.
+- **Stripping**: is the removal of non-digit characters from masked fields. It
+  is enabled by default. To disable it, simply set the `strip` property to
+  `false`.
 - **Smart trimming**: this is when trimming is also applied to callback functions.
-  The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To enable it,
-  simply set the `trim` property to `true`.
+  The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To
+  enable it, simply set the `trim` property to `true`.
 - **Automatic keyboard type selection**: the most suitable keyboard type is
   selected according to the field type. For example, the
   [EmailFiel](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-  widget sets the keyboard type to `TextInputType.emailAddress`, which is optimized for
-  entering email addresses.
+  widget sets the keyboard type to `TextInputType.emailAddress`, which is
+  optimized for entering email addresses.
 
 ### Form Field in Action
 
 The code below demonstrates how to use the `EmailField` widget with the `trim`
-property set to `true` so that the entered email value is trimmed before
+property set to `true`. Thus, the entered email value is trimmed before
 validation takes place. Furthermore, the example also illustrates some important
 features:
 
 - auto validation
-- error messages
+- custom error messages
 - length constraint
 
 ```dart
@@ -147,7 +149,7 @@ parameters, etc.):
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
 
-Most fields in the Brazil library are masked fields; so whenever you see a "#"
+Most form fields in this library are masked fields; so whenever you see a '#'
 character in the documentation, think of it as a placeholder for a single digit
 [0-9].
 
