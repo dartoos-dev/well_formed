@@ -55,7 +55,7 @@ of the form-related coding. This is achieved by providing out-of-the-box field
 masking, validation, smart trimming, and more. In addition, this package aims
 to:
 
-- help developers to always keep the users' data well-formed.
+- help developers to always keep the users' data **well-formed**.
 - reduce most of the code related to form fields and their validations.
 - improve source code readability by providing form fields with **semantic
   names**; that is, names that convey their purpose at first glance like
@@ -82,7 +82,7 @@ fields with stunning capabilities such as:
   the `blank` property with some text. This property is the error message that
   will be displayed if the user leaves the field blank.
 - **Automatic field masking**. For example, the
-  [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.htmlform)
+  [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   form field displays the mask '###.###.###-##' (where each '#' is a single
   digit [0–9]) while the user is entering the digits. Therefore, if the user
   enters '999999999', the displayed text will be '999.999.999-99'.
@@ -93,9 +93,10 @@ fields with stunning capabilities such as:
   and `onFieldSubmitted`. To enable it, simply set the `trim` property to `true`.
 - **Validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
 - **Automatic keyboard type selection**: the most suitable keyboard type is
-  selected according to the field type. For example, the `EmailFiel` class sets
-  the keyboardType to `TextInputType.emailAddress`, which is optimized for email
-  addresses.
+  selected according to the field type. For example, the
+  [EmailFiel](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
+  class sets) the keyboardType to `TextInputType.emailAddress`, which is
+  optimized for email addresses.
 
 ### Form Field in Action
 
@@ -144,8 +145,9 @@ parameters, etc.):
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
 
-Most of the fields in the Brazil library are masked fields; so whenever you see a '#'
-character in the documentation, think of it as a placeholder for a single digit [0–9].
+Most fields in Brazil library are masked fields; so whenever you see a '#'
+character in the documentation, think of it as a placeholder for a single digit
+[0–9].
 
 #### BrMobileField
 
@@ -156,14 +158,14 @@ is a masked _(##) #####-####_ form field for Brazilian mobile numbers.
 BrMobileField(
   strip: true, // remove non-digit characters when submitted/saved/changed.
   blank: 'Please enter the mobile number', // the error message if the field is left blank
-  malformed: 'Invalid mobile number', // the error message if the number is invalid
+  malformed: 'Invalid mobile number', // the error message if the number is malformed
   decoration: InputDecoration(labelText: 'Enter a mobile number'),
 );
 ```
 
 #### BrPhoneField
 
-[BrPhoneField](https://pub.dev/documentation/well_formed/latest/brazil/BrPhone-class.html)
+[BrPhoneField](https://pub.dev/documentation/well_formed/latest/brazil/BrPhoneField-class.html)
 is a masked _(##) ####-####_ form field for Brazilian landline telephone
 numbers.
 
@@ -247,7 +249,7 @@ BasicTextField.max(
 [WellFormed](https://pub.dev/documentation/well_formed/latest/core/WellFormed-class.html)
 is a convenient and well-formed form widget! It builds a
 [Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget within a
-structure consisting of
+structure consisting of the
 [SafeArea](https://api.flutter.dev/flutter/widgets/SafeArea-class.html) and
 [Column](https://api.flutter.dev/flutter/widgets/Column-class.html) widgets.
 
@@ -260,14 +262,16 @@ related form fields.
 
 [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
 is a form field optimized for emails. You can limit the length of an email by
-using the `EmailField.len` constructor.
+using the
+[EmailField.len](https://pub.dev/documentation/well_formed/latest/net/EmailField/EmailField.len.html)
+constructor.
 
 ```dart
 EmailField.len(
   50, // limits the length to up to 50 characters
   trim: true, // trims the entered email
   blank: 'Inform the email', // error message if the field is left blank
-  malformed: 'Invalid email', // error message if the email is invalid
+  malformed: 'Invalid email', // error message if the email is malformed
   long: 'The email is too long', // error message for long emails
   decoration: InputDecoration(
     labelText: 'Enter an email with up to 50 characters',
@@ -278,15 +282,15 @@ EmailField.len(
 ### Numeric
 
 [Numeric](https://pub.dev/documentation/formdator/latest/numeric/numeric-library.html)
-form fields related to numbers or digits. Example of numeric inputs: a
-three-digit code; a six-digit password; a hexadecimal value; the Minimum Order
+form fields related to numbers or digits. A few examples of numeric entries are:
+a three-digit code; a six-digit password; a hexadecimal value; the Minimum Order
 Quantity of a product; and so on.
 
 #### DigitField
 
 [DigitField](https://pub.dev/documentation/well_formed/latest/numeric/DigitField-class.html)
-is a digit-only form field. It is ideal for verification code, PIN numbers, etc.
-Example of valid entries: _0123_, _1111_, _090909_.
+is a digit-only form field. It is ideal for verification codes, PIN numbers,
+etc. Here are some examples of valid entries: _0123_, _1111_, _090909_.
 
 ```dart
 DigitField(
@@ -315,7 +319,7 @@ is a hexadecimal form field. It accepts the digits 0–9 and the letters
 
 ```dart
 HexField(
-  blank: 'Please enter the device number', // the error message if the field is left blank
+  blank: 'Please enter the device hex number', // the error message if the field is left blank
   malformed:'non-hex character(s)' // the error message for malformed data.
   decoration: InputDecoration(labelText: 'Enter a device hex number'),
 );
@@ -369,7 +373,7 @@ a shopping cart, getting an auction bid, etc.
 NumField(
   blank: 'Please enter your bid amount', // the error message if the field is left blank
   malformed:'non-numeric character(s)' // the error message for malformed data.
-  decoration: InputDecoration(labelText: 'Your bid amount'),
+  decoration: InputDecoration(labelText: 'Enter your bid'),
 );
 ```
 
@@ -426,7 +430,7 @@ class, some properties were left out for one of two reasons:
 - the property has been deprecated by the Flutter sdk. This is the case of the
   `autovalidate` and `maxLengthEnforced` properties.
 - the property has been considered too superfluous — it has little use in
-  the context of form fields. This is the case of the following properties:
+  the context of form fields. This is the case for the following properties:
 
 ```Dart
 Brightness? keyboardAppearance,
