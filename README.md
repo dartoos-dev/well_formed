@@ -74,7 +74,7 @@ widget so that they remain **fully compatible** with the
 important to avoid erroneous (buggy) behavior, such as when a field does not
 reset when its parent `Form` widget is reset.
 
-In addition to supporting most of the `TextFormField` properties, additional
+Besides supporting most of the `TextFormField` properties, additional
 properties have been introduced to facilitate the creation of "Smarter" form
 fields with stunning capabilities such as:
 
