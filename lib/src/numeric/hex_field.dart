@@ -5,11 +5,11 @@ import 'package:well_formed/well_formed.dart';
 
 /// Hexadecimal-only Form Field.
 ///
-/// Hexadecimal: any one of the sixteen hexadecimal digits [0–9a-fA–F]. Non-hex
+/// Hexadecimal: any one of the sixteen hexadecimal digits [0–9A–F]. Non-hex
 /// characters must somehow be filtered out so that they do not appear in the
 /// form field. To achieve this, this widget:
 ///
-/// - sets up a validator to block non-hex characters;
+/// - sets up a validator to block non-hexadecimal characters;
 /// - sets the [inputFormatters] to deny non-hexadecimal characters.
 /// - sets the [keyboardType] to [TextInputType.text] — due to the need for the
 ///   letters 'AaBbCcDdEeFf'.
