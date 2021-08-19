@@ -51,12 +51,12 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 ## Overview
 
 Well-**Form**ed is a form field package designed to relieve developers of much
-of the form-related coding. This is achieved by providing out-of-the-box field
-masking, validation, smart trimming, and more. In addition, this package aims
-to:
+of the form-related coding. This is achieved by providing automatic field validation
+and masking, smart trimming, and more.
+
+In addition, this package aims to:
 
 - help developers to always keep the users' data **well-formed**.
-- reduce most of the code related to form fields and their validations.
 - improve source code readability by providing form fields with **semantic
   names**; that is, names that convey their purpose at first glance like
   _EmailField_, _Ipv4Field_, _UrlField_, and so on.
@@ -78,8 +78,8 @@ In addition to supporting most of the `TextFormField` properties, additional
 properties have been introduced to facilitate the creation of "Smarter" form
 fields with stunning capabilities such as:
 
-- Fields that can easily be made **required**: just to set the `blank`property to the
-  text that will be displayed if the user leaves the field blank.
+- **Required fields**: any field can be made required. To do this, simply assign an
+  error message to the field's "blank" property.
 - **Automatic field masking**. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   widget displays the mask _###.###.###-##_ as the user enters digits; therefore,
