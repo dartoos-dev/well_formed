@@ -78,31 +78,31 @@ In addition to supporting most of the `TextFormField` properties, additional
 properties have been introduced to facilitate the creation of "Smarter" form
 fields with stunning capabilities such as:
 
-- Fields that can easily be made **required (mandatory)**: you have just to set
-  the `blank` property with some text. This property is the error message that
-  will be displayed if the user leaves the field blank.
+- Fields that can easily be made **required**: just to set the `blank`property to the
+  text that will be displayed if the user leaves the field blank.
 - **Automatic field masking**. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
-  form field displays the mask '###.###.###-##' (where each '#' is a single
-  digit [0–9]) while the user is entering the digits. Therefore, if the user
-  enters '999999999', the displayed text will be '999.999.999-99'.
+  widget displays the mask _###.###.###-##_ as the user enters digits; therefore,
+  if the user enters _12345678900_, the displayed text will be _123.456.789-00_.
 - **Stripping**: this is the optional removal of non-digit characters. It is
   enabled by default. To disable it, simply set the `strip` property to `false`.
-- **Smart trimming**: this is when trimming is also applied to form field
-  callback functions. The affected callback functions are `onSaved`,`onChanged`
-  and `onFieldSubmitted`. To enable it, simply set the `trim` property to `true`.
-- **Validation** with custom error messages (`blank`, `malformed`, `long`, etc.).
+- **Smart trimming**: this is when trimming is also applied to the callback functions.
+  The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To enable it,
+  simply set the `trim` property to `true`.
+- **Validation**: you can customize the error messages by assigning them to properties like
+  `blank`,`malformed`, `long`, etc.
 - **Automatic keyboard type selection**: the most suitable keyboard type is
   selected according to the field type. For example, the
   [EmailFiel](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-  class sets) the keyboardType to `TextInputType.emailAddress`, which is
-  optimized for email addresses.
+  widget sets the keyboard type to `TextInputType.emailAddress`, which is optimized for
+  entering email addresses.
 
 ### Form Field in Action
 
 The code below demonstrates how to use the `EmailField` widget with the `trim`
-property set to `true` so that the entered email value is trimmed before being
-validated. Furthermore, the example also illustrates some important features:
+property set to `true` so that the entered email value is trimmed before
+validation takes place. Furthermore, the example also illustrates some important
+features:
 
 - auto validation
 - error messages
@@ -135,7 +135,7 @@ validated. Furthermore, the example also illustrates some important features:
 
 ## List of Form Fields
 
-The list of form fields with detailed information about each one (constructors,
+The complete list of form fields with detailed information about each one (constructors,
 parameters, etc.):
 
 - [well_formed](https://pub.dev/documentation/well_formed/latest/).
@@ -145,9 +145,9 @@ parameters, etc.):
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
 
-Most fields in Brazil library are masked fields; so whenever you see a '#'
+Most fields in the Brazil library are masked fields; so whenever you see a "#"
 character in the documentation, think of it as a placeholder for a single digit
-[0–9].
+[0-9].
 
 #### BrMobileField
 
