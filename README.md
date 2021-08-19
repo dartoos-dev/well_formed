@@ -87,8 +87,8 @@ fields with stunning capabilities such as:
 - **Field masking**: this is also performed automatically. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   widget displays the mask _###.###.###-##_ (each '#' is a digit [0–9]) as the
-  user enters digits; therefore, if the user enters _12345678900_, the text that
-  will be displayed is _123.456.789-00_.
+  user enters digits; therefore, if the user enters _12345678900_, the displayed
+  text will be _123.456.789-00_.
 - **Stripping**: is the removal of non-digit characters from masked fields. It
   is enabled by default. To disable it, simply set the `strip` property to
   `false`.
