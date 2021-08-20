@@ -103,10 +103,11 @@ fields with stunning capabilities such as:
 
 ### Form Field in Action
 
-The code below demonstrates how to use the `EmailField` widget with the `trim`
-property set to `true`. Thus, the entered email value is trimmed before
-validation takes place. Furthermore, the example also illustrates some important
-features:
+The code below demonstrates how to use the
+[EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
+widget with the `trim` property set to `true`. Thus, the entered value is
+trimmed before validation takes place. Furthermore, the example also illustrates
+some important features:
 
 - auto validation
 - custom error messages
