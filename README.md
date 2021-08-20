@@ -79,7 +79,7 @@ properties have been introduced to facilitate the creation of "Smarter" form
 fields with stunning capabilities such as:
 
 - **Required fields**: any field can be made required. To do this, simply assign
-  an error message to the field's "blank" property.
+  an error message to the field's `blank` property.
 - **Validation**: this is done automatically according to the field type. You
   can use your own error messages by assigning them to properties like `blank`,
   `malformed`, `long`, etc. In addition, you can pass an extra validation step to
@@ -96,10 +96,10 @@ fields with stunning capabilities such as:
   The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To
   enable it, simply set the `trim` property to `true`.
 - **Automatic keyboard type selection**: the most suitable keyboard type is
-  selected according to the field type. For example, the
-  [EmailFiel](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-  widget sets the keyboard type to `TextInputType.emailAddress`, which is
-  optimized for entering email addresses.
+  selected according to the field type. For example,
+  the [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
+  widget sets the keyboard type to `TextInputType.emailAddress`, which is optimized
+  for entering email addresses.
 
 ### Form Field in Action
 
