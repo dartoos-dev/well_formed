@@ -286,7 +286,7 @@ EmailField.len(
 
 ### Numeric
 
-[Numeric](https://pub.dev/documentation/formdator/latest/numeric/numeric-library.html)
+[Numeric](https://pub.dev/documentation/formdator/latest/numeric/numeric-library.html):
 form fields related to numbers or digits. A few examples of numeric entries are:
 a three-digit code; a six-digit password; a hexadecimal value; the Minimum Order
 Quantity of a product; and so on.
