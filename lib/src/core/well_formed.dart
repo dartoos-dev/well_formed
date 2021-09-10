@@ -33,31 +33,33 @@ class WellFormed extends StatelessWidget {
   })  : _toForm = ((context) {
           final fkey = formKey ?? GlobalKey<FormState>();
           return SafeArea(
-            child: Column(children: [
-              Form(
-                key: fkey,
-                child: Column(children: fields),
-              ),
-              ListTile(
-                leading: leading ?? const SizedBox(),
-                title: submit(() {
-                  final formState = fkey.currentState;
-                  if (formState != null) {
-                    if (formState.validate()) {
-                      formState.save();
+            child: Column(
+              children: [
+                Form(
+                  key: fkey,
+                  child: Column(children: fields),
+                ),
+                ListTile(
+                  leading: leading ?? const SizedBox(),
+                  title: submit(() {
+                    final formState = fkey.currentState;
+                    if (formState != null) {
+                      if (formState.validate()) {
+                        formState.save();
+                      }
                     }
-                  }
-                }),
-                trailing: reset == null
-                    ? const SizedBox()
-                    : reset(() {
-                        final formState = fkey.currentState;
-                        if (formState != null) {
-                          formState.reset();
-                        }
-                      }),
-              ),
-            ]),
+                  }),
+                  trailing: reset == null
+                      ? const SizedBox()
+                      : reset(() {
+                          final formState = fkey.currentState;
+                          if (formState != null) {
+                            formState.reset();
+                          }
+                        }),
+                ),
+              ],
+            ),
           );
         }),
         super(key: key);

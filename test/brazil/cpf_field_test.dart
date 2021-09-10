@@ -6,6 +6,7 @@ import 'package:well_formed/src/core/well_formed.dart';
 
 import '../get_val.dart';
 
+// ignore_for_file: require_trailing_commas
 Future<void> main() async {
   group('CpfField', () {
     const empty = ''; // zero-length text.

@@ -79,7 +79,8 @@ class BrPhoneField extends StatelessWidget {
                   : !strip
                       ? onFieldSubmitted
                       : (String mask) => onFieldSubmitted(
-                          mask.replaceAll(RegExp(r'[-()\s]'), ''));
+                            mask.replaceAll(RegExp(r'[-()\s]'), ''),
+                          );
           return BasicTextField(
             validator: Pair.str(BrPhone(mal: malformed), validator ?? _dummy),
             blank: blank,

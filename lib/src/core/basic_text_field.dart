@@ -345,7 +345,9 @@ class BasicTextField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str2(
-              Len.range(min, max, less: less, great: great), validator ?? _ok),
+            Len.range(min, max, less: less, great: great),
+            validator ?? _ok,
+          ),
           trim: trim,
           blank: blank,
           controller: controller,

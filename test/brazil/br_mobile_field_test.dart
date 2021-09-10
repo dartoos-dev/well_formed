@@ -6,6 +6,8 @@ import 'package:well_formed/src/core/well_formed.dart';
 
 import '../get_val.dart';
 
+// ignore_for_file: require_trailing_commas
+
 Future<void> main() async {
   group('BrMobileField', () {
     const empty = ''; // zero-length text.
@@ -81,7 +83,6 @@ Future<void> main() async {
         expect(count, 1);
       });
 
-      ///
       testWidgets('masked', (WidgetTester tester) async {
         const trimmed = '(11) 99765-4322';
         const untrimmed = '\n $trimmed \t';

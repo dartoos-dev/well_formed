@@ -7,6 +7,7 @@ import 'package:well_formed/src/numeric/int_field.dart';
 
 import '../get_val.dart';
 
+// ignore_for_file: require_trailing_commas
 Future<void> main() async {
   group('IntField', () {
     const empty = ''; // zero-length text.
