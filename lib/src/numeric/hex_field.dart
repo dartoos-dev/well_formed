@@ -153,15 +153,15 @@ class HexField extends StatelessWidget {
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [malformed] the error message in case of non-hex characters.
-  /// [less] the error message if the number of hexs is less than [min].
-  /// will not be required.
+  /// [short] the error message if the length of the input data is shorter than
+  /// [min].
   HexField.min(
     int min, {
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? less,
+    String? short,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration,
@@ -184,7 +184,7 @@ class HexField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.min(min, less: less), validator ?? _dummy),
+          validator: Pair.str(Len.min(min, short: short), validator ?? _dummy),
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -219,14 +219,17 @@ class HexField extends StatelessWidget {
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [malformed] the error message in case of non-hex characters.
-  /// [great] the error message if the number of hexs is greater than [max].
+  /// [short] the error message if the length of the input data is shorter than
+  /// [min].
+  /// [long] the error message if the length of the input data is longer than
+  /// [max].
   HexField.max(
     int max, {
     bool trim = false,
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? great,
+    String? long,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration,
@@ -249,7 +252,7 @@ class HexField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.max(max, great: great), validator ?? _dummy),
+          validator: Pair.str(Len.max(max, long: long), validator ?? _dummy),
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -285,8 +288,10 @@ class HexField extends StatelessWidget {
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [malformed] the error message in case of non-hex characters.
-  /// [less] the error message if the number of hexs is less than [min].
-  /// [great] the error message if the number of hexs is greater than [max].
+  /// [short] the error message if the length of the input data is shorter than
+  /// [min].
+  /// [long] the error message if the length of the input data is longer than
+  /// [max].
   HexField.range(
     int min,
     int max, {
@@ -294,8 +299,8 @@ class HexField extends StatelessWidget {
     FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
-    String? less,
-    String? great,
+    String? short,
+    String? long,
     String? initialValue,
     TextEditingController? controller,
     InputDecoration? decoration,
@@ -319,7 +324,7 @@ class HexField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Len.range(min, max, less: less, great: great),
+            Len.range(min, max, short: short, long: long),
             validator ?? _dummy,
           ),
           malformed: malformed,

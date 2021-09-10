@@ -87,14 +87,15 @@ class EmailField extends StatelessWidget {
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [malformed] the error message in case of a malformed email.
+  /// [long] the error message if the length of the entered email > [len].
   EmailField.len(
     int len, {
     bool trim = false,
-    FormFieldValidator<String>? validator,
     String? blank,
     String? malformed,
     String? long,
     String? initialValue,
+    FormFieldValidator<String>? validator,
     TextEditingController? controller,
     InputDecoration? decoration = const InputDecoration(),
     TextInputAction? textInputAction,
@@ -117,7 +118,7 @@ class EmailField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.max(len, great: long), validator ?? _dummy),
+          validator: Pair.str2(Len.max(len, long: long), validator ?? _dummy),
           malformed: malformed,
           blank: blank,
           trim: trim,

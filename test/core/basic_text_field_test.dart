@@ -11,12 +11,13 @@ import '../get_val.dart';
 Future<void> main() async {
   group('BasicTextField', () {
     const empty = ''; // zero-length text.
-    const short = 'few';
+    const shortText = 'few';
     const tenCharText = 'ten chars.';
-    const long = 'There are certainly more than ten chars in this sentence.';
+    const longText =
+        'There are certainly more than ten chars in this sentence.';
     const blank = 'Error: this field is required';
-    const less = 'Error: the text is too short';
-    const great = 'Error: the text is too long';
+    const short = 'Error: the text is too short';
+    const long = 'Error: the text is too long';
     const kDef = Key('()');
     const kLen = Key('len');
     const kMin = Key('min');
@@ -37,36 +38,36 @@ Future<void> main() async {
         expect(val(null), null);
         expect(val(empty), diff);
         expect(val(tenCharText), null);
-        expect(val(short), diff);
-        expect(val(long), diff);
+        expect(val(shortText), diff);
+        expect(val(longText), diff);
       });
       testWidgets('mininum', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(BasicTextField.min(10, less: less));
+        final val = await getVal(BasicTextField.min(10, short: short));
         expect(val(null), null);
-        expect(val(empty), less);
+        expect(val(empty), short);
         expect(val(tenCharText), null);
-        expect(val(short), less);
-        expect(val(long), null);
+        expect(val(shortText), short);
+        expect(val(longText), null);
       });
       testWidgets('maximum', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(BasicTextField.max(10, great: great));
+        final val = await getVal(BasicTextField.max(10, long: long));
         expect(val(null), null);
         expect(val(empty), null);
         expect(val(tenCharText), null);
-        expect(val(short), null);
-        expect(val(long), great);
+        expect(val(shortText), null);
+        expect(val(longText), long);
       });
       testWidgets('range', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-            BasicTextField.range(10, 20, less: less, great: great));
+            BasicTextField.range(10, 20, short: short, long: long));
         expect(val(null), null);
-        expect(val(empty), less);
+        expect(val(empty), short);
         expect(val(tenCharText), null);
-        expect(val(short), less);
-        expect(val(long), great);
+        expect(val(shortText), short);
+        expect(val(longText), long);
       });
     });
     group('key', () {

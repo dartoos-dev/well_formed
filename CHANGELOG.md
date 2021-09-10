@@ -9,7 +9,13 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ### Changed
 
+- rename 'less' and 'great' ctor. parameters to 'short' and 'long' — **Breaking
+  Changes**.
+- bump formdator to v0.12.1.
+- reorganization of the structure of the README file.
+- minor corrections to the contents of the README file.
 - minor changes to the package description.
+- stricter linting rules.
 
 ## [0.3.8] - 2021-08-19
 

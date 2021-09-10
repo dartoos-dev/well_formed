@@ -11,13 +11,13 @@ import '../get_val.dart';
 Future<void> main() async {
   group('DigitField', () {
     const empty = ''; // zero-length text.
-    const short = '123';
-    const long = '012345678901234567890';
+    const shortText = '123';
+    const longText = '012345678901234567890';
     const nonDigit = 'Error: non-digit character(s)';
     const blank = 'Error: this field is required';
     const diff = 'length error';
-    const less = 'Error: the text is too short';
-    const great = 'Error: the text is too long';
+    const short = 'Error: the text is too short';
+    const long = 'Error: the text is too long';
     const tenDigits = '0123456789';
     const tenDigitsX = '123456789X';
     const kDef = Key('()');
@@ -41,28 +41,28 @@ Future<void> main() async {
         expect(val(tenDigits), null);
         expect(val(empty), nonDigit);
         expect(val(tenDigitsX), nonDigit);
-        expect(val(short), diff);
-        expect(val(long), diff);
+        expect(val(shortText), diff);
+        expect(val(longText), diff);
       });
       testWidgets('mininum', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val =
-            await getVal(DigitField.min(10, malformed: nonDigit, less: less));
+            await getVal(DigitField.min(10, malformed: nonDigit, short: short));
         expect(val(null), null);
         expect(val(tenDigits), null);
         expect(val(empty), nonDigit);
-        expect(val(short), less);
-        expect(val(long), null);
+        expect(val(shortText), short);
+        expect(val(longText), null);
       });
       testWidgets('maximum', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val =
-            await getVal(DigitField.max(10, malformed: nonDigit, great: great));
+            await getVal(DigitField.max(10, malformed: nonDigit, long: long));
         expect(val(null), null);
         expect(val(empty), nonDigit);
         expect(val(tenDigits), null);
-        expect(val(short), null);
-        expect(val(long), great);
+        expect(val(shortText), null);
+        expect(val(longText), long);
       });
       testWidgets('range', (WidgetTester tester) async {
         final getVal = GetVal(tester);
@@ -70,14 +70,14 @@ Future<void> main() async {
           10,
           20,
           malformed: nonDigit,
-          less: less,
-          great: great,
+          short: short,
+          long: long,
         ));
         expect(val(null), null);
         expect(val(tenDigitsX), nonDigit);
         expect(val(tenDigits), null);
-        expect(val(short), less);
-        expect(val(long), great);
+        expect(val(shortText), short);
+        expect(val(longText), long);
       });
     });
     group('key', () {
@@ -246,13 +246,13 @@ Future<void> main() async {
           3,
           blank: blank,
           malformed: nonDigit,
-          less: less,
+          short: short,
           validator: nok,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('1.1'), nonDigit);
-        expect(val('55'), less);
+        expect(val('55'), short);
         expect(val('123'), error);
         expect(val('222'), error);
       });
@@ -262,13 +262,13 @@ Future<void> main() async {
           3,
           blank: blank,
           malformed: nonDigit,
-          great: great,
+          long: long,
           validator: nok,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('+55'), nonDigit);
-        expect(val('5555'), great);
+        expect(val('5555'), long);
         expect(val('9'), error);
         expect(val('11'), error);
         expect(val('246'), error);
@@ -280,15 +280,15 @@ Future<void> main() async {
           4,
           blank: blank,
           malformed: nonDigit,
-          less: less,
-          great: great,
+          short: short,
+          long: long,
           validator: nok,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('-55'), nonDigit);
-        expect(val('9'), less);
-        expect(val('99999'), great);
+        expect(val('9'), short);
+        expect(val('99999'), long);
         expect(val('111'), error);
       });
     });

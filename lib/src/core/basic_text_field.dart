@@ -167,15 +167,15 @@ class BasicTextField extends StatelessWidget {
   /// characters.
   ///
   /// [min] the minimum length of the input data; it must be > 0.
-  /// [less] the error message in case the length of the input data is less than
-  /// [min]; that is, the entered text contains fewer characters than [min].
+  /// [short] the error message if the length of the input data is shorter than
+  /// [min].
   /// [trim] whether to trim or not the input data.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [validator] an optional extra validation step.
   BasicTextField.min(
     int min, {
-    String? less,
+    String? short,
     bool trim = false,
     String? blank,
     TextEditingController? controller,
@@ -203,7 +203,7 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.min(min, less: less), validator ?? _ok),
+          validator: Pair.str2(Len.min(min, short: short), validator ?? _ok),
           trim: trim,
           blank: blank,
           keyboardType: keyboardType,
@@ -235,15 +235,15 @@ class BasicTextField extends StatelessWidget {
   /// characters.
   ///
   /// [max] the maximum length of the input data; it must be > 0.
-  /// [great] the error message in case the length of the input data is greater
-  /// than [max]; that is, the entered text contains more characters than [max].
+  /// [long] the error message if the length of the input data is longer than
+  /// [max].
   /// [trim] whether to trim or not the input data.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
   /// [validator] an optional extra validation step.
   BasicTextField.max(
     int max, {
-    String? great,
+    String? long,
     bool trim = false,
     String? blank,
     TextEditingController? controller,
@@ -271,7 +271,7 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.max(max, great: great), validator ?? _ok),
+          validator: Pair.str2(Len.max(max, long: long), validator ?? _ok),
           trim: trim,
           blank: blank,
           controller: controller,
@@ -304,10 +304,10 @@ class BasicTextField extends StatelessWidget {
   ///
   /// [min] the minimum length of the input data; it must be > 0 and < [max].
   /// [max] the maximum length of the input data; it must be > 0 and > [min].
-  /// [less] the error message in case the length of the input data is less than
-  /// [min]; that is, the entered text contains fewer characters than [min].
-  /// [great] the error message in case the length of the input data is greater
-  /// than [max]; that is, the entered text contains more characters than [max].
+  /// [short] the error message if the length of the input data is shorter than
+  /// [min].
+  /// [long] the error message if the length of the input data is longer than
+  /// [max].
   /// [trim] whether to trim or not the input data.
   /// [blank] the error message in case of blank field; if omitted, the field
   /// will not be made required.
@@ -315,8 +315,8 @@ class BasicTextField extends StatelessWidget {
   BasicTextField.range(
     int min,
     int max, {
-    String? less,
-    String? great,
+    String? short,
+    String? long,
     bool trim = false,
     String? blank,
     TextEditingController? controller,
@@ -345,7 +345,7 @@ class BasicTextField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str2(
-            Len.range(min, max, less: less, great: great),
+            Len.range(min, max, short: short, long: long),
             validator ?? _ok,
           ),
           trim: trim,

@@ -19,6 +19,23 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 [![Hits-of-Code](https://hitsofcode.com/github/dartoos-dev/well_formed?branch=master)](https://hitsofcode.com/github/dartoos-dev/well_formed/view?branch=master)
 
+## Overview
+
+Well-**Form**ed is a form field package designed to relieve developers of much
+of the form-related coding. This is achieved by providing automatic field validation
+and masking, smart trimming, and more.
+
+In addition, this package aims to:
+
+- help developers to always keep the users' data **well-formed**.
+- improve source code readability by providing form fields with **semantic
+  names**; that is, names that convey their purpose at first glance like
+  _EmailField_, _Ipv4Field_, _UrlField_, and so on.
+- automate the selection of the keyboard type according to the field's purpose.
+
+In order to be a reliable package, every class is well-documented and fully unit-tested
+by a CI/CD pipeline with rigorous quality gates.
+
 ## Contents
 
 - [Overview](#overview)
@@ -48,22 +65,6 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 - [Left Out Properties](#left-out-properties)
 - [References](#references)
 
-## Overview
-
-Well-**Form**ed is a form field package designed to relieve developers of much
-of the form-related coding. This is achieved by providing automatic field validation
-and masking, smart trimming, and more.
-
-In addition, this package aims to:
-
-- help developers to always keep the users' data **well-formed**.
-- improve source code readability by providing form fields with **semantic
-  names**; that is, names that convey their purpose at first glance like
-  _EmailField_, _Ipv4Field_, _UrlField_, and so on.
-- automate the selection of the keyboard type according to the field's purpose.
-
-In order to be a reliable package, every class is well-documented and fully unit-tested
-by a CI/CD pipeline with rigorous quality gates.
 
 ## Getting Started
 
@@ -254,9 +255,9 @@ BasicTextField.max(
 [WellFormed](https://pub.dev/documentation/well_formed/latest/core/WellFormed-class.html)
 is a convenient and well-formed form widget! It builds a
 [Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget within a
-structure consisting of the
-[SafeArea](https://api.flutter.dev/flutter/widgets/SafeArea-class.html) and
-[Column](https://api.flutter.dev/flutter/widgets/Column-class.html) widgets.
+structure consisting of a
+[SafeArea](https://api.flutter.dev/flutter/widgets/SafeArea-class.html) and a
+[Column](https://api.flutter.dev/flutter/widgets/Column-class.html).
 
 ### Net
 
@@ -288,14 +289,16 @@ EmailField.len(
 
 [Numeric](https://pub.dev/documentation/formdator/latest/numeric/numeric-library.html):
 form fields related to numbers or digits. A few examples of numeric entries are:
-a three-digit code; a six-digit password; a hexadecimal value; the Minimum Order
-Quantity of a product; and so on.
+- a three-digit code
+- a six-digit password
+- a hexadecimal value
+- the Minimum Order Quantity of a product
 
 #### DigitField
 
 [DigitField](https://pub.dev/documentation/well_formed/latest/numeric/DigitField-class.html)
-is a digit-only form field. It is ideal for verification codes, PIN numbers,
-etc. Here are some examples of valid entries: _0123_, _1111_, _090909_.
+is a digit-only form field. It is the ideal form field for verification codes,
+PIN numbers, etc. Examples of valid entries are: _0123_, _1111_, _090909_.
 
 ```dart
 DigitField(
@@ -319,8 +322,8 @@ You can constrain the number of digits in several ways through constructors:
 #### HexField
 
 [HexField](https://pub.dev/documentation/well_formed/latest/numeric/HexField-class.html)
-is a hexadecimal form field. It accepts the digits 0–9 and the letters
-'AaBbCcDdEeFf'. Example of valid entries: _123_, _45fe_, _CafeBabe_.
+is a hexadecimal form field. It accepts the digits _0123456789_ and the letters
+_AaBbCcDdEeFf_. Example of valid entries: _123_, _45fe_, _CafeBabe_.
 
 ```dart
 HexField(
@@ -344,8 +347,8 @@ You can constrain the number of hex digits in several ways through constructors:
 #### IntField
 
 [IntField](https://pub.dev/documentation/well_formed/latest/numeric/IntField-class.html)
-is the form field for integers. It is ideal for entering the quantity of an
-item, number of children, age, etc.
+is the form field for integers. It is the ideal form field for entering the
+quantity of an item, the number of children, age, etc.
 
 ```dart
 IntField(
@@ -371,8 +374,8 @@ You can constrain the allowed values in several ways through constructors:
 #### NumField
 
 [NumField](https://pub.dev/documentation/well_formed/latest/numeric/NumField-class.html)
-is the floating-point form field. It is ideal for displaying the total price of
-a shopping cart, getting an auction bid, etc.
+is the floating-point form field. It is the ideal form field for displaying the
+total price of a shopping cart, getting an auction bid, etc.
 
 ```dart
 NumField(
@@ -432,8 +435,8 @@ Regarding compatibility with the
 [TextFormField](https://api.flutter.dev/flutter/material/TextFormField-class.html)
 class, some properties were left out for one of two reasons:
 
-- the property has been deprecated by the Flutter sdk. This is the case of the
-  `autovalidate` and `maxLengthEnforced` properties.
+- the property has been deprecated by the Flutter development team. This is the
+  case of the `autovalidate` and `maxLengthEnforced` properties.
 - the property has been considered too superfluous — it has little use in
   the context of form fields. This is the case for the following properties:
 
