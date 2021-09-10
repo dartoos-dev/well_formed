@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-09-10
+
 ### Changed
 
 - rename 'less' and 'great' ctor. parameters to 'short' and 'long' — **Breaking

@@ -1,6 +1,6 @@
 name: well_formed
 description: A form fields package designed to relieve developers of much of the burden of form-related coding. It provides field masking, validation, smart trimming, and more.
-version: 0.3.8
+version: 0.4.0
 homepage: https://dartoos.dev
 repository: https://github.com/dartoos-dev/well_formed
 
