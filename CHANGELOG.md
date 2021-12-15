@@ -7,6 +7,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+## [0.4.1] - 2021-12-15
+
 ### Changed
 
 - bump up the formdator package version to 0.12.2
