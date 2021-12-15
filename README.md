@@ -245,7 +245,7 @@ BasicTextField.max(
   50, // limits the length to 50 charactes
   trim: true, // trims the entered data when submitted/saved/changed.
   blank: 'Please enter your full name', // the error message if the field is left blank
-  great: 'The name is too long', // the error message if the number of chars is greater than 50
+  long: 'The name is too long', // the error message if the number of chars is longer than 50
   decoration: InputDecoration(labelText: 'Enter your full name (up to 50 chars)'),
 );
 ```

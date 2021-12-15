@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:formdator/formdator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// Plano Brasileiro de Numeração de Telefones Fixos.
-///
-/// Brazilian Landline Numbering Plan.
+/// Plano Brasileiro de Numeração de Telefones Fixos — Brazilian Landline
+/// Numbering Plan.
 ///
 /// Brazil's telephone numbering plan uses a two-digit area code plus
 /// eight-digit local telephone numbers for landlines. Typically, a number is

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:formdator/formdator.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:well_formed/well_formed.dart';
 
-/// Plano Brasileiro de Numeração Móvel.
-///
-/// Brazilian Mobile Numbering Plan.
+/// Plano Brasileiro de Numeração Móvel — Brazilian Mobile Numbering Plan.
 ///
 /// Brazil's mobile numbering plan uses a two-digit area code plus nine-digit
 /// local numbers. Typically, a number is masked as (AA) NNNNN-NNNN, where AA =

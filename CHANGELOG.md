@@ -7,6 +7,16 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
+### Changed
+
+- bump up the formdator package version to 0.12.2
+
+### Fixed
+
+- running demo app on Android — [62](https://github.com/dartoos-dev/well_formed/issues/62).
+- remove redundant imports.
+- README: rename the `BasicTextField` constructor parameter 'great' to 'long'.
+
 ## [0.4.0] - 2021-09-10
 
 ### Changed
