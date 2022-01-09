@@ -11,7 +11,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  eo_color: ^1.1.9
+  eo_color: ^2.2.0
   flutter:
     sdk: flutter
   well_formed:
@@ -20,7 +20,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^1.5.3
+  lint: ^1.7.1
 
 flutter:
   uses-material-design: true
