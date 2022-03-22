@@ -490,3 +490,4 @@ Make sure the commands below **passes** before making a Pull Request.
 - [TextFormField](https://api.flutter.dev/flutter/material/TextFormField-class.html)
 - [Build a Flutter form](https://flutter.dev/docs/cookbook/forms/validation)
 - [Mozilla input types](https://developer.mozilla.org/en-US/docs/Learn/Forms/HTML5_input_types)
+- [HTML Input Types](https://www.scaler.com/topics/html/html-forms/)
