@@ -9,16 +9,14 @@ analyzer:
     implicit-dynamic: false
 linter:
   rules:
-    # Always await.
-    unawaited_futures: true
     # Make constructors the first thing in every class
     sort_constructors_first: true
     # Good packages document everything
     public_member_api_docs: true
-    # It's a good practice to expose the ability to provide a key when creating public widgets.
     use_key_in_widget_constructors: true
     always_declare_return_types: true
     cancel_subscriptions: true
     close_sinks: true
     only_throw_errors: true
     package_api_docs: true
+    always_use_package_imports: false
