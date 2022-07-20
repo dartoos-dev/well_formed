@@ -11,6 +11,7 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 - improvements to the README file —
   [72](https://github.com/dartoos-dev/well_formed/issues/72).
+- bump up the dependencies — [74](https://github.com/dartoos-dev/well_formed/issues/74).
 
 ## [0.4.2] - 2022-01-09
 
