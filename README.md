@@ -22,8 +22,8 @@ Rultor.com](https://www.rultor.com/b/dartoos-dev/well_formed)](https://www.rulto
 ## Overview
 
 Well-**Form**ed is a form field package designed to relieve developers of much
-of the form-related coding. This is achieved by providing automatic field validation
-and masking, smart trimming, and more.
+of the form-related coding. This is achieved by providing automatic field
+validation and masking, smart trimming, and more.
 
 In addition, this package aims to:
 
@@ -33,8 +33,8 @@ In addition, this package aims to:
   _EmailField_, _Ipv4Field_, _UrlField_, and so on.
 - automate the selection of the keyboard type according to the field's purpose.
 
-In order to be a reliable package, every class is well-documented and fully unit-tested
-by a CI/CD pipeline with rigorous quality gates.
+In order to be a reliable package, every class is well-documented and fully
+unit-tested by a CI/CD pipeline with rigorous quality gates.
 
 ## Contents
 
@@ -74,46 +74,47 @@ Most of the form fields in this package are built on top of the
 widget so that they remain **fully compatible** with the
 [Form](https://api.flutter.dev/flutter/widgets/Form-class.html) widget. This is
 important to avoid erroneous (buggy) behavior, such as when a field does not
-reset when its parent `Form` widget is reset.
+reset when its parent `Form` widget gets reset.
 
-Besides supporting most of the `TextFormField` properties, additional
-properties have been introduced to facilitate the creation of "Smarter" form
-fields with stunning capabilities such as:
+Besides supporting most of the `TextFormField` properties, additional properties
+have been introduced to facilitate the creation of "Smarter" form fields with
+stunning capabilities such as:
 
-- **Required fields**: any field can be made required. To do this, simply assign
+- **Required fields**: any field can be made required by simply assigning
   an error message to the field's `blank` property.
 - **Validation**: this is done automatically according to the field type. You
   can use your own error messages by assigning them to properties like `blank`,
-  `malformed`, `long`, etc. In addition, you can pass an extra validation step to
+  `malformed`, `long`, etc. In addition, you can pass extra validation steps to
   the `validator` property.
 - **Field masking**: this is also performed automatically. For example, the
   [CpfField](https://pub.dev/documentation/well_formed/latest/brazil/CpfField-class.html)
   widget displays the mask _###.###.###-##_ (each '#' is a digit [0–9]) as the
   user enters digits; therefore, if the user enters _12345678900_, the displayed
   text will be _123.456.789-00_.
-- **Stripping**: is the removal of non-digit characters from masked fields. It
-  is enabled by default. To disable it, simply set the `strip` property to
+- **Stripping**: it is the removal of non-digit characters from masked fields.
+  It is enabled by default; to disable it, simply set the `strip` property to
   `false`.
-- **Smart trimming**: this is when trimming is also applied to callback functions.
-  The affected callbacks are `onSaved`,`onChanged`, and `onFieldSubmitted`. To
+- **Smart trimming**: this is when trimming — the removal of leading and
+  trailing white-space characters — is also applied to the callback functions.
+  The affected callbacks are: `onSaved`,`onChanged`, `onFieldSubmitted`. To
   enable it, simply set the `trim` property to `true`.
 - **Automatic keyboard type selection**: the most suitable keyboard type is
-  selected according to the field type. For example,
-  the [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-  widget sets the keyboard type to `TextInputType.emailAddress`, which is optimized
-  for entering email addresses.
+  selected according to the field type. For example, the
+  [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
+  widget sets the keyboard type to `TextInputType.emailAddress`, which is
+  optimized for entering email addresses.
 
 ### Form Field in Action
 
 The code below demonstrates how to use the
 [EmailField](https://pub.dev/documentation/well_formed/latest/net/EmailField-class.html)
-widget with the `trim` property set to `true`. Thus, the entered value is
-trimmed before validation takes place. Furthermore, the example also illustrates
-some important features:
+widget with the `trim` property set to `true`. Thus, the entered value gets
+trimmed before any validation takes place. Furthermore, this example also
+illustrates some important features:
 
-- auto validation
-- custom error messages
-- length constraint
+- auto validation.
+- custom error messages.
+- length constraint.
 
 ```dart
   …
@@ -123,10 +124,10 @@ some important features:
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(children: [
         EmailField.len(
-          50, // limits the length to up to 50 characters
+          50, // limits the input length to up to 50 characters
           trim: true, // trims the entered email
           blank: 'Inform the email', // error message if the field is left blank
           malformed: 'Invalid email', // error message if the email is invalid
@@ -142,8 +143,8 @@ some important features:
 
 ## List of Form Fields
 
-The complete list of form fields with detailed information about each one (constructors,
-parameters, etc.):
+The complete list of form fields along with more detailed information about each
+one (constructors, parameters, etc.):
 
 - [well_formed](https://pub.dev/documentation/well_formed/latest/).
 
@@ -152,9 +153,9 @@ parameters, etc.):
 Form fields related to
 [Brazil](https://pub.dev/documentation/well_formed/latest/brazil/brazil-library.html).
 
-Most form fields in this library are masked fields; so whenever you see a '#'
-character in the documentation, think of it as a placeholder for a single digit
-[0-9].
+Most form fields in this library are _masked fields_, so whenever you see a '#'
+character in the documentation, you should think of it as a placeholder for a
+single digit [0-9].
 
 #### BrMobileField
 
@@ -243,10 +244,10 @@ trimmed.
 
 ```dart
 BasicTextField.max(
-  50, // limits the length to 50 charactes
-  trim: true, // trims the entered data when submitted/saved/changed.
+  50, // limits the input length to 50 characters
+  trim: true, // trims the entered data when submitted/saved/changed
   blank: 'Please enter your full name', // the error message if the field is left blank
-  long: 'The name is too long', // the error message if the number of chars is longer than 50
+  long: 'The name is too long', // the error message if the input is longer than 50 characters
   decoration: InputDecoration(labelText: 'Enter your full name (up to 50 chars)'),
 );
 ```
@@ -275,7 +276,7 @@ constructor.
 
 ```dart
 EmailField.len(
-  50, // limits the length to up to 50 characters
+  50, // limits the input length to up to 50 characters
   trim: true, // trims the entered email
   blank: 'Inform the email', // error message if the field is left blank
   malformed: 'Invalid email', // error message if the email is malformed
@@ -309,7 +310,8 @@ DigitField(
 );
 ```
 
-You can constrain the number of digits in several ways through constructors:
+You can constrain the range of allowed input values in various ways through the
+following named constructors:
 
 - [DigitField.len](https://pub.dev/documentation/well_formed/latest/numeric/DigitField/DigitField.len.html)
   for a fixed number of digits.
@@ -334,7 +336,8 @@ HexField(
 );
 ```
 
-You can constrain the number of hex digits in several ways through constructors:
+You can constrain the range of allowed input values in various ways through the
+following named constructors:
 
 - [HexField.len](https://pub.dev/documentation/well_formed/latest/numeric/HexField/HexField.len.html)
   for a fixed number of hex digits.
@@ -359,7 +362,8 @@ IntField(
 );
 ```
 
-You can constrain the allowed values in several ways through constructors:
+You can constrain the range of allowed input values in various ways through the
+following named constructors:
 
 - [IntField.pos](https://pub.dev/documentation/well_formed/latest/numeric/IntField/IntField.pos.html)
   for positive integers.
@@ -386,7 +390,8 @@ NumField(
 );
 ```
 
-You can constrain the allowed values in several ways:
+You can constrain the range of allowed input values in various ways through the
+following named constructors:
 
 - [NumField.pos](https://pub.dev/documentation/well_formed/latest/numeric/NumField/NumField.pos.html)
   for positive numbers.
@@ -430,7 +435,7 @@ This should launch the demo application on Chrome in debug mode.
 
 ![valid-inputs](https://user-images.githubusercontent.com/24878574/129644261-da1d2621-7f85-4835-8f6d-bf55ae3fd8f6.png)
 
-## Left out Properties
+## Left Out Properties
 
 Regarding compatibility with the
 [TextFormField](https://api.flutter.dev/flutter/material/TextFormField-class.html)
