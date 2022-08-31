@@ -13,7 +13,7 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 - improvements to the README file —
   [72](https://github.com/dartoos-dev/well_formed/issues/72).
-- bump up the dependencies — [74](https://github.com/dartoos-dev/well_formed/issues/74).
+- bump up dependencies — [74](https://github.com/dartoos-dev/well_formed/issues/74).
 
 ## [0.4.2] - 2022-01-09
 
@@ -25,7 +25,7 @@ _'Contribute'_ section to README — [65](https://github.com/dartoos-dev/well_fo
 
 ### Changed
 
-- bump up the formdator package version to 0.12.2
+- bump up Formdator to 0.12.2
 
 ### Fixed
 
