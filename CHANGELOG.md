@@ -7,7 +7,7 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 
 ## [Unreleased]
 
-## [0.4.3] - 2024-08-24
+## [0.4.4] - 2024-08-24
 
 ### Changed
 
