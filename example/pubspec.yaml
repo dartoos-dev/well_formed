@@ -8,7 +8,7 @@ homepage: https://dartoos.dev
 repository: https://github.com/dartoos-dev/well_formed
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ^3.5.0
 
 dependencies:
   eo_color: ^2.2.0

@@ -104,7 +104,7 @@ class BrPhoneField extends StatelessWidget {
               MaskTextInputFormatter(
                 mask: '(##) ####-####',
                 filter: {"#": RegExp(r'\d')},
-              )
+              ),
             ],
             enabled: enabled,
             scrollPadding: scrollPadding,
