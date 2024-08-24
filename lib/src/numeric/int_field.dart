@@ -50,10 +50,12 @@ class IntField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toIntField = ((context) {
+    super.key,
+  }) : _toIntField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Int(mal: malformed), validator ?? _dummy),
+            validator:
+                Pair.str(Int(mal: malformed).call, validator ?? const Ok().call)
+                    .call,
             keyboardType: const TextInputType.numberWithOptions(signed: true),
             inputFormatters: inputFormatters ??
                 [FilteringTextInputFormatter.allow(RegExp('[0-9+-]'))],
@@ -80,8 +82,7 @@ class IntField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Constrains data to integer numbers greater than or equal to [min].
   ///
@@ -121,7 +122,10 @@ class IntField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Int.min(min, small: small), validator ?? _dummy),
+          validator: Pair.str(
+            Int.min(min, small: small).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -187,7 +191,9 @@ class IntField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Int.pos(neg: neg), validator ?? _dummy),
+          validator:
+              Pair.str(Int.pos(neg: neg).call, validator ?? const Ok().call)
+                  .call,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[0-9+]')),
           ],
@@ -255,7 +261,10 @@ class IntField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Int.max(max, large: large), validator ?? _dummy),
+          validator: Pair.str(
+            Int.max(max, large: large).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -321,7 +330,9 @@ class IntField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Int.neg(pos: pos), validator ?? _dummy),
+          validator:
+              Pair.str(Int.neg(pos: pos).call, validator ?? const Ok().call)
+                  .call,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[0-9-]')),
           ],
@@ -393,9 +404,9 @@ class IntField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Int.range(min, max, small: small, large: large),
-            validator ?? _dummy,
-          ),
+            Int.range(min, max, small: small, large: large).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -423,8 +434,6 @@ class IntField extends StatelessWidget {
         );
 
   final ToBasicTextField _toIntField;
-
-  static String? _dummy(String? input) => null;
 
   /// Builds a [BasicTextField] suitable for integer values.
   @override

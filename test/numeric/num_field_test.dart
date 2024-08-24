@@ -275,7 +275,7 @@ Future<void> main() async {
 
       testWidgets('default ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(NumField(blank: blank, validator: nok));
+        final val = await getVal(NumField(blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(zero), error);
@@ -285,7 +285,8 @@ Future<void> main() async {
 
       testWidgets('min ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(NumField.min(1, blank: blank, validator: nok));
+        final val =
+            await getVal(NumField.min(1, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(ten), error);
@@ -294,7 +295,8 @@ Future<void> main() async {
 
       testWidgets('pos ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(NumField.pos(blank: blank, validator: nok));
+        final val =
+            await getVal(NumField.pos(blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(zero), error);
@@ -305,7 +307,7 @@ Future<void> main() async {
       testWidgets('max ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val =
-            await getVal(NumField.max(100, blank: blank, validator: nok));
+            await getVal(NumField.max(100, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(minusTen), error);
@@ -315,7 +317,8 @@ Future<void> main() async {
 
       testWidgets('neg ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(NumField.neg(blank: blank, validator: nok));
+        final val =
+            await getVal(NumField.neg(blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(minusOneBillion), error);
@@ -326,7 +329,7 @@ Future<void> main() async {
       testWidgets('range ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-            NumField.range(-100, 100, blank: blank, validator: nok));
+            NumField.range(-100, 100, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val(minusTen), error);

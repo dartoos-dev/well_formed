@@ -57,8 +57,8 @@ class BrPhoneField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toBrPhoneField = ((context) {
+    super.key,
+  }) : _toBrPhoneField = ((context) {
           final FormFieldSetter<String>? onSavedStrip = onSaved == null
               ? null
               : !strip
@@ -80,7 +80,10 @@ class BrPhoneField extends StatelessWidget {
                             mask.replaceAll(RegExp(r'[-()\s]'), ''),
                           );
           return BasicTextField(
-            validator: Pair.str(BrPhone(mal: malformed), validator ?? _dummy),
+            validator: Pair.str(
+              BrPhone(mal: malformed).call,
+              validator ?? const Ok().call,
+            ).call,
             blank: blank,
             trim: trim,
             keyboardType: TextInputType.number,
@@ -111,12 +114,9 @@ class BrPhoneField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   final ToBasicTextField _toBrPhoneField;
-
-  static String? _dummy(String? input) => null;
 
   /// Builds a [BasicTextField] suitable for Brazilian phone numbers.
   @override

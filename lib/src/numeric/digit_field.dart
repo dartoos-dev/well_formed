@@ -44,10 +44,13 @@ class DigitField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toDigitField = ((context) {
+    super.key,
+  }) : _toDigitField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Digit(mal: malformed), validator ?? _dummy),
+            validator: Pair.str(
+              Digit(mal: malformed).call,
+              validator ?? const Ok().call,
+            ).call,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             blank: blank,
@@ -73,8 +76,7 @@ class DigitField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Digit-only form field with length constraint.
   ///
@@ -114,7 +116,8 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len(len, diff: diff), validator ?? _dummy),
+          validator:
+              Pair.str(Len(len, diff: diff).call, validator ?? _dummy).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -180,7 +183,9 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.min(min, short: short), validator ?? _dummy),
+          validator:
+              Pair.str(Len.min(min, short: short).call, validator ?? _dummy)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -246,7 +251,8 @@ class DigitField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.max(max, long: long), validator ?? _dummy),
+          validator:
+              Pair.str(Len.max(max, long: long).call, validator ?? _dummy).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -318,9 +324,9 @@ class DigitField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Len.range(min, max, short: short, long: long),
+            Len.range(min, max, short: short, long: long).call,
             validator ?? _dummy,
-          ),
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,

@@ -48,8 +48,8 @@ class CnpjField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toCnpjField = ((context) {
+    super.key,
+  }) : _toCnpjField = ((context) {
           final FormFieldSetter<String>? onSavedStrip = onSaved == null
               ? null
               : !strip
@@ -69,7 +69,10 @@ class CnpjField extends StatelessWidget {
                   : (String mask) =>
                       onFieldSubmitted(mask.replaceAll(RegExp('[-/.]'), ''));
           return BasicTextField(
-            validator: Pair.str(Cnpj(mal: malformed), validator ?? _dummy),
+            validator: Pair.str(
+              Cnpj(mal: malformed).call,
+              validator ?? const Ok().call,
+            ).call,
             blank: blank,
             trim: trim,
             keyboardType: TextInputType.number,
@@ -100,12 +103,9 @@ class CnpjField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   final ToBasicTextField _toCnpjField;
-
-  static String? _dummy(String? input) => null;
 
   /// Builds a [BasicTextField] suitable for CNPJ values.
   @override

@@ -105,7 +105,7 @@ Future<void> main() async {
       testWidgets('default ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-          EmailField(blank: blank, malformed: mal, validator: nok),
+          EmailField(blank: blank, malformed: mal, validator: nok.call),
         );
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -116,7 +116,7 @@ Future<void> main() async {
       testWidgets('len ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-          EmailField.len(50, blank: blank, malformed: mal, validator: nok),
+          EmailField.len(50, blank: blank, malformed: mal, validator: nok.call),
         );
         expect(val(null), blank);
         expect(val(empty), blank);

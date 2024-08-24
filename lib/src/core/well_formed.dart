@@ -29,8 +29,8 @@ class WellFormed extends StatelessWidget {
     ToReset? reset,
     Widget? leading,
     GlobalKey<FormState>? formKey,
-    Key? key,
-  })  : _toForm = ((context) {
+    super.key,
+  }) : _toForm = ((context) {
           final fkey = formKey ?? GlobalKey<FormState>();
           return SafeArea(
             child: Column(
@@ -61,8 +61,7 @@ class WellFormed extends StatelessWidget {
               ],
             ),
           );
-        }),
-        super(key: key);
+        });
 
   /// Convenient Scrollable Form Widget.
   ///
@@ -80,8 +79,8 @@ class WellFormed extends StatelessWidget {
     Widget? leading,
     Axis scrollDirection = Axis.vertical,
     GlobalKey<FormState>? formKey,
-    Key? key,
-  })  : _toForm = ((context) {
+    super.key,
+  }) : _toForm = ((context) {
           return SingleChildScrollView(
             scrollDirection: scrollDirection,
             child: WellFormed(
@@ -92,8 +91,7 @@ class WellFormed extends StatelessWidget {
               formKey: formKey,
             ),
           );
-        }),
-        super(key: key);
+        });
 
   /// Convenient Scrollable Form Widget that contains a [ElevatedButton] for
   /// submission along with an optional reset [TextButton]for resetting all form
@@ -195,8 +193,8 @@ class WellFormed extends StatelessWidget {
     GlobalKey<FormState>? formKey,
     Key? submitKey,
     Key? resetKey,
-    Key? key,
-  })  : _toForm = ((context) {
+    super.key,
+  }) : _toForm = ((context) {
           return MaterialApp(
             title: title,
             debugShowCheckedModeBanner: false,
@@ -219,8 +217,7 @@ class WellFormed extends StatelessWidget {
               ),
             ),
           );
-        }),
-        super(key: key);
+        });
 
   /// Form builder.
   final ToForm _toForm;

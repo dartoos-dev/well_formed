@@ -47,10 +47,11 @@ class EmailField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toEmailField = ((context) {
+    super.key,
+  }) : _toEmailField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Email(mal: malformed), validator ?? _dummy),
+            validator:
+                Pair.str(Email(mal: malformed).call, validator ?? _dummy).call,
             keyboardType: TextInputType.emailAddress,
             blank: blank,
             trim: trim,
@@ -76,8 +77,7 @@ class EmailField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Email field that limits the length of the email to up to [len] characters.
   ///
@@ -118,7 +118,9 @@ class EmailField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.max(len, long: long), validator ?? _dummy),
+          validator:
+              Pair.str2(Len.max(len, long: long).call, validator ?? _dummy)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
