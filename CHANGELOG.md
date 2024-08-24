@@ -10,6 +10,8 @@ and this project adheres to [Dart Package Versioning](https://dart.dev/tools/pub
 ### Changed
 
 - Update ci-related scripts.
+- Update linting rules.
+- Update dependencies.
 
 ## [0.4.3] - 2022-07-20
 

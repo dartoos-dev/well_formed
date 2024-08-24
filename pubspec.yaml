@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  formdator: ^1.1.0
+  formdator: ^1.1.1
   mask_text_input_formatter: ^2.3.0
 
 dev_dependencies:
