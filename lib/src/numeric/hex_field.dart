@@ -52,7 +52,7 @@ class HexField extends StatelessWidget {
             validator: Pair.str(Hex(mal: malformed), validator ?? _dummy),
             keyboardType: TextInputType.text,
             inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp('[^0-9a-fA-F]'))
+              FilteringTextInputFormatter.deny(RegExp('[^0-9a-fA-F]')),
             ],
             blank: blank,
             trim: trim,

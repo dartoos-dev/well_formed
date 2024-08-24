@@ -22,7 +22,7 @@ class _DemoApp extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Cyan().color,
           elevation: 0.0,
-          title: const Text('Well_formed demo app'),
+          title: const Text('Well_Formed Showcase App'),
         ),
         body: Center(
           child: SizedBox(
@@ -30,7 +30,7 @@ class _DemoApp extends StatelessWidget {
             child: WellFormed.btn([
               DigitField.len(
                 5,
-                diff: 'Please enter exactly 5 digits; for example, "22335".',
+                diff: 'Please enter exactly 5 digits. For example: "22335".',
                 blank: 'Please enter the 5 digits.',
                 decoration: InputDecoration(
                   labelText: 'Enter 5 digits',
