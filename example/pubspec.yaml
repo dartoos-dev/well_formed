@@ -11,7 +11,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  eo_color: ^2.2.0
+  eo_color: ^2.2.2
   flutter:
     sdk: flutter
   well_formed:
