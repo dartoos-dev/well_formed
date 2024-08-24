@@ -2,8 +2,7 @@
 library type;
 
 import 'package:flutter/material.dart';
-
-import 'core.dart';
+import 'package:well_formed/core.dart';
 
 /// Form fields that builds a [TextFormField].
 typedef ToTextField = TextFormField Function(BuildContext);

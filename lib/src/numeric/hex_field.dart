@@ -46,10 +46,11 @@ class HexField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toHexField = ((context) {
+    super.key,
+  }) : _toHexField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Hex(mal: malformed), validator ?? _dummy),
+            validator:
+                Pair.str(Hex(mal: malformed).call, validator ?? _dummy).call,
             keyboardType: TextInputType.text,
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp('[^0-9a-fA-F]')),
@@ -77,8 +78,7 @@ class HexField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Hex-only form field with length constraint.
   ///
@@ -118,7 +118,9 @@ class HexField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len(len, diff: diff), validator ?? _dummy),
+          validator:
+              Pair.str(Len(len, diff: diff).call, validator ?? const Ok().call)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -184,7 +186,9 @@ class HexField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.min(min, short: short), validator ?? _dummy),
+          validator:
+              Pair.str(Len.min(min, short: short).call, validator ?? _dummy)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -252,7 +256,8 @@ class HexField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Len.max(max, long: long), validator ?? _dummy),
+          validator:
+              Pair.str(Len.max(max, long: long).call, validator ?? _dummy).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -324,9 +329,9 @@ class HexField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Len.range(min, max, short: short, long: long),
+            Len.range(min, max, short: short, long: long).call,
             validator ?? _dummy,
-          ),
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,

@@ -55,7 +55,7 @@ Future<void> main() async {
       testWidgets('default ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-          CnpjField(blank: blank, malformed: mal, validator: nok),
+          CnpjField(blank: blank, malformed: mal, validator: nok.call),
         );
         expect(val(null), blank);
         expect(val(empty), blank);

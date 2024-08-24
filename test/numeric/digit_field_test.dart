@@ -218,7 +218,7 @@ Future<void> main() async {
         final val = await getVal(DigitField(
           blank: blank,
           malformed: nonDigit,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -232,7 +232,7 @@ Future<void> main() async {
           2,
           blank: blank,
           malformed: nonDigit,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -247,7 +247,7 @@ Future<void> main() async {
           blank: blank,
           malformed: nonDigit,
           short: short,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -263,7 +263,7 @@ Future<void> main() async {
           blank: blank,
           malformed: nonDigit,
           long: long,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -282,7 +282,7 @@ Future<void> main() async {
           malformed: nonDigit,
           short: short,
           long: long,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);

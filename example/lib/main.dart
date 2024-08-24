@@ -9,7 +9,7 @@ void main() {
 /// Demo purposes form app widget.
 class _DemoApp extends StatelessWidget {
   /// Ctor.
-  const _DemoApp({Key? key}) : super(key: key);
+  const _DemoApp();
 
   static final _labelStyle = TextStyle(color: const Grey.veryDark().color);
 

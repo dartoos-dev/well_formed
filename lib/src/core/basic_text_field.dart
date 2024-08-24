@@ -41,14 +41,14 @@ class BasicTextField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toBasicField = ((context) {
+    super.key,
+  }) : _toBasicField = ((context) {
           ValStr val = validator ?? _ok;
           if (blank != null) {
-            val = Pair.str2(Req(blank: blank), val);
+            val = Pair.str2(Req(blank: blank).call, val).call;
           }
           if (trim) {
-            val = Trim(val);
+            val = Trim(val).call;
           }
           final ValueChanged<String>? maybeTrimOnChanged = onChanged == null
               ? null
@@ -91,8 +91,7 @@ class BasicTextField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Text form field  whose number of characters (length) must be equal to
   /// [len] characters.
@@ -135,7 +134,8 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len(len, diff: diff), validator ?? _ok),
+          validator:
+              Pair.str2(Len(len, diff: diff).call, validator ?? _ok).call,
           trim: trim,
           blank: blank,
           keyboardType: keyboardType,
@@ -203,7 +203,8 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.min(min, short: short), validator ?? _ok),
+          validator:
+              Pair.str2(Len.min(min, short: short).call, validator ?? _ok).call,
           trim: trim,
           blank: blank,
           keyboardType: keyboardType,
@@ -271,7 +272,8 @@ class BasicTextField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str2(Len.max(max, long: long), validator ?? _ok),
+          validator:
+              Pair.str2(Len.max(max, long: long).call, validator ?? _ok).call,
           trim: trim,
           blank: blank,
           controller: controller,
@@ -345,9 +347,9 @@ class BasicTextField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str2(
-            Len.range(min, max, short: short, long: long),
+            Len.range(min, max, short: short, long: long).call,
             validator ?? _ok,
-          ),
+          ).call,
           trim: trim,
           blank: blank,
           controller: controller,

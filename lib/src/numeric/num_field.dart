@@ -48,10 +48,12 @@ class NumField extends StatelessWidget {
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool enableInteractiveSelection = true,
     AutovalidateMode? autovalidateMode,
-    Key? key,
-  })  : _toNumField = ((context) {
+    super.key,
+  }) : _toNumField = ((context) {
           return BasicTextField(
-            validator: Pair.str(Num(mal: malformed), validator ?? _dummy),
+            validator:
+                Pair.str(Num(mal: malformed).call, validator ?? const Ok().call)
+                    .call,
             keyboardType: const TextInputType.numberWithOptions(
               signed: true,
               decimal: true,
@@ -80,8 +82,7 @@ class NumField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: autovalidateMode,
           );
-        }),
-        super(key: key);
+        });
 
   /// Constrains data to numbers greater than or equal to [min].
   ///
@@ -122,7 +123,10 @@ class NumField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Num.min(min, small: small), validator ?? _dummy),
+          validator: Pair.str(
+            Num.min(min, small: small).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -187,7 +191,9 @@ class NumField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Num.pos(neg: neg), validator ?? _dummy),
+          validator:
+              Pair.str(Num.pos(neg: neg).call, validator ?? const Ok().call)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -254,7 +260,10 @@ class NumField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Num.max(max, large: large), validator ?? _dummy),
+          validator: Pair.str(
+            Num.max(max, large: large).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -319,7 +328,9 @@ class NumField extends StatelessWidget {
     AutovalidateMode? autovalidateMode,
     Key? key,
   }) : this(
-          validator: Pair.str(Num.neg(pos: pos), validator ?? _dummy),
+          validator:
+              Pair.str(Num.neg(pos: pos).call, validator ?? const Ok().call)
+                  .call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -390,9 +401,9 @@ class NumField extends StatelessWidget {
     Key? key,
   }) : this(
           validator: Pair.str(
-            Num.range(min, max, small: small, large: large),
-            validator ?? _dummy,
-          ),
+            Num.range(min, max, small: small, large: large).call,
+            validator ?? const Ok().call,
+          ).call,
           malformed: malformed,
           blank: blank,
           trim: trim,
@@ -421,8 +432,6 @@ class NumField extends StatelessWidget {
         );
 
   final ToBasicTextField _toNumField;
-
-  static String? _dummy(String? input) => null;
 
   /// Builds a [BasicTextField] suitable for numeric values.
   @override

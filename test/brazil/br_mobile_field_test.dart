@@ -56,7 +56,7 @@ Future<void> main() async {
       testWidgets('default ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-          BrMobileField(blank: blank, malformed: mal, validator: nok),
+          BrMobileField(blank: blank, malformed: mal, validator: nok.call),
         );
         expect(val(null), blank);
         expect(val(empty), blank);

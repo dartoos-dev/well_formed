@@ -192,7 +192,8 @@ Future<void> main() async {
 
       testWidgets('default ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val = await getVal(BasicTextField(blank: blank, validator: nok));
+        final val =
+            await getVal(BasicTextField(blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);
@@ -200,8 +201,8 @@ Future<void> main() async {
       });
       testWidgets('len ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val =
-            await getVal(BasicTextField.len(13, blank: blank, validator: nok));
+        final val = await getVal(
+            BasicTextField.len(13, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);
@@ -209,8 +210,8 @@ Future<void> main() async {
       });
       testWidgets('min ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val =
-            await getVal(BasicTextField.min(13, blank: blank, validator: nok));
+        final val = await getVal(
+            BasicTextField.min(13, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);
@@ -218,8 +219,8 @@ Future<void> main() async {
       });
       testWidgets('max ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
-        final val =
-            await getVal(BasicTextField.max(13, blank: blank, validator: nok));
+        final val = await getVal(
+            BasicTextField.max(13, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);
@@ -228,7 +229,7 @@ Future<void> main() async {
       testWidgets('range ctor', (WidgetTester tester) async {
         final getVal = GetVal(tester);
         final val = await getVal(
-            BasicTextField.range(13, 26, blank: blank, validator: nok));
+            BasicTextField.range(13, 26, blank: blank, validator: nok.call));
         expect(val(null), blank);
         expect(val(empty), blank);
         expect(val('13 characters'), error);

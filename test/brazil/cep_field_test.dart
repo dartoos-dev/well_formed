@@ -51,7 +51,7 @@ Future<void> main() async {
       const nok = Nok(error: error);
       final getVal = GetVal(tester);
       final val = await getVal(
-        CepField(blank: blank, malformed: malformed, validator: nok),
+        CepField(blank: blank, malformed: malformed, validator: nok.call),
       );
       expect(val(null), blank);
       expect(val(empty), blank);

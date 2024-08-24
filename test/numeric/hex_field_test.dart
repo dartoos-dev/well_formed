@@ -216,7 +216,7 @@ Future<void> main() async {
         final val = await getVal(HexField(
           blank: blank,
           malformed: nonHex,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -230,7 +230,7 @@ Future<void> main() async {
           2,
           blank: blank,
           malformed: nonHex,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -245,7 +245,7 @@ Future<void> main() async {
           blank: blank,
           malformed: nonHex,
           short: short,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -261,7 +261,7 @@ Future<void> main() async {
           blank: blank,
           malformed: nonHex,
           long: long,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);
@@ -280,7 +280,7 @@ Future<void> main() async {
           malformed: nonHex,
           short: short,
           long: long,
-          validator: nok,
+          validator: nok.call,
         ));
         expect(val(null), blank);
         expect(val(empty), blank);

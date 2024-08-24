@@ -103,10 +103,10 @@ packages:
     dependency: "direct dev"
     description:
       name: lint
-      sha256: "7e9eb7b748d782921353d757334705c45a9cc37b5c694054856ed77a0a7df9fd"
+      sha256: d758a5211fce7fd3f5e316f804daefecdc34c7e53559716125e6da7388ae8565
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.1"
+    version: "2.3.0"
   mask_text_input_formatter:
     dependency: transitive
     description:
